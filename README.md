@@ -20,8 +20,19 @@ Projet Transversal 4 IRC
    Cette partie du Emergency's web server affiche sur un service web les données sur un Leaflet les informations concernants les feux et les camions sur une map (OpenStreetMap)
    
 # Emergency manager
-
+   Cette application Java gère l'envoie des camions sur les différents feux captés par le Data Collect et remontés par l'Emergency's web server dans la base de données. L'application récupère aussi les positions des camions lorsque la simulation les déplacent. Les informations concernant la prise en charge des feux sont écrit sur la base de données grâce à l'API Rest.
+   
 # Simulator
+   Cette application Java gère le changement d'intensité des feux, leurs positions et celle des camions, notamment leurs déplacements. Lorsqu'un camion est proche d'un feu, le feu concerné réduit d'intensité. Les informations d'intensités de feu, de positions des feux et des camions sont envoyées dans la base de données via la Database API
+   
+   
 # Simulator web server
+   Ce serveur, en python avec Flask, il récupère les données de position et d'intensité des feux. Ainsi que de l'affichage de la Simulation View.
+
 # Simulation View
-# Database Api
+   Cette partie du Simulator's web server affiche sur Leaflet les informations concernant la position des feux et leur intensité sur une map (OpenStreetMap) 
+   
+# Database API
+   Cette API a pour rôle de d'enregistrer et d'envoyer les données dans la base de données (PostGreSQL), le Simulator's Web server, Le Simulator, L'Emergency's web server et l'Emergency manager s'en servent pour leurs requêtes. La base de données est séparée en deux parties : 
+   - La partie Simulation (données provenant du simulateur)
+   - La partie réelle (doonées récupérer depuis l'IOT et données d'envoie des camions)
