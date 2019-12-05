@@ -1,0 +1,16 @@
+{# start router configuration #}
+enable
+configure terminal
+
+{# set hostname #}
+hostname {{ host.hostname }}
+
+{# configure interfaces #}
+{% for interface in host.interfaces %}
+interface {{ interface.name }}
+ip address {{ interface.address }} {{ interface.mask }}
+{% if interface.description is defined %}
+description {{ interface.description }}
+{% endif %}
+no shutdown
+{% endfor %}
