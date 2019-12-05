@@ -1,0 +1,4 @@
+- ajouter une table type vehicule avec vitesse et puissance bdd 
+-ajout des cardinalitées
+-séparer la bdd et la classe java par une api rest
+- ajouter un nb de camion limité par caserne
