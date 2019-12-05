@@ -14,7 +14,7 @@ Projet Transversal 4 IRC
    - Emergency View
    
 # Dashboard
-   Le Dashboard dans le cloud reçoit par messages MQTT les données d'intensités des feux, il les stockes dans sa base de données InfluxDB puis met à dispotion dans un service web l'affichage des données grâce à Grafana.
+   Le Dashboard dans le cloud reçoit par messages MQTT les données d'intensités des feux, il les stockes dans sa base de données InfluxDB puis met à disposition dans un service web l'affichage des données grâce à Grafana.
    
 # Emergency View
    Cette partie du Emergency's web server affiche sur un service web les données sur un Leaflet les informations concernants les feux et les camions sur une map (OpenStreetMap)
