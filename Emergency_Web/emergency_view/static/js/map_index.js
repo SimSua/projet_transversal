@@ -1,3 +1,15 @@
+
+function addCircle(x, y, size, map)
+{
+	L.circle([x, y], {
+	    color: 'red',
+	    fillColor: '#f03',
+	    fillOpacity: 0.5,
+	    radius: (size * 10)
+	}).addTo(map);
+
+}
+
 var map = L.map('map').setView([45.7730904, 4.8410339], 14);
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -6,3 +18,5 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 	id: 'mapbox/streets-v11',
 	accessToken: 'pk.eyJ1Ijoid2VsbGllbiIsImEiOiJjazRiMHhiM3AwOWM5M3NvMnNpZ2U5cnR0In0.4wn-kNouTu3UVKCFaTWfZA'
 }).addTo(map);
+
+addCircle(45.77,4.84, 50, map)
