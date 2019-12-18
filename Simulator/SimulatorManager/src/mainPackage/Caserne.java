@@ -18,4 +18,22 @@ public class Caserne {
     public void addVehicule(Vehicule vehicule){
         this.vehicules.add(vehicule);
     }
+
+    public int getLigne() {
+        return ligne;
+    }
+
+    public int getColonne() {
+        return colonne;
+    }
+
+    @Override
+    public String toString() {
+        return "Caserne{" +
+                "ligne=" + ligne +
+                ", colonne=" + colonne +
+                ", coordonnees=" + coordonnees.toString() +
+                ", vehicules=" + vehicules.toString() +
+                '}';
+    }
 }

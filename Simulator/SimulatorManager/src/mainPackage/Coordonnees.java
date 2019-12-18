@@ -1,19 +1,27 @@
 package mainPackage;
 
 public class Coordonnees {
-    private float x_coord;
-    private float y_coord;
+    private double x_coord;
+    private double y_coord;
 
-    public Coordonnees(float x,float y) {
+    public Coordonnees(double x,double y) {
         this.x_coord = x;
         this.y_coord = y;
     }
 
-    public float getX_coord() {
+    public double getX_coord() {
         return this.x_coord;
     }
 
-    public float getY_coord() {
+    public double getY_coord() {
         return this.y_coord;
+    }
+
+    @Override
+    public String toString() {
+        return "Coordonnees{" +
+                "x_coord=" + x_coord +
+                ", y_coord=" + y_coord +
+                '}';
     }
 }

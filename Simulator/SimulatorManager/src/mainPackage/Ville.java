@@ -16,4 +16,13 @@ public class Ville {
     public void addCaserne(Caserne caserne) {
         this.casernes.add(caserne);
     }
+
+    @Override
+    public String toString() {
+        return "Ville{" +
+                "nom_ville='" + nom_ville + '\'' +
+                ", casernes=" + casernes +
+                ", coordonnees=" + coordonnees.toString() +
+                '}';
+    }
 }
