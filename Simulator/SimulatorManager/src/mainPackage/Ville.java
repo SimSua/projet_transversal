@@ -1,0 +1,19 @@
+package mainPackage;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Ville {
+    private String nom_ville;
+    private List<Caserne> casernes = new ArrayList<Caserne>();
+    private Coordonnees coordonnees;
+
+    public Ville(String nom_ville, Coordonnees coordonnees) {
+        this.nom_ville = nom_ville;
+        this.coordonnees = coordonnees;
+    }
+
+    public void addCaserne(Caserne caserne) {
+        this.casernes.add(caserne);
+    }
+}
