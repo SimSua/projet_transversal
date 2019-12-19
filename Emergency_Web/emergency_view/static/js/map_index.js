@@ -1,16 +1,18 @@
+var map = L.map('map').setView([45.7730904, 4.8410339], 14);
 
-function addCircle(x, y, size, map)
+function addFire(x, y, size)
 {
-	L.circle([x, y], {
+	
+	var fire = L.circle([x, y], {
 	    color: 'red',
 	    fillColor: '#f03',
 	    fillOpacity: 0.5,
 	    radius: (size * 10)
 	}).addTo(map);
 
-}
+	return fire
 
-var map = L.map('map').setView([45.7730904, 4.8410339], 14);
+}
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -19,4 +21,15 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 	accessToken: 'pk.eyJ1Ijoid2VsbGllbiIsImEiOiJjazRiMHhiM3AwOWM5M3NvMnNpZ2U5cnR0In0.4wn-kNouTu3UVKCFaTWfZA'
 }).addTo(map);
 
-addCircle(45.77,4.84, 50, map)
+
+var list_fire = [null]
+//list_fire.push(addFire(45.77,4.84,10))
+//while(1)
+//{
+	setTimeout(function(){}, 100000)
+	fire = get_fire()
+//}
+
+
+
+
