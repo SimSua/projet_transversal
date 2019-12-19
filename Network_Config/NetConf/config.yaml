@@ -1,0 +1,22 @@
+---
+hostname: BBN-R5
+interfaces:
+  - name: Loopback0
+    address: 5.5.5.5
+    mask: 255.255.255.255
+  - name: Port-channel1
+    address: 172.16.56.1
+    mask: 255.255.255.252
+    description: "*** Interco BBN-R6 ***"
+  - name: FastEthernet0/0
+    address: 172.16.15.2
+    mask: 255.255.255.252
+    description: "*** Interco BBN-R1 ***"
+  - name: FastEthernet1/0
+    address: 172.16.35.2
+    mask: 255.255.255.252
+    description: "*** Interco BBN-R3 ***"
+  - name: FastEthernet1/1
+    address: 172.16.45.2
+    mask: 255.255.255.252
+    description: "*** Interco BBN-R4 ***"
