@@ -18,6 +18,8 @@ public class Feu {
         this.intensite--;
     }
 
+    public void augmenterIntensite() { this.intensite++; }
+
     public boolean estEteint() {
         return this.intensite <= 0;
     }

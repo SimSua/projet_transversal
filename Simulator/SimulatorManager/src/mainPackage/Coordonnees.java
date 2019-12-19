@@ -9,11 +9,11 @@ public class Coordonnees {
         this.y_coord = y;
     }
 
-    public double getX_coord() {
+    public double getX() {
         return this.x_coord;
     }
 
-    public double getY_coord() {
+    public double getY() {
         return this.y_coord;
     }
 

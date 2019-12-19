@@ -17,7 +17,7 @@ public class Vehicule {
         this.coordonnees = coordonnees;
     }
 
-    void deplace(Coordonnees coordonnees){
+    void deplacer(Coordonnees coordonnees){
         this.coordonnees = coordonnees;
     }
 
@@ -40,11 +40,6 @@ public class Vehicule {
     public void setVitesse(int vitesse) {
         this.vitesse = vitesse;
     }
-
-    public void setCoordonnees(Coordonnees coordonnees) {
-        this.coordonnees = coordonnees;
-    }
-
     public void setLigne(int ligne) {
         this.ligne = ligne;
     }

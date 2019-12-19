@@ -7,12 +7,6 @@ public class Camion extends Vehicule {
         super(vitesse, ligne, colonne,coordonnees);
         this.caserne = caserne;
     }
-
-    @Override
-    void deplace(Coordonnees coordonnees) {
-        super.deplace(coordonnees);
-    }
-
     public Caserne getCaserne() {
         return caserne;
     }
