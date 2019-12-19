@@ -14,6 +14,11 @@ function addFire(x, y, size)
 
 }
 
+function setFire()
+{
+	alert("test")
+}
+
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 	maxZoom: 18,
@@ -24,11 +29,10 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 
 var list_fire = [null]
 //list_fire.push(addFire(45.77,4.84,10))
-//while(1)
-//{
-	setTimeout(function(){}, 100000)
-	fire = get_fire()
-//}
+
+fire = null
+setInterval(setFire(), 5000);
+
 
 
 

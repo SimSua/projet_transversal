@@ -1,6 +1,6 @@
 function get_fire()
 {
-	alert("test")
+	//alert("test")
 
 	return "test"
 }
