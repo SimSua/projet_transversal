@@ -924,7 +924,7 @@ LOAD objs/apps/rf_sub1G/data_collect/main.o
                 0x0000000010000fe0                _end_stack = ((_sram_base + _sram_size) - 0x20)
                 0x0000000000000000                . = ORIGIN (flash)
 
-.text           0x0000000000000000     0x1f30
+.text           0x0000000000000000     0x1f0c
  FILL mask 0xff
  *(SORT(.vectors))
  .vectors       0x0000000000000000       0xc0 objs/core/bootstrap.o
@@ -1147,94 +1147,94 @@ LOAD objs/apps/rf_sub1G/data_collect/main.o
                 0x00000000000018e8       0x58 objs/apps/rf_sub1G/data_collect/main.o
                 0x00000000000018e8                rf_config
  .text.handle_rf_rx_data
-                0x0000000000001940       0xac objs/apps/rf_sub1G/data_collect/main.o
+                0x0000000000001940       0x84 objs/apps/rf_sub1G/data_collect/main.o
                 0x0000000000001940                handle_rf_rx_data
  .text.startup.main
-                0x00000000000019ec       0x98 objs/apps/rf_sub1G/data_collect/main.o
-                0x00000000000019ec                main
+                0x00000000000019c4       0x98 objs/apps/rf_sub1G/data_collect/main.o
+                0x00000000000019c4                main
  *(SORT(.rodata*))
  .rodata.__FUNCTION__.3723
-                0x0000000000001a84        0xc objs/core/fault_handlers.o
+                0x0000000000001a5c        0xc objs/core/fault_handlers.o
  .rodata.__FUNCTION__.3731
-                0x0000000000001a90        0xc objs/core/fault_handlers.o
+                0x0000000000001a68        0xc objs/core/fault_handlers.o
  .rodata.__FUNCTION__.3727
-                0x0000000000001a9c       0x12 objs/core/fault_handlers.o
- *fill*         0x0000000000001aae        0x2 ff
+                0x0000000000001a74       0x12 objs/core/fault_handlers.o
+ *fill*         0x0000000000001a86        0x2 ff
  .rodata.__FUNCTION__.3735
-                0x0000000000001ab0        0xf objs/core/fault_handlers.o
- *fill*         0x0000000000001abf        0x1 ff
+                0x0000000000001a88        0xf objs/core/fault_handlers.o
+ *fill*         0x0000000000001a97        0x1 ff
  .rodata.pio_regs_handles_port0
-                0x0000000000001ac0       0x80 objs/core/pio.o
+                0x0000000000001a98       0x80 objs/core/pio.o
  .rodata.pio_regs_handles_port1
-                0x0000000000001b40       0x1c objs/core/pio.o
+                0x0000000000001b18       0x1c objs/core/pio.o
  .rodata.pio_regs_handles_port2
-                0x0000000000001b5c       0x40 objs/core/pio.o
+                0x0000000000001b34       0x40 objs/core/pio.o
  .rodata.status_led
-                0x0000000000001b9c       0x2c objs/extdrv/status_led.o
- .rodata.steps  0x0000000000001bc8        0xb objs/extdrv/status_led.o
- *fill*         0x0000000000001bd3        0x1 ff
+                0x0000000000001b74       0x2c objs/extdrv/status_led.o
+ .rodata.steps  0x0000000000001ba0        0xb objs/extdrv/status_led.o
+ *fill*         0x0000000000001bab        0x1 ff
  .rodata.rf_init_settings
-                0x0000000000001bd4       0x48 objs/extdrv/cc1101.o
+                0x0000000000001bac       0x48 objs/extdrv/cc1101.o
  .rodata.set_gpio_callback
-                0x0000000000001c1c       0x14 objs/drivers/gpio.o
+                0x0000000000001bf4       0x14 objs/drivers/gpio.o
  .rodata.uart_defs
-                0x0000000000001c30       0x10 objs/drivers/serial.o
+                0x0000000000001c08       0x10 objs/drivers/serial.o
  .rodata.I2C_0_Handler
-                0x0000000000001c40      0x164 objs/drivers/i2c.o
+                0x0000000000001c18      0x164 objs/drivers/i2c.o
  .rodata.vsnprintf
-                0x0000000000001da4       0xc8 objs/lib/vsprintf.o
+                0x0000000000001d7c       0xc8 objs/lib/vsprintf.o
  .rodata.digits.3755
-                0x0000000000001e6c       0x10 objs/lib/vsprintf.o
+                0x0000000000001e44       0x10 objs/lib/vsprintf.o
  .rodata.cc1101_miso_pin
-                0x0000000000001e7c        0x3 objs/apps/rf_sub1G/data_collect/main.o
-                0x0000000000001e7c                cc1101_miso_pin
- *fill*         0x0000000000001e7f        0x1 ff
+                0x0000000000001e54        0x3 objs/apps/rf_sub1G/data_collect/main.o
+                0x0000000000001e54                cc1101_miso_pin
+ *fill*         0x0000000000001e57        0x1 ff
  .rodata.status_led_red
-                0x0000000000001e80        0x3 objs/apps/rf_sub1G/data_collect/main.o
-                0x0000000000001e80                status_led_red
- *fill*         0x0000000000001e83        0x1 ff
+                0x0000000000001e58        0x3 objs/apps/rf_sub1G/data_collect/main.o
+                0x0000000000001e58                status_led_red
+ *fill*         0x0000000000001e5b        0x1 ff
  .rodata.cc1101_gdo0
-                0x0000000000001e84        0x3 objs/apps/rf_sub1G/data_collect/main.o
-                0x0000000000001e84                cc1101_gdo0
- *fill*         0x0000000000001e87        0x1 ff
+                0x0000000000001e5c        0x3 objs/apps/rf_sub1G/data_collect/main.o
+                0x0000000000001e5c                cc1101_gdo0
+ *fill*         0x0000000000001e5f        0x1 ff
  .rodata.common_pins
-                0x0000000000001e88       0x40 objs/apps/rf_sub1G/data_collect/main.o
-                0x0000000000001e88                common_pins
+                0x0000000000001e60       0x40 objs/apps/rf_sub1G/data_collect/main.o
+                0x0000000000001e60                common_pins
  .rodata.str1.4
-                0x0000000000001ec8       0x60 objs/apps/rf_sub1G/data_collect/main.o
+                0x0000000000001ea0       0x64 objs/apps/rf_sub1G/data_collect/main.o
                                          0x63 (size before relaxing)
  .rodata.status_led_green
-                0x0000000000001f28        0x3 objs/apps/rf_sub1G/data_collect/main.o
-                0x0000000000001f28                status_led_green
- *fill*         0x0000000000001f2b        0x1 ff
+                0x0000000000001f04        0x3 objs/apps/rf_sub1G/data_collect/main.o
+                0x0000000000001f04                status_led_green
+ *fill*         0x0000000000001f07        0x1 ff
  .rodata.cc1101_cs_pin
-                0x0000000000001f2c        0x3 objs/apps/rf_sub1G/data_collect/main.o
-                0x0000000000001f2c                cc1101_cs_pin
+                0x0000000000001f08        0x3 objs/apps/rf_sub1G/data_collect/main.o
+                0x0000000000001f08                cc1101_cs_pin
  *(SORT(.got*))
-                0x0000000000001f30                . = ALIGN (0x4)
- *fill*         0x0000000000001f2f        0x1 ff
-                0x0000000000001f30                _end_text = .
+                0x0000000000001f0c                . = ALIGN (0x4)
+ *fill*         0x0000000000001f0b        0x1 ff
+                0x0000000000001f0c                _end_text = .
 
-.glue_7         0x0000000000001f30        0x0
- .glue_7        0x0000000000001f30        0x0 linker stubs
+.glue_7         0x0000000000001f0c        0x0
+ .glue_7        0x0000000000001f0c        0x0 linker stubs
 
-.glue_7t        0x0000000000001f30        0x0
- .glue_7t       0x0000000000001f30        0x0 linker stubs
+.glue_7t        0x0000000000001f0c        0x0
+ .glue_7t       0x0000000000001f0c        0x0 linker stubs
 
-.vfp11_veneer   0x0000000000001f30        0x0
- .vfp11_veneer  0x0000000000001f30        0x0 linker stubs
+.vfp11_veneer   0x0000000000001f0c        0x0
+ .vfp11_veneer  0x0000000000001f0c        0x0 linker stubs
 
-.v4_bx          0x0000000000001f30        0x0
- .v4_bx         0x0000000000001f30        0x0 linker stubs
+.v4_bx          0x0000000000001f0c        0x0
+ .v4_bx         0x0000000000001f0c        0x0 linker stubs
 
-.iplt           0x0000000000001f30        0x0
- .iplt          0x0000000000001f30        0x0 objs/core/watchdog.o
+.iplt           0x0000000000001f0c        0x0
+ .iplt          0x0000000000001f0c        0x0 objs/core/watchdog.o
 
-.rel.dyn        0x0000000000001f30        0x0
- .rel.iplt      0x0000000000001f30        0x0 objs/core/watchdog.o
-                0x0000000000001f30                . = ALIGN (0x4)
+.rel.dyn        0x0000000000001f0c        0x0
+ .rel.iplt      0x0000000000001f0c        0x0 objs/core/watchdog.o
+                0x0000000000001f0c                . = ALIGN (0x4)
 
-.data           0x0000000010000000      0x1c2 load address 0x0000000000001f30
+.data           0x0000000010000000      0x1c2 load address 0x0000000000001f0c
                 0x0000000010000000                _start_data = .
  *(SORT(.data*))
  .data.lpc_private
@@ -1256,11 +1256,11 @@ LOAD objs/apps/rf_sub1G/data_collect/main.o
                 0x00000000100001bc        0x6 objs/apps/rf_sub1G/data_collect/main.o
                 0x00000000100001c2                _end_data = .
 
-.igot.plt       0x00000000100001c4        0x0 load address 0x00000000000020f2
+.igot.plt       0x00000000100001c4        0x0 load address 0x00000000000020ce
  .igot.plt      0x00000000100001c4        0x0 objs/core/watchdog.o
                 0x00000000100001c4                . = ALIGN (0x4)
 
-.bss            0x00000000100001c4      0x184 load address 0x00000000000020f2
+.bss            0x00000000100001c4      0x184 load address 0x00000000000020ce
                 0x00000000100001c4                _start_bss = .
  *(SORT(.bss*))
  .bss.wdt_callback

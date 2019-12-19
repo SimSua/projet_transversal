@@ -145,40 +145,28 @@ void handle_rf_rx_data(void)
 	int total_size = 0;
 	uint16_t i = 0;
 	//while(total_size < 420){
-		uint8_t data[RF_BUFF_LEN+3];
-		uint8_t sender;
-		uint8_t status = 0;
-		int8_t ret = 0;
-		
-		ret = cc1101_receive_packet(data, RF_BUFF_LEN+3, &status);
-		uprintf(UART0, "\n");
+	uint8_t data[RF_BUFF_LEN+3];
+	uint8_t sender;
+	uint8_t status = 0;
+	int8_t ret = 0;
+	ret = cc1101_receive_packet(data, RF_BUFF_LEN+3, &status);
+	uprintf(UART0, "\n");
 	/* Go back to RX mode */
-		cc1101_enter_rx_mode();
-		
-		memcpy(&sender, &data[2], sizeof(uint8_t));		
+	cc1101_enter_rx_mode();	
+	memcpy(&sender, &data[2], sizeof(uint8_t));		
 		//uprintf(UART0, "msg : %s\n\r", recv_data);
 		/* JSON PRINT*/
-		
-		if(sender == (uint8_t)NEIGHBOR_ADDRESS){
-			memcpy(&recv_data, &data[3], RF_BUFF_LEN);	
-		}
-
-		//total_size+=RF_BUFF_LEN;
-	//}
-	uprintf(UART0, "msg : ");
-	for(i = 0; i <= sizeof(recv_data); i++){
-		if(i%RF_BUFF_LEN==0){
-			uprintf(UART0, "\n\r");
-		}
-		uprintf(UART0, "%c", recv_data[i]);
-
+	if(sender == (uint8_t)NEIGHBOR_ADDRESS){
+		memcpy(&recv_data, &data[3], RF_BUFF_LEN);	
 	}
-	uprintf(UART0, "\n\r");
-	/* Check for received packet (and get it if any) */
-
-    /*uprintf(UART0, "RF: message: %c.\n\r", data[2]);*/
-
-
+	uprintf(UART0, "msg : <");
+	for(i = 0; i < sizeof(recv_data); i++){
+		// if(i%RF_BUFF_LEN==0){
+		// 	uprintf(UART0, "\n\r");
+		// }
+		uprintf(UART0, "%c", recv_data[i]);
+	}
+	uprintf(UART0, ">\n\r");
 }
 
 
