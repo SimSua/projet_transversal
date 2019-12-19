@@ -42,6 +42,6 @@ Pour lancer l'Emergency Web Server dans un container Docker il faut :
 - Aller dans le répertoire /Emergency_Web
 - Faire la commande "sudo docker build -t docker-flask ." pour créer votre image avec le code du répertoire actuel
 Pour l'instant pour lancer le serveur web :
-"sudo run -p 5000:5000 python-flask python run.py "0.0.0.0""
+- "sudo run -p 5000:5000 python-flask python run.py "0.0.0.0""
 Pour lancer la partie IOT :
-"sudo docker run -p 5000:5000 -v /dev/ttyUSB0:/dev/ttyUSB0 -v :/app --privileged python-flask python receiver_uart.py"
+- "sudo docker run -p 5000:5000 -v /dev/ttyUSB0:/dev/ttyUSB0 -v :/app --privileged python-flask python receiver_uart.py"
