@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Emergency;
 
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class FireController extends Controller
 {

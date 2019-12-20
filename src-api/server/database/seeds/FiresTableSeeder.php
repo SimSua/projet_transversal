@@ -1,7 +1,8 @@
 <?php
 
+use App\Models\Fire;
 use Illuminate\Database\Seeder;
-use App\Fire;
+use Illuminate\Support\Facades\DB;
 
 class FiresTableSeeder extends Seeder
 {
@@ -12,7 +13,6 @@ class FiresTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::connection('pgsql_sim');
         DB::table('fires')->delete();
 
         $json = File::get("database/data-sample/fires.json");
@@ -20,7 +20,10 @@ class FiresTableSeeder extends Seeder
         foreach ($data as $obj) {
             Fire::create(
                 [
-                    'intensity' => $obj->intensity
+                    'line' => $obj->line,
+                    'column' => $obj->column,
+                    'intensity' => $obj->intensity,
+                    'id_point' => $obj->id_point
                 ]
             );
         }

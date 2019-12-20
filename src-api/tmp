@@ -1,0 +1,7 @@
+php artisan migrate --database=pgsql
+php artisan db:seed --database=pgsql
+php artisan db:wipe --database=pgsql
+
+php artisan migrate --database=pgsql_sim
+php artisan db:seed --database=pgsql_sim
+php artisan db:wipe --database=pgsql_sim

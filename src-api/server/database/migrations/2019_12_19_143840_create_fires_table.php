@@ -13,10 +13,14 @@ class CreateFiresTable extends Migration
      */
     public function up()
     {
-        Schema::connection('pgsql')->create('fires', function (Blueprint $table) {
+        Schema::create('fires', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('intensity');
+            $table->integer('line')->unsigned();
+            $table->integer('column')->unsigned();
+            $table->integer('intensity')->unsigned();
+            $table->bigInteger('id_point')->unsigned();
             $table->timestamps();
+//            $table->foreign('id_point')->references('id')->on('points');
         });
     }
 
