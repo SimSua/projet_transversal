@@ -14,13 +14,13 @@ class CreateFiresTable extends Migration
     public function up()
     {
         Schema::create('fires', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->unsigned();
             $table->integer('line')->unsigned();
             $table->integer('column')->unsigned();
             $table->integer('intensity')->unsigned();
-            $table->bigInteger('id_point')->unsigned();
+            $table->bigInteger('id_coordinate')->unsigned();
             $table->timestamps();
-//            $table->foreign('id_point')->references('id')->on('points');
+            $table->foreign('id_coordinate')->references('id')->on('coordinates');
         });
     }
 

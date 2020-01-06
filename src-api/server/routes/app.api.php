@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Emergency\FireController;
 use Illuminate\Http\Request;
 
 /*
@@ -17,4 +18,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/fires', 'FireController@index');
+Route::apiResource('coordinates','CoordinateController');
+
+///** Fires routes */
+//Route::get('/fires', 'FireController@getFires');
+//
+//Route::get('/fire/{id}', function(FireController $fireController, int $id) {
+//    return $fireController->getFire($id);
+//})->where(['id' => '[0-9]+']);
+//
+//Route::post('/fires/create', 'FireController@create');
