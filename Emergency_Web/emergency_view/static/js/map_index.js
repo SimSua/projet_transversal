@@ -1,7 +1,7 @@
-//var map = L.map('map').setView([45.7730904, 4.8410339], 14);
 var map = null
-var list_layout = []
+var list_fire_layout = []
 var list_fire = []
+var list_camion = []
 
 function setmap(x,y,z)
 {
@@ -25,24 +25,23 @@ function addfire(x, y, size)
 	    radius: (size * 10)
 	}).addTo(map);
 
-	list_layout.push(fire)
+	list_fire_layout.push(fire)
 }
 
-function setfire()
-{
-	fires = null
-	setInterval(function(){ 
-
-	fires = get_fire()
-
- }, 5000);
-
-}
 
 function removefire(fire)
 {
 	map.removeLayer(fire)
 }
 
-//list_fire.push(addFire(45.77,4.84,10))
+function addcamion(x, y)
+{
+	camion = L.marker([x, y],).addTo(map);
+	list_camion.push(camion)
+}
 
+function movecamion(camion, x, y)
+{
+	var newLatLng = new L.LatLng(x, y);
+	camion.setLatLng(newLatLng);
+}
