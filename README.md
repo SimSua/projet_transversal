@@ -36,3 +36,12 @@ Projet Transversal 4 IRC
    Cette API a pour rôle de d'enregistrer et d'envoyer les données dans la base de données (PostGreSQL), le Simulator's Web server, Le Simulator, L'Emergency's web server et l'Emergency manager s'en servent pour leurs requêtes. La base de données est séparée en deux parties : 
    - La partie Simulation (données provenant du simulateur)
    - La partie réelle (doonées récupérer depuis l'IOT et données d'envoie des camions)
+   
+# Docker
+Pour lancer l'Emergency Web Server dans un container Docker il faut :
+- Aller dans le répertoire /Emergency_Web
+- Faire la commande "sudo docker build -t docker-flask ." pour créer votre image avec le code du répertoire actuel
+Pour l'instant pour lancer le serveur web :
+- "sudo run -p 5000:5000 python-flask python run.py "0.0.0.0""
+Pour lancer la partie IOT :
+- "sudo docker run -p 5000:5000 -v /dev/ttyUSB0:/dev/ttyUSB0 -v :/app --privileged python-flask python receiver_uart.py"
