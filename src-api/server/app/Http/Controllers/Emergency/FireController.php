@@ -76,4 +76,17 @@ class FireController extends Controller
 
         return new FireResource($fire);
     }
+
+    /**
+     * Update the specified resource from storage.
+     *
+     * @param Request $request
+     * @param $id
+     */
+    public function updateIntensity(Request $request , $id)
+    {
+        $fire = Fire::findOrFail($id);
+        $fire->intensity = $request->intensity;
+        $fire->save();
+    }
 }

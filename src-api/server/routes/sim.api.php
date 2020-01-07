@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Simulator\SimFireController;
 use Illuminate\Http\Request;
 
 /*
@@ -19,3 +20,7 @@ Route::apiResource('fires','SimFireController');
 Route::apiResource('fire-departments','SimFireDepartmentController');
 Route::apiResource('vehicle-types','SimVehicleTypeController');
 Route::apiResource('trucks','SimTruckController');
+
+Route::post('/fires/update-intensity/{id}', function(SimFireController $fireController, int $id) {
+    return $fireController->updateIntensity(Request::capture(), $id);
+})->where(['id' => '[0-9]+']);

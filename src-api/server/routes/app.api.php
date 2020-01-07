@@ -24,11 +24,6 @@ Route::apiResource('fire-departments','FireDepartmentController');
 Route::apiResource('vehicle-types','VehicleTypeController');
 Route::apiResource('trucks','TruckController');
 
-///** Fires routes */
-//Route::get('/fires', 'FireController@getFires');
-//
-//Route::get('/fire/{id}', function(FireController $fireController, int $id) {
-//    return $fireController->getFire($id);
-//})->where(['id' => '[0-9]+']);
-//
-//Route::post('/fires/create', 'FireController@create');
+Route::post('/fires/update-intensity/{id}', function(FireController $fireController, int $id) {
+    return $fireController->updateIntensity(Request::capture(), $id);
+})->where(['id' => '[0-9]+']);
