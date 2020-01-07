@@ -14,8 +14,8 @@ use Illuminate\Http\Request;
 */
 //Route::get('/fires', 'FireController@index');
 
-Route::apiResource('coordinates','CoordinateController');
-Route::apiResource('fires','FireController');
-Route::apiResource('fire-departments','FireDepartmentController');
-Route::apiResource('vehicle-types','VehicleTypeController');
-Route::apiResource('trucks','TruckController');
+Route::apiResource('coordinates', 'SimCoordinateController');
+Route::apiResource('fires','SimFireController');
+Route::apiResource('fire-departments','SimFireDepartmentController');
+Route::apiResource('vehicle-types','SimVehicleTypeController');
+Route::apiResource('trucks','SimTruckController');

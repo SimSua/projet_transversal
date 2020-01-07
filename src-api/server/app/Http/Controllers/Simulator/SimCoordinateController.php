@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Simulator;
 
 use App\Http\Resources\CoordinateCollection;
-use App\Models\Coordinate;
+use App\Models\Simulator\Coordinate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Coordinate as CoordinateResource;
 
-class CoordinateController extends Controller
+class SimCoordinateController extends Controller
 {
     /**
      * Display a listing of the resource.

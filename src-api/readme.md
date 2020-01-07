@@ -12,8 +12,12 @@
 
 > composer install
 
-> php artisan migrate
+> php artisan migrate --database=pgsql
 
-> php artisan db:seed
+> php artisan migrate --database=pgsql_sim
+
+> php artisan db:seed --database=pgsql
+
+> php artisan db:seed --database=pgsql_sim
 
 > localhost:8081/api/coordinates

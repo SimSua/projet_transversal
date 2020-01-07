@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Simulator;
 
 use App\Http\Resources\FireCollection;
-use App\Models\Fire;
+use App\Models\Simulator\Fire;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Fire as FireResource;
 
-class FireController extends Controller
+class SimFireController extends Controller
 {
     /**
      * Display a listing of the resource.

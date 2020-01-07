@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Simulator;
 
 use App\Http\Resources\VehicleTypeCollection;
-use App\Models\VehicleType;
+use App\Models\Simulator\VehicleType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\VehicleType as VehicleTypeResource;
 
-class VehicleTypeController extends Controller
+class SimVehicleTypeController extends Controller
 {
     /**
      * Display a listing of the resource.

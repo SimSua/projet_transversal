@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Simulator;
 
 use App\Http\Resources\TruckCollection;
-use App\Models\Truck;
+use App\Models\Simulator\Truck;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Truck as TruckResource;
 
-class TruckController extends Controller
+class SimTruckController extends Controller
 {
     /**
      * Display a listing of the resource.
