@@ -27,13 +27,35 @@ public class Caserne {
         return colonne;
     }
 
+    public List<Vehicule> getVehiculesDispo() {
+        List<Vehicule> vehiculesDispo = new ArrayList<>();
+        for (Vehicule vehicule:this.getVehicules()) {
+            if (vehicule.getFeu() == null) {
+                vehiculesDispo.add(vehicule);
+            }
+        }
+        return vehiculesDispo;
+    }
+
+    public Coordonnees getCoordonnees() {
+        return coordonnees;
+    }
+
+    public List<Vehicule> getVehicules() {
+        return vehicules;
+    }
+
     @Override
     public String toString() {
+        ArrayList idVehicules = new ArrayList<>();
+        for (Vehicule vehicule:vehicules) {
+            idVehicules.add(vehicule.getId());
+        }
         return "Caserne{" +
                 "ligne=" + ligne +
                 ", colonne=" + colonne +
                 ", coordonnees=" + coordonnees.toString() +
-                ", vehicules=" + vehicules.toString() +
+                ", vehicules=" + idVehicules +
                 '}';
     }
 }
