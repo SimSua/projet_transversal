@@ -28,8 +28,11 @@ class FireDepartmentController extends Controller
     public function store(Request $request)
     {
         $fireDepartment = new FireDepartment();
-        $fireDepartment->latitude = $request->get('latitude');
-        $fireDepartment->longitude = $request->get('longitude');
+        $fireDepartment->label = $request->get('label');
+        $fireDepartment->line = (int)$request->get('line');
+        $fireDepartment->column = (int)$request->get('column');
+        $fireDepartment->capacity = (int)$request->get('capacity');
+        $fireDepartment->id_coordinate = (int)$request->get('id_coordinate');
         $fireDepartment->save();
 
         return new FireDepartmentResource($fireDepartment);
@@ -56,8 +59,11 @@ class FireDepartmentController extends Controller
     public function update(Request $request, $id)
     {
         $fireDepartment = FireDepartment::findOrFail($id);
-        $fireDepartment->latitude = $request->get('latitude');
-        $fireDepartment->longitude = $request->get('longitude');
+        $fireDepartment->label = $request->get('label');
+        $fireDepartment->line = (int)$request->get('line');
+        $fireDepartment->column = (int)$request->get('column');
+        $fireDepartment->capacity = (int)$request->get('capacity');
+        $fireDepartment->id_coordinate = (int)$request->get('id_coordinate');
         $fireDepartment->save();
 
         return new FireDepartmentResource($fireDepartment);
