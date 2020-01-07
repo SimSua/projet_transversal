@@ -1,55 +1,79 @@
 <?php
 
-
 namespace App\Http\Controllers\Emergency;
 
-use Illuminate\Http\JsonResponse;
+use App\Http\Resources\FireCollection;
+use App\Models\Fire;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Fire as FireResource;
 
 class FireController extends Controller
 {
     /**
-     * @return JsonResponse
+     * Display a listing of the resource.
+     *
      */
-    public function getFires(): JsonResponse
+    public function index()
     {
-        $row = DB::connection('pgsql')->select('SELECT * FROM fires;');
-
-        return new JsonResponse($row);
+        return new FireCollection(Fire::All());
     }
 
     /**
-     * @param int $id
-     * @return JsonResponse
-     */
-    public function getFire(int $id): JsonResponse
-    {
-        $row = DB::connection('pgsql')->selectOne('SELECT * FROM fires WHERE id=:id;', [':id'=>$id]);
-
-        return new JsonResponse($row);
-    }
-
-    /**
+     * Store a newly created resource in storage.
+     *
      * @param Request $request
-     * @return JsonResponse
+     * @return FireResource
      */
-    public function create(Request $request): JsonResponse
+    public function store(Request $request)
     {
-        $data = [
-            'line' => $request->get('line'),
-            'column' => $request->get('column'),
-            'intensity' => $request->get('intensity'),
-            'coordinate' => $request->get('id_coordinate')
-        ];
+        $fire = new Fire();
+        $fire->latitude = $request->get('latitude');
+        $fire->longitude = $request->get('longitude');
+        $fire->save();
 
-        $sql = '
-            INSERT INTO fires ("line", "column", "intensity", "id_coordinate")
-            VALUES ('.$data['line'].', '.$data['column'].', '.$data['intensity'].', '.$data['coordinate'].')
-        ';
-        DB::connection('pgsql')->insert($sql);
+        return new FireResource($fire);
+    }
 
-        return new JsonResponse(['status' => 'success']);
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return FireResource
+     */
+    public function show($id)
+    {
+        return new FireResource(Fire::FindOrFail($id));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return FireResource
+     */
+    public function update(Request $request, $id)
+    {
+        $fire = Fire::findOrFail($id);
+        $fire->latitude = $request->get('latitude');
+        $fire->longitude = $request->get('longitude');
+        $fire->save();
+
+        return new FireResource($fire);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return FireResource
+     */
+    public function destroy($id)
+    {
+        $fire = Fire::findOrFail($id);
+        $fire->delete();
+
+        return new FireResource($fire);
     }
 }
