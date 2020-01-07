@@ -29,9 +29,9 @@ function addfire(x, y, size)
 }
 
 
-function removefire(fire)
+function removeLayout(id)
 {
-	map.removeLayer(fire)
+	map.removeLayer(id)
 }
 
 function addcamion(x, y)
