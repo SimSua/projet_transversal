@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factory;
 
 $factory->define(Coordinate::class, function (Faker $faker) {
     return [
-        'latitude' => $faker->randomFloat(3, 0, 360),
-        'longitude' => $faker->randomFloat(3, 0, 360)
+        'latitude' => $faker->randomFloat(5, 0, 360),
+        'longitude' => $faker->randomFloat(5, 0, 360)
     ];
 });

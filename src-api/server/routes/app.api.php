@@ -19,6 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('coordinates','CoordinateController');
+//Route::apiResource('fires','FireController');
+//Route::apiResource('fire-departments','FireDepartmentController');
+//Route::apiResource('vehicle-types','VehicleTypeController');
+//Route::apiResource('trucks','TruckController');
 
 ///** Fires routes */
 //Route::get('/fires', 'FireController@getFires');
