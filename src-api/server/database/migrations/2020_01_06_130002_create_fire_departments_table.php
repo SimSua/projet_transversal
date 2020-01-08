@@ -16,8 +16,6 @@ class CreateFireDepartmentsTable extends Migration
         Schema::create('fire_departments', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->string('label');
-            $table->integer('line')->unsigned();
-            $table->integer('column')->unsigned();
             $table->integer('capacity')->unsigned();
             $table->bigInteger('id_coordinate')->unsigned();
             $table->timestamps();

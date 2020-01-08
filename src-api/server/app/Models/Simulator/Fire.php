@@ -9,8 +9,6 @@ class Fire extends Model
     protected $connection = 'pgsql_sim';
 
     protected $fillable = [
-        'line',
-        'column',
         'intensity',
         'id_coordinate'
     ];

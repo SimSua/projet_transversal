@@ -17,6 +17,8 @@ class CreateCoordinatesTable extends Migration
             $table->bigIncrements('id')->unsigned();
             $table->float('latitude')->unsigned();
             $table->float('longitude')->unsigned();
+            $table->float('line')->unsigned();
+            $table->float('column')->unsigned();
             $table->timestamps();
         });
     }

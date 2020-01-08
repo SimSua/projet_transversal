@@ -30,6 +30,8 @@ class CoordinateController extends Controller
         $coordinate = new Coordinate();
         $coordinate->latitude = (float)$request->get('latitude');
         $coordinate->longitude = (float)$request->get('longitude');
+        $coordinate->line = (int)$request->get('line');
+        $coordinate->column = (int)$request->get('column');
         $coordinate->save();
 
         return new CoordinateResource($coordinate);
@@ -58,6 +60,8 @@ class CoordinateController extends Controller
         $coordinate = Coordinate::findOrFail($id);
         $coordinate->latitude = (float)$request->get('latitude');
         $coordinate->longitude = (float)$request->get('longitude');
+        $coordinate->line = (int)$request->get('line');
+        $coordinate->column = (int)$request->get('column');
         $coordinate->save();
 
         return new CoordinateResource($coordinate);

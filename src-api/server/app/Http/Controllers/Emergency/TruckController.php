@@ -28,11 +28,10 @@ class TruckController extends Controller
     public function store(Request $request)
     {
         $truck = new Truck();
-        $truck->line = (int)$request->get('line');
-        $truck->column = (int)$request->get('column');
         $truck->id_type = (int)$request->get('id_type');
         $truck->id_fire = (int)$request->get('id_fire');
         $truck->id_department = (int)$request->get('id_department');
+        $truck->id_coordinate = (int)$request->get('id_coordinate');
         $truck->save();
 
         return new TruckResource($truck);
@@ -59,11 +58,10 @@ class TruckController extends Controller
     public function update(Request $request, $id)
     {
         $truck = Truck::findOrFail($id);
-        $truck->line = (int)$request->get('line');
-        $truck->column = (int)$request->get('column');
         $truck->id_type = (int)$request->get('id_type');
         $truck->id_fire = (int)$request->get('id_fire');
         $truck->id_department = (int)$request->get('id_department');
+        $truck->id_coordinate = (int)$request->get('id_coordinate');
         $truck->save();
 
         return new TruckResource($truck);

@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Factory;
 $factory->define(Coordinate::class, function (Faker $faker) {
     return [
         'latitude' => $faker->randomFloat(5, 0, 360),
-        'longitude' => $faker->randomFloat(5, 0, 360)
+        'longitude' => $faker->randomFloat(5, 0, 360),
+        'line' => $faker->numberBetween(0, 9),
+        'column' => $faker->numberBetween(0, 9)
     ];
 });
