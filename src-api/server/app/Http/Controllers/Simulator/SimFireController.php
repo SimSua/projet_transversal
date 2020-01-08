@@ -28,8 +28,10 @@ class SimFireController extends Controller
     public function store(Request $request)
     {
         $fire = new Fire();
-        $fire->latitude = $request->get('latitude');
-        $fire->longitude = $request->get('longitude');
+        $fire->line = (int)$request->get('line');
+        $fire->column = (int)$request->get('column');
+        $fire->intensity = (int)$request->get('intensity');
+        $fire->id_coordinate = (int)$request->get('id_coordinate');
         $fire->save();
 
         return new FireResource($fire);
@@ -56,8 +58,10 @@ class SimFireController extends Controller
     public function update(Request $request, $id)
     {
         $fire = Fire::findOrFail($id);
-        $fire->latitude = $request->get('latitude');
-        $fire->longitude = $request->get('longitude');
+        $fire->line = (int)$request->get('line');
+        $fire->column = (int)$request->get('column');
+        $fire->intensity = (int)$request->get('intensity');
+        $fire->id_coordinate = (int)$request->get('id_coordinate');
         $fire->save();
 
         return new FireResource($fire);
@@ -87,7 +91,7 @@ class SimFireController extends Controller
     public function updateIntensity(Request $request , $id)
     {
         $fire = Fire::findOrFail($id);
-        $fire->intensity = $request->intensity;
+        $fire->intensity = (int)$request->intensity;
         $fire->save();
 
         return new FireResource($fire);

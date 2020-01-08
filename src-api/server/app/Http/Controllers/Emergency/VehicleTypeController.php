@@ -28,8 +28,9 @@ class VehicleTypeController extends Controller
     public function store(Request $request)
     {
         $vehicleType = new VehicleType();
-        $vehicleType->latitude = $request->get('latitude');
-        $vehicleType->longitude = $request->get('longitude');
+        $vehicleType->label = $request->get('label');
+        $vehicleType->speed = (int)$request->get('speed');
+        $vehicleType->efficiency = (int)$request->get('efficiency');
         $vehicleType->save();
 
         return new VehicleTypeResource($vehicleType);
@@ -56,8 +57,9 @@ class VehicleTypeController extends Controller
     public function update(Request $request, $id)
     {
         $vehicleType = VehicleType::findOrFail($id);
-        $vehicleType->latitude = $request->get('latitude');
-        $vehicleType->longitude = $request->get('longitude');
+        $vehicleType->label = $request->get('label');
+        $vehicleType->speed = (int)$request->get('speed');
+        $vehicleType->efficiency = (int)$request->get('efficiency');
         $vehicleType->save();
 
         return new VehicleTypeResource($vehicleType);

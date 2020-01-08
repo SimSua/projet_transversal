@@ -28,8 +28,11 @@ class SimTruckController extends Controller
     public function store(Request $request)
     {
         $truck = new Truck();
-        $truck->latitude = $request->get('latitude');
-        $truck->longitude = $request->get('longitude');
+        $truck->line = (int)$request->get('line');
+        $truck->column = (int)$request->get('column');
+        $truck->id_type = (int)$request->get('id_type');
+        $truck->id_fire = (int)$request->get('id_fire');
+        $truck->id_department = (int)$request->get('id_department');
         $truck->save();
 
         return new TruckResource($truck);
@@ -56,8 +59,11 @@ class SimTruckController extends Controller
     public function update(Request $request, $id)
     {
         $truck = Truck::findOrFail($id);
-        $truck->latitude = $request->get('latitude');
-        $truck->longitude = $request->get('longitude');
+        $truck->line = (int)$request->get('line');
+        $truck->column = (int)$request->get('column');
+        $truck->id_type = (int)$request->get('id_type');
+        $truck->id_fire = (int)$request->get('id_fire');
+        $truck->id_department = (int)$request->get('id_department');
         $truck->save();
 
         return new TruckResource($truck);

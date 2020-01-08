@@ -28,8 +28,8 @@ class CoordinateController extends Controller
     public function store(Request $request)
     {
         $coordinate = new Coordinate();
-        $coordinate->latitude = $request->get('latitude');
-        $coordinate->longitude = $request->get('longitude');
+        $coordinate->latitude = (float)$request->get('latitude');
+        $coordinate->longitude = (float)$request->get('longitude');
         $coordinate->save();
 
         return new CoordinateResource($coordinate);
@@ -56,8 +56,8 @@ class CoordinateController extends Controller
     public function update(Request $request, $id)
     {
         $coordinate = Coordinate::findOrFail($id);
-        $coordinate->latitude = $request->get('latitude');
-        $coordinate->longitude = $request->get('longitude');
+        $coordinate->latitude = (float)$request->get('latitude');
+        $coordinate->longitude = (float)$request->get('longitude');
         $coordinate->save();
 
         return new CoordinateResource($coordinate);
