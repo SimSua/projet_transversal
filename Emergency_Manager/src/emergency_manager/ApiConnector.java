@@ -8,7 +8,7 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 
 public class ApiConnector {
-	protected String uri = "http://localhost:8081/api/";
+	protected String uri = "http://webserver:8081/api/";
 	protected HttpClient client;
 	
 	public ApiConnector() {
