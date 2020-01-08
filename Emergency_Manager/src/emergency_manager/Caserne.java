@@ -1,6 +1,7 @@
 package emergency_manager;
 
 import java.util.ArrayList;
+import java.net.HttpURLConnection;
 
 public class Caserne {
 	private ArrayList<Vehicule> vehicules;
