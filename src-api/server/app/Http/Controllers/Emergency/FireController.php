@@ -28,8 +28,6 @@ class FireController extends Controller
     public function store(Request $request)
     {
         $fire = new Fire();
-        $fire->line = (int)$request->get('line');
-        $fire->column = (int)$request->get('column');
         $fire->intensity = (int)$request->get('intensity');
         $fire->id_coordinate = (int)$request->get('id_coordinate');
         $fire->save();
@@ -58,8 +56,6 @@ class FireController extends Controller
     public function update(Request $request, $id)
     {
         $fire = Fire::findOrFail($id);
-        $fire->line = (int)$request->get('line');
-        $fire->column = (int)$request->get('column');
         $fire->intensity = (int)$request->get('intensity');
         $fire->id_coordinate = (int)$request->get('id_coordinate');
         $fire->save();

@@ -15,8 +15,6 @@ class CreateFiresTable extends Migration
     {
         Schema::create('fires', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->integer('line')->unsigned();
-            $table->integer('column')->unsigned();
             $table->integer('intensity')->unsigned();
             $table->bigInteger('id_coordinate')->unsigned();
             $table->timestamps();

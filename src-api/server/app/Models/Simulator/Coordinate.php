@@ -9,6 +9,9 @@ class Coordinate extends Model
     protected $connection = 'pgsql_sim';
 
     protected $fillable = [
-        'latitude', 'longitude'
+        'latitude',
+        'longitude',
+        'line',
+        'column'
     ];
 }

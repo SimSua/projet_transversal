@@ -63,6 +63,16 @@
 											"key": "longitude",
 											"value": "118.66",
 											"type": "text"
+										},
+										{
+											"key": "line",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "column",
+											"value": "1",
+											"type": "text"
 										}
 									]
 								},
@@ -102,7 +112,7 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_url}}/coordinates/10?latitude=22.36554&longitude=36.56476",
+									"raw": "{{pt_base_url}}/coordinates/10?latitude=22.36554&longitude=36.56476&line=2&coordinate=1",
 									"host": [
 										"{{pt_base_url}}"
 									],
@@ -118,6 +128,14 @@
 										{
 											"key": "longitude",
 											"value": "36.56476"
+										},
+										{
+											"key": "line",
+											"value": "2"
+										},
+										{
+											"key": "coordinate",
+											"value": "1"
 										}
 									]
 								}
@@ -182,16 +200,6 @@
 									"mode": "formdata",
 									"formdata": [
 										{
-											"key": "line",
-											"value": "1",
-											"type": "text"
-										},
-										{
-											"key": "column",
-											"value": "1",
-											"type": "text"
-										},
-										{
 											"key": "intensity",
 											"value": "5",
 											"type": "text"
@@ -201,12 +209,7 @@
 											"value": "1",
 											"type": "text"
 										}
-									],
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
+									]
 								},
 								"url": {
 									"raw": "{{pt_base_url}}/fires",
@@ -251,7 +254,7 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_url}}/fires/10?line=0&column=0&intensity=0&id_coordinate=1",
+									"raw": "{{pt_base_url}}/fires/10?intensity=0&id_coordinate=1",
 									"host": [
 										"{{pt_base_url}}"
 									],
@@ -260,14 +263,6 @@
 										"10"
 									],
 									"query": [
-										{
-											"key": "line",
-											"value": "0"
-										},
-										{
-											"key": "column",
-											"value": "0"
-										},
 										{
 											"key": "intensity",
 											"value": "0"
@@ -366,16 +361,6 @@
 											"type": "text"
 										},
 										{
-											"key": "line",
-											"value": "1",
-											"type": "text"
-										},
-										{
-											"key": "column",
-											"value": "2",
-											"type": "text"
-										},
-										{
 											"key": "capacity",
 											"value": "5",
 											"type": "text"
@@ -448,7 +433,7 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_url}}/fire-departments/10?label=Renamed FD&line=1&column=1&capacity=10&id_coordinate=1",
+									"raw": "{{pt_base_url}}/fire-departments/10?label=Renamed FD&capacity=10&id_coordinate=1",
 									"host": [
 										"{{pt_base_url}}"
 									],
@@ -460,14 +445,6 @@
 										{
 											"key": "label",
 											"value": "Renamed FD"
-										},
-										{
-											"key": "line",
-											"value": "1"
-										},
-										{
-											"key": "column",
-											"value": "1"
 										},
 										{
 											"key": "capacity",
@@ -687,16 +664,6 @@
 									"mode": "formdata",
 									"formdata": [
 										{
-											"key": "line",
-											"value": "0",
-											"type": "text"
-										},
-										{
-											"key": "column",
-											"value": "0",
-											"type": "text"
-										},
-										{
 											"key": "id_type",
 											"value": "1",
 											"type": "text"
@@ -708,6 +675,11 @@
 										},
 										{
 											"key": "id_department",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "id_coordinate",
 											"value": "1",
 											"type": "text"
 										}
@@ -774,7 +746,7 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_url}}/trucks/2?line=1&column=1&id_type=1&id_fire=1&id_department=1",
+									"raw": "{{pt_base_url}}/trucks/2?id_type=1&id_fire=1&id_department=1&id_coordinate=1",
 									"host": [
 										"{{pt_base_url}}"
 									],
@@ -783,14 +755,6 @@
 										"2"
 									],
 									"query": [
-										{
-											"key": "line",
-											"value": "1"
-										},
-										{
-											"key": "column",
-											"value": "1"
-										},
 										{
 											"key": "id_type",
 											"value": "1"
@@ -801,6 +765,10 @@
 										},
 										{
 											"key": "id_department",
+											"value": "1"
+										},
+										{
+											"key": "id_coordinate",
 											"value": "1"
 										}
 									]
@@ -873,6 +841,16 @@
 											"key": "longitude",
 											"value": "118.66",
 											"type": "text"
+										},
+										{
+											"key": "line",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "column",
+											"value": "1",
+											"type": "text"
 										}
 									]
 								},
@@ -912,7 +890,7 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_sim_url}}/coordinates/10?latitude=22.36554&longitude=36.56476",
+									"raw": "{{pt_base_sim_url}}/coordinates/10?latitude=22.36554&longitude=36.56476&line=2&column=1",
 									"host": [
 										"{{pt_base_sim_url}}"
 									],
@@ -928,6 +906,14 @@
 										{
 											"key": "longitude",
 											"value": "36.56476"
+										},
+										{
+											"key": "line",
+											"value": "2"
+										},
+										{
+											"key": "column",
+											"value": "1"
 										}
 									]
 								}
@@ -992,16 +978,6 @@
 									"mode": "formdata",
 									"formdata": [
 										{
-											"key": "line",
-											"value": "1",
-											"type": "text"
-										},
-										{
-											"key": "column",
-											"value": "1",
-											"type": "text"
-										},
-										{
 											"key": "intensity",
 											"value": "5",
 											"type": "text"
@@ -1011,12 +987,7 @@
 											"value": "1",
 											"type": "text"
 										}
-									],
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
+									]
 								},
 								"url": {
 									"raw": "{{pt_base_sim_url}}/fires",
@@ -1061,7 +1032,7 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_sim_url}}/fires/10?line=0&column=0&intensity=1&id_coordinate=1",
+									"raw": "{{pt_base_sim_url}}/fires/10?intensity=1&id_coordinate=1",
 									"host": [
 										"{{pt_base_sim_url}}"
 									],
@@ -1070,14 +1041,6 @@
 										"10"
 									],
 									"query": [
-										{
-											"key": "line",
-											"value": "0"
-										},
-										{
-											"key": "column",
-											"value": "0"
-										},
 										{
 											"key": "intensity",
 											"value": "1"
@@ -1176,16 +1139,6 @@
 											"type": "text"
 										},
 										{
-											"key": "line",
-											"value": "1",
-											"type": "text"
-										},
-										{
-											"key": "column",
-											"value": "2",
-											"type": "text"
-										},
-										{
 											"key": "capacity",
 											"value": "5",
 											"type": "text"
@@ -1258,7 +1211,7 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_sim_url}}/fire-departments/10?label=Renamed FD&line=1&column=1&capacity=10&id_coordinate=1",
+									"raw": "{{pt_base_sim_url}}/fire-departments/10?label=Renamed FD&capacity=10&id_coordinate=1",
 									"host": [
 										"{{pt_base_sim_url}}"
 									],
@@ -1270,14 +1223,6 @@
 										{
 											"key": "label",
 											"value": "Renamed FD"
-										},
-										{
-											"key": "line",
-											"value": "1"
-										},
-										{
-											"key": "column",
-											"value": "1"
 										},
 										{
 											"key": "capacity",
@@ -1497,16 +1442,6 @@
 									"mode": "formdata",
 									"formdata": [
 										{
-											"key": "line",
-											"value": "0",
-											"type": "text"
-										},
-										{
-											"key": "column",
-											"value": "0",
-											"type": "text"
-										},
-										{
 											"key": "id_type",
 											"value": "1",
 											"type": "text"
@@ -1518,6 +1453,11 @@
 										},
 										{
 											"key": "id_department",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "id_coordinate",
 											"value": "1",
 											"type": "text"
 										}
@@ -1584,7 +1524,7 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_sim_url}}/trucks/2?line=1&column=1&id_type=1&id_fire=1&id_department=1",
+									"raw": "{{pt_base_sim_url}}/trucks/2?id_type=1&id_fire=1&id_department=1&id_coordinate=1",
 									"host": [
 										"{{pt_base_sim_url}}"
 									],
@@ -1593,14 +1533,6 @@
 										"2"
 									],
 									"query": [
-										{
-											"key": "line",
-											"value": "1"
-										},
-										{
-											"key": "column",
-											"value": "1"
-										},
 										{
 											"key": "id_type",
 											"value": "1"
@@ -1611,6 +1543,10 @@
 										},
 										{
 											"key": "id_department",
+											"value": "1"
+										},
+										{
+											"key": "id_coordinate",
 											"value": "1"
 										}
 									]

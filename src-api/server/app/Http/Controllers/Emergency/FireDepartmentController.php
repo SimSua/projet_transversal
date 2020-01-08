@@ -29,8 +29,6 @@ class FireDepartmentController extends Controller
     {
         $fireDepartment = new FireDepartment();
         $fireDepartment->label = $request->get('label');
-        $fireDepartment->line = (int)$request->get('line');
-        $fireDepartment->column = (int)$request->get('column');
         $fireDepartment->capacity = (int)$request->get('capacity');
         $fireDepartment->id_coordinate = (int)$request->get('id_coordinate');
         $fireDepartment->save();
@@ -60,8 +58,6 @@ class FireDepartmentController extends Controller
     {
         $fireDepartment = FireDepartment::findOrFail($id);
         $fireDepartment->label = $request->get('label');
-        $fireDepartment->line = (int)$request->get('line');
-        $fireDepartment->column = (int)$request->get('column');
         $fireDepartment->capacity = (int)$request->get('capacity');
         $fireDepartment->id_coordinate = (int)$request->get('id_coordinate');
         $fireDepartment->save();

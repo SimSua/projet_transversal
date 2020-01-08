@@ -8,8 +8,6 @@ class FireDepartment extends Model
 {
     protected $fillable = [
         'label',
-        'line',
-        'column',
         'capacity',
         'id_coordinate'
     ];
