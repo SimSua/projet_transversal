@@ -10,6 +10,8 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_MULTIPLE_DATABASES=app_emergency,app_simulator
+    ports:
+      - "5433:5432"
 
   webserver:
     image: nginx:alpine
