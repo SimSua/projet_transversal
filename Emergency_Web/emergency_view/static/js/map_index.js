@@ -1,6 +1,6 @@
 var map = null
 var list_fire_layout = []
-var list_camion = []
+var list_camion_layout = {}
 
 function setmap(x,y,z)
 {
@@ -37,17 +37,41 @@ function managefire()
 	list_fire_layout.forEach(fire => removeLayout(fire))
 	list_fire_layout =[]
 
-
 }
 
-function addcamion(x, y)
+function add_trucks(ID, x, y)
 {
-	camion = L.marker([x, y],).addTo(map);
-	list_camion.push(camion)
+	camion = L.marker([x, y],{id: ID}).addTo(map);
+	list_camion_layout[ID] = camion
+
 }
 
 function movecamion(camion, x, y)
 {
 	var newLatLng = new L.LatLng(x, y);
 	camion.setLatLng(newLatLng);
+}
+
+function test_trucks(camion, ID, x, y)
+{
+	if(camion['options']['id'] == ID)
+	{
+		movecamion(camion, x, y)
+	}
+	else
+	{
+		add_trucks(ID, x, y)
+	}
+}
+
+function manage_trucks(ID, x, y)
+{
+	if(list_camion_layout[ID] == undefined)
+	{
+		add_trucks(ID, x, y)
+	}
+	else
+	{
+		movecamion(list_camion_layout[ID])
+	}
 }
