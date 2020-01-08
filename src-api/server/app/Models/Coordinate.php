@@ -12,4 +12,19 @@ class Coordinate extends Model
         'line',
         'column'
     ];
+
+    public function fires()
+    {
+        return $this->belongsTo(Fire::class);
+    }
+
+    public function fireDepartments()
+    {
+        return $this->belongsTo(FireDepartment::class);
+    }
+
+    public function trucks()
+    {
+        return $this->belongsToMany(Truck::class);
+    }
 }

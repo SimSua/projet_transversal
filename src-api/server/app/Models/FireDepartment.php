@@ -11,4 +11,14 @@ class FireDepartment extends Model
         'capacity',
         'id_coordinate'
     ];
+
+    public function coordinates()
+    {
+        return $this->hasOne(Coordinate::class);
+    }
+
+    public function trucks()
+    {
+        return $this->belongsToMany(Truck::class);
+    }
 }
