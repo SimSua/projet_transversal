@@ -1,14 +1,10 @@
 package mainPackage;
 
 public class Camion extends Vehicule {
-    private Caserne caserne;
+
 
     public Camion(int id,int vitesse, int ligne, int colonne, Coordonnees coordonnees,Caserne caserne) {
-        super(id,vitesse, ligne, colonne,coordonnees);
-        this.caserne = caserne;
-    }
-    public Caserne getCaserne() {
-        return caserne;
+        super(id,vitesse, ligne, colonne,coordonnees,caserne);
     }
 
     @Override

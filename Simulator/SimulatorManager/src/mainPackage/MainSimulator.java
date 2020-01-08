@@ -46,7 +46,6 @@ public class MainSimulator {
         System.out.println(lyon.toString());
         System.out.println(villeurbanne.toString());
         List<Ville> listVilles = new ArrayList<>();
-        List<Feu> listFeux = new ArrayList<>();
         /*
         Scénario :
         boucle infini
@@ -57,68 +56,23 @@ public class MainSimulator {
         une fois le véhicule sur place, l'intensité diminue de 1 en 1 jusqu'à ce que le feu s'éteigne
         une fois éteint le camion est téléporté vers sa caserne
          */
-        List<Feu> listFeuxNonTraites = new ArrayList<>();
-        int indexOfFeu = -1;
-        while (true){
-            Thread.sleep(2000);
-            int pourcentageChance = (int) (1 + (Math.random() * 10));
-            List<Boolean> tirage = new ArrayList<>();
-            for(int i=0;i<10;i++){
-                if(i<pourcentageChance){
-                    tirage.add(true);
-                }else {
-                    tirage.add(false);
-                }
-            }
-            Boolean nouveauFeu = tirage.get(new Random().nextInt(tirage.size()));
-            if (nouveauFeu) {
-                System.out.println("nouveau feu");
-                int intensite = (int) (1 + (Math.random() * 10));
-                int ligneFeu = (int) (1 + (Math.random() * 30));
-                int colonneFeu = (int) (1 + (Math.random() * 30));
-                Feu feu = new Feu(intensite,ligneFeu,colonneFeu,new Coordonnees(7,5));
-                listFeuxNonTraites.add(feu);
-                for (Feu feuAtraiter:listFeuxNonTraites) {
-                    System.out.println(listFeuxNonTraites);
-                    double ancDistance = 0;
-                    double nouvelleDistance = 0;
-                    boolean first = true;
-                    Caserne caserneChoisie = null;
-                    for (Caserne caserne : listCasernes) {
-                        if (first && caserne.getVehiculesDispo().size() > 0) {
-                            ancDistance = sqrt(pow(feuAtraiter.getColonne() - caserne.getColonne(), 2)
-                                    + pow(feuAtraiter.getLigne() - caserne.getLigne(), 2));
-                            caserneChoisie = caserne;
-                            first = false;
-                        } else if (!first && caserne.getVehiculesDispo().size() > 0) {
-                            nouvelleDistance = sqrt(pow(feuAtraiter.getColonne() - caserne.getColonne(), 2)
-                                    + pow(feuAtraiter.getLigne() - caserne.getLigne(), 2));
-                            if (nouvelleDistance < ancDistance) {
-                                caserneChoisie = caserne;
-                            }
-                            ancDistance = nouvelleDistance;
-                        }
-                    }
-                    if (caserneChoisie != null) {
-                        Vehicule vehiculeChoisi = caserneChoisie.getVehiculesDispo().get(
-                                new Random().nextInt(caserneChoisie.getVehiculesDispo().size()));
-                        vehiculeChoisi.setFeu(feuAtraiter);
-                        System.out.println(caserneChoisie.getVehicules().get(caserneChoisie.getVehicules().indexOf(vehiculeChoisi)));
-                        indexOfFeu = listFeuxNonTraites.indexOf(feuAtraiter);
-                        //Une fois le vehicule assigné à un feu
+        Simulator simulator = new Simulator(listCasernes,listVehicules,listVilles);
+        simulator.start();
+        //Emergency Manager local
+        while(true){
+            Thread.sleep(500);
+            if(simulator.vehiculeChoisi != null && simulator.vehiculeChoisi.getFeu() != null){
+                simulator.vehiculeChoisi.allerAuFeu();
+                //vehicule téléporté au feu
 
-                    } else {
-                        indexOfFeu = -1;
-                        System.out.println("Pas de véhicule disponible.");
-                    }
-                }
-                if (indexOfFeu != -1) {
-                    listFeuxNonTraites.remove(indexOfFeu);
-                }
-            }else{
-                System.out.println("Pas de nouveau feu");
             }
+            if (simulator.listFeuxNonTraites.size() > 0) {
+                System.out.println("traiter feux");
+                simulator.traiterFeux();
+            }
+
         }
+
 
     }
 }

@@ -12,13 +12,15 @@ public class Vehicule {
     private int colonne;
     //feu attribué
     private Feu feu;
+    private Caserne caserne;
 
-    public Vehicule(int id,int vitesse,int ligne,int colonne,Coordonnees coordonnees){
+    public Vehicule(int id,int vitesse,int ligne,int colonne,Coordonnees coordonnees,Caserne caserne){
         this.id = id;
         this.vitesse = vitesse;
         this.ligne = ligne;
         this.colonne = colonne;
         this.coordonnees = coordonnees;
+        this.caserne = caserne;
     }
 
     void deplacer(Coordonnees coordonnees){
@@ -45,6 +47,10 @@ public class Vehicule {
 
     public Feu getFeu() { return this.feu; }
 
+    public Caserne getCaserne() {
+        return caserne;
+    }
+
     public void setFeu(Feu feu) {
         this.feu = feu;
     }
@@ -58,5 +64,19 @@ public class Vehicule {
 
     public void setColonne(int colonne) {
         this.colonne = colonne;
+    }
+
+    public void allerAuFeu(){
+        this.setColonne(this.feu.getColonne());
+        this.setLigne(this.feu.getLigne());
+    }
+
+    public void allerALaCaserne(){
+        this.setColonne(this.caserne.getColonne());
+        this.setLigne(this.caserne.getLigne());
+    }
+
+    public boolean estSurLeFeu() {
+        return this.colonne == this.feu.getColonne() && this.ligne == this.feu.getLigne();
     }
 }
