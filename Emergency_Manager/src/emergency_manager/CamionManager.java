@@ -41,7 +41,6 @@ public class CamionManager extends Thread {
 				vehiculesDispo.add(ve);
 			}
 		}
-		
 		//Liste des feux allumés
 		ArrayList<Feu> feuAllume = new ArrayList<Feu>();		
 		for(Feu f: v.getFeux()) {

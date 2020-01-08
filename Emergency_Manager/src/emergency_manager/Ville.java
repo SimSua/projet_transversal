@@ -21,11 +21,25 @@ public class Ville {
 		this.casernes = casernes;
 	}
 	
+	public ArrayList<Caserne> getCasernes() {
+		return this.casernes;
+	}
+	
 	public void addFeu(Feu f) {
 		this.feux.add(f);
 	}
 	
 	public void setFeux(ArrayList<Feu> feux) {
 		this.feux = feux;
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return this.name;
+	}
+
+	public ArrayList<Feu> getFeux() {
+		// TODO Auto-generated method stub
+		return this.feux;
 	}
 }
