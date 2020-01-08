@@ -1,7 +1,7 @@
 package emergency_manager;
 
 import java.util.ArrayList;
-import java.net.HttpURLConnection;
+
 
 public class Caserne {
 	private ArrayList<Vehicule> vehicules;
@@ -15,6 +15,12 @@ public class Caserne {
 	}
 
 	public ArrayList<Vehicule> generateVehicules() {
+		if(true) {
+		//if(Manager.bdd) {
+			ApiConnector connector = new ApiConnector();
+			String s = connector.requestCasernes();
+			System.out.println(s);
+		}
 		//Connection bdd
 		for(int i = 0; i < 5; i++) {
 			this.vehicules.add(new Camion(this, this.getCoordonnees()));
