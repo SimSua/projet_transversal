@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Emergency;
 
+use App\Exceptions\ExceptionResponse;
+use App\Exceptions\ResponseInterface;
 use App\Http\Resources\FireDepartmentCollection;
 use App\Models\FireDepartment;
 use Illuminate\Http\Request;
@@ -13,10 +15,19 @@ class FireDepartmentController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @return FireDepartmentCollection | ExceptionResponse
      */
-    public function index()
+    public function index(): ResponseInterface
     {
-        return new FireDepartmentCollection(FireDepartment::All());
+        try {
+            return new FireDepartmentCollection(FireDepartment::All());
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -25,15 +36,23 @@ class FireDepartmentController extends Controller
      * @param Request $request
      * @return FireDepartmentResource
      */
-    public function store(Request $request)
+    public function store(Request $request): ResponseInterface
     {
-        $fireDepartment = new FireDepartment();
-        $fireDepartment->label = $request->get('label');
-        $fireDepartment->capacity = (int)$request->get('capacity');
-        $fireDepartment->id_coordinate = (int)$request->get('id_coordinate');
-        $fireDepartment->save();
+        try {
+            $fireDepartment = new FireDepartment();
+            $fireDepartment->label = $request->get('label');
+            $fireDepartment->capacity = (int)$request->get('capacity');
+            $fireDepartment->id_coordinate = (int)$request->get('id_coordinate');
+            $fireDepartment->save();
 
-        return new FireDepartmentResource($fireDepartment);
+            return new FireDepartmentResource($fireDepartment);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -42,9 +61,17 @@ class FireDepartmentController extends Controller
      * @param int $id
      * @return FireDepartmentResource
      */
-    public function show($id)
+    public function show($id): ResponseInterface
     {
-        return new FireDepartmentResource(FireDepartment::FindOrFail($id));
+        try {
+            return new FireDepartmentResource(FireDepartment::FindOrFail($id));
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -54,15 +81,23 @@ class FireDepartmentController extends Controller
      * @param int $id
      * @return FireDepartmentResource
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): ResponseInterface
     {
-        $fireDepartment = FireDepartment::findOrFail($id);
-        $fireDepartment->label = $request->get('label');
-        $fireDepartment->capacity = (int)$request->get('capacity');
-        $fireDepartment->id_coordinate = (int)$request->get('id_coordinate');
-        $fireDepartment->save();
+        try {
+            $fireDepartment = FireDepartment::findOrFail($id);
+            $fireDepartment->label = $request->get('label');
+            $fireDepartment->capacity = (int)$request->get('capacity');
+            $fireDepartment->id_coordinate = (int)$request->get('id_coordinate');
+            $fireDepartment->save();
 
-        return new FireDepartmentResource($fireDepartment);
+            return new FireDepartmentResource($fireDepartment);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -71,11 +106,19 @@ class FireDepartmentController extends Controller
      * @param int $id
      * @return FireDepartmentResource
      */
-    public function destroy($id)
+    public function destroy($id): ResponseInterface
     {
-        $fireDepartment = FireDepartment::findOrFail($id);
-        $fireDepartment->delete();
+        try {
+            $fireDepartment = FireDepartment::findOrFail($id);
+            $fireDepartment->delete();
 
-        return new FireDepartmentResource($fireDepartment);
+            return new FireDepartmentResource($fireDepartment);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 }
