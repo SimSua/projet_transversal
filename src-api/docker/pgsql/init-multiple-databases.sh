@@ -6,18 +6,14 @@ set -u
 function create_user_and_database() {
 	local database=$1
 	echo "  Creating user and database '$database'"
-	psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL	
-		DROP DATABASE $database;    
+	psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
+	    DROP USER  IF EXISTS $database;
+	    DROP DATABASE IF EXISTS $database;
+	    CREATE USER $database;
 	    CREATE DATABASE $database;
-	    GRANT ALL PRIVILEGES ON DATABASE $database TO $POSTGRES_USER;
+	    GRANT ALL PRIVILEGES ON DATABASE $database TO $database;
 EOSQL
 }
-
-psql -v ON_ERROR_TOP=1 -U "postgres" <<-EOSQL
-	DROP ROLE $POSTGRES_USER;
-	CREATE ROLE $POSTGRES_USER WITH SUPERUSER CREATEDB LOGIN PASSWORD '$POSTGRES_PASSWORD';
-	CREATE DATABASE $POSTGRES_USER;
-EOSQL
 
 if [ -n "$POSTGRES_MULTIPLE_DATABASES" ]; then
 	echo "Multiple database creation requested: $POSTGRES_MULTIPLE_DATABASES"
