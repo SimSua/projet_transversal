@@ -67,6 +67,7 @@ public class Vehicule {
     }
 
     public void allerAuFeu(){
+        System.out.println("n°"+this.id+" va au feu");
         this.setColonne(this.feu.getColonne());
         this.setLigne(this.feu.getLigne());
     }

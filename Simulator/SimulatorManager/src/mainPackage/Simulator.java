@@ -31,12 +31,13 @@ public class Simulator extends Thread {
                 e.printStackTrace();
             }
             Boolean nouveauFeu = getChanceFeu();
+            vehiculeChoisi = null;
             if (nouveauFeu) {
                 System.out.println("nouveau feu");
-                this.creerFeu();
-                this.attribuerFeu();
+                creerFeu();
+                attribuerFeu();
             }else{
-                System.out.println("Pas de nouveau feu");
+                //System.out.println("Pas de nouveau feu");
             }
         }
     }
@@ -46,47 +47,43 @@ public class Simulator extends Thread {
         int ligneFeu = (int) (1 + (Math.random() * 30));
         int colonneFeu = (int) (1 + (Math.random() * 30));
         Feu feu = new Feu(intensite,ligneFeu,colonneFeu,new Coordonnees(7,5));
-        this.listFeuxNonTraites.add(feu);
+        listFeuxNonTraites.add(feu);
     }
 
     private void attribuerFeu() {
         int indexOfFeu = -1;
-        for (Feu feuAtraiter:this.listFeuxNonTraites) {
-            //System.out.println(this.listFeuxNonTraites);
-
-            this.getCaserneDispo(feuAtraiter);
+        for (Feu feuAtraiter:listFeuxNonTraites) {
+            getCaserneDispo(feuAtraiter);
             if (caserneChoisie != null) {
-                System.out.println(caserneChoisie.getVehiculesDispo().size());
                 vehiculeChoisi = getChoixVehicule();
                 vehiculeChoisi.setFeu(feuAtraiter);
-                System.out.println(caserneChoisie.getVehicules().get(caserneChoisie.getVehicules().indexOf(vehiculeChoisi)));
-                indexOfFeu = this.listFeuxNonTraites.indexOf(feuAtraiter);
+                indexOfFeu = listFeuxNonTraites.indexOf(feuAtraiter);
             } else {
                 indexOfFeu = -1;
                 System.out.println("Pas de véhicule disponible.");
             }
-            //this.checkVehiculeSurFeu(feuAtraiter);
         }
         if (indexOfFeu != -1) {
-            this.listFeuxNonTraites.remove(indexOfFeu);
+            listFeuxNonTraites.remove(indexOfFeu);
         }
     }
 
     public void traiterFeux() {
-        for (Vehicule vehicule:this.listVehicules){
+        //System.out.println("traiter feux");
+        for (Vehicule vehicule:listVehicules){
 //            if(vehicule.getFeu() != null) {
 //                System.out.println(vehicule.estSurLeFeu());
 //            }
             if (vehicule.getFeu() != null && vehicule.estSurLeFeu()){
                 if (vehicule.getFeu().estEteint()){
+                    System.out.println("n°"+vehicule.getId()+" a éteint un feu");
                     vehicule.setFeu(null);
-                    this.listFeuxNonTraites.remove(vehicule.getFeu());
+                    listFeuxNonTraites.remove(vehicule.getFeu());
                     vehicule.allerALaCaserne();
                 }else {
                     vehicule.getFeu().baisserIntensite();
                     System.out.println("intensité baissé du feu " + vehicule.getFeu().toString());
                 }
-                break;
             }else if(vehicule.getFeu() != null){
                 System.out.println("intensité augmenté du feu "+ vehicule.getFeu().toString());
                 vehicule.getFeu().augmenterIntensite();

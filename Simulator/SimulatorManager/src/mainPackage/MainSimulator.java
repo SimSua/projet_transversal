@@ -60,17 +60,13 @@ public class MainSimulator {
         simulator.start();
         //Emergency Manager local
         while(true){
-            Thread.sleep(500);
+            Thread.sleep(1800);
             if(simulator.vehiculeChoisi != null && simulator.vehiculeChoisi.getFeu() != null){
                 simulator.vehiculeChoisi.allerAuFeu();
                 //vehicule téléporté au feu
 
             }
-            if (simulator.listFeuxNonTraites.size() > 0) {
-                System.out.println("traiter feux");
-                simulator.traiterFeux();
-            }
-
+            simulator.traiterFeux();
         }
 
 
