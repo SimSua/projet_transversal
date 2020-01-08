@@ -17,7 +17,7 @@ class CreateFireDepartmentsTable extends Migration
             $table->bigIncrements('id')->unsigned();
             $table->string('label');
             $table->integer('capacity')->unsigned();
-            $table->bigInteger('id_coordinate')->unsigned();
+            $table->bigInteger('id_coordinate')->unsigned()->unique();
             $table->timestamps();
             $table->foreign('id_coordinate')->references('id')->on('coordinates');
         });
