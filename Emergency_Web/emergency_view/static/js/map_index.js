@@ -1,6 +1,5 @@
 var map = null
 var list_fire_layout = []
-var list_fire = []
 var list_camion = []
 
 function setmap(x,y,z)
@@ -15,6 +14,10 @@ function setmap(x,y,z)
 
 }
 
+function removeLayout(id)
+{
+	map.removeLayer(id)
+}
 
 function addfire(x, y, size)
 {	
@@ -28,10 +31,13 @@ function addfire(x, y, size)
 	list_fire_layout.push(fire)
 }
 
-
-function removeLayout(id)
+function managefire()
 {
-	map.removeLayer(id)
+
+	list_fire_layout.forEach(fire => removeLayout(fire))
+	list_fire_layout =[]
+
+
 }
 
 function addcamion(x, y)
