@@ -47,6 +47,57 @@
 							"response": []
 						},
 						{
+							"name": "APP_coordinates/{line}/{column}",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "latitude",
+											"value": "223.3",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "longitude",
+											"value": "118.66",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "line",
+											"value": "2",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "column",
+											"value": "1",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{pt_base_url}}/coordinates/0/1",
+									"host": [
+										"{{pt_base_url}}"
+									],
+									"path": [
+										"coordinates",
+										"0",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "APP_coordinates",
 							"request": {
 								"method": "POST",
@@ -72,7 +123,8 @@
 										{
 											"key": "column",
 											"value": "1",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										}
 									]
 								},
@@ -94,13 +146,13 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_url}}/coordinates/22",
+									"raw": "{{pt_base_url}}/coordinates/2",
 									"host": [
 										"{{pt_base_url}}"
 									],
 									"path": [
 										"coordinates",
-										"22"
+										"2"
 									]
 								}
 							},
@@ -112,7 +164,7 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_url}}/coordinates/10?latitude=22.36554&longitude=36.56476&line=2&coordinate=1",
+									"raw": "{{pt_base_url}}/coordinates/10?latitude=22.36554&longitude=36.56476&line=2&column=1",
 									"host": [
 										"{{pt_base_url}}"
 									],
@@ -134,7 +186,7 @@
 											"value": "2"
 										},
 										{
-											"key": "coordinate",
+											"key": "column",
 											"value": "1"
 										}
 									]
@@ -236,13 +288,13 @@
 									}
 								],
 								"url": {
-									"raw": "{{pt_base_url}}/fires/24",
+									"raw": "{{pt_base_url}}/fires/1",
 									"host": [
 										"{{pt_base_url}}"
 									],
 									"path": [
 										"fires",
-										"24"
+										"1"
 									]
 								}
 							},
@@ -335,13 +387,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_url}}/fire-departments/12",
+									"raw": "{{pt_base_url}}/fire-departments/1",
 									"host": [
 										"{{pt_base_url}}"
 									],
 									"path": [
 										"fire-departments",
-										"12"
+										"1"
 									]
 								}
 							},
@@ -415,13 +467,13 @@
 									]
 								},
 								"url": {
-									"raw": "{{pt_base_url}}/fire-departments/21",
+									"raw": "{{pt_base_url}}/fire-departments/2",
 									"host": [
 										"{{pt_base_url}}"
 									],
 									"path": [
 										"fire-departments",
-										"21"
+										"2"
 									]
 								}
 							},
@@ -812,13 +864,64 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_sim_url}}/coordinates/12",
+									"raw": "{{pt_base_sim_url}}/coordinates/1",
 									"host": [
 										"{{pt_base_sim_url}}"
 									],
 									"path": [
 										"coordinates",
-										"12"
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "APP_coordinates/{line}/{column} Copy",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "latitude",
+											"value": "223.3",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "longitude",
+											"value": "118.66",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "line",
+											"value": "2",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "column",
+											"value": "1",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{pt_base_sim_url}}/coordinates/0/1",
+									"host": [
+										"{{pt_base_sim_url}}"
+									],
+									"path": [
+										"coordinates",
+										"0",
+										"1"
 									]
 								}
 							},
@@ -872,13 +975,13 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_sim_url}}/coordinates/21",
+									"raw": "{{pt_base_sim_url}}/coordinates/10",
 									"host": [
 										"{{pt_base_sim_url}}"
 									],
 									"path": [
 										"coordinates",
-										"21"
+										"10"
 									]
 								}
 							},
@@ -950,13 +1053,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_sim_url}}/fires/12",
+									"raw": "{{pt_base_sim_url}}/fires/1",
 									"host": [
 										"{{pt_base_sim_url}}"
 									],
 									"path": [
 										"fires",
-										"12"
+										"1"
 									]
 								}
 							},
@@ -1014,13 +1117,13 @@
 									}
 								],
 								"url": {
-									"raw": "{{pt_base_sim_url}}/fires/23",
+									"raw": "{{pt_base_sim_url}}/fires/2",
 									"host": [
 										"{{pt_base_sim_url}}"
 									],
 									"path": [
 										"fires",
-										"23"
+										"2"
 									]
 								}
 							},
@@ -1032,7 +1135,7 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_sim_url}}/fires/10?intensity=1&id_coordinate=1",
+									"raw": "{{pt_base_sim_url}}/fires/10?intensity=1&id_coordinate=10",
 									"host": [
 										"{{pt_base_sim_url}}"
 									],
@@ -1047,7 +1150,7 @@
 										},
 										{
 											"key": "id_coordinate",
-											"value": "1"
+											"value": "10"
 										}
 									]
 								}
@@ -1113,13 +1216,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_sim_url}}/fire-departments/12",
+									"raw": "{{pt_base_sim_url}}/fire-departments/1",
 									"host": [
 										"{{pt_base_sim_url}}"
 									],
 									"path": [
 										"fire-departments",
-										"12"
+										"1"
 									]
 								}
 							},
@@ -1193,13 +1296,13 @@
 									]
 								},
 								"url": {
-									"raw": "{{pt_base_sim_url}}/fire-departments/21",
+									"raw": "{{pt_base_sim_url}}/fire-departments/2",
 									"host": [
 										"{{pt_base_sim_url}}"
 									],
 									"path": [
 										"fire-departments",
-										"21"
+										"2"
 									]
 								}
 							},
@@ -1211,7 +1314,7 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_sim_url}}/fire-departments/10?label=Renamed FD&capacity=10&id_coordinate=1",
+									"raw": "{{pt_base_sim_url}}/fire-departments/10?label=Renamed FD&capacity=10&id_coordinate=10",
 									"host": [
 										"{{pt_base_sim_url}}"
 									],
@@ -1230,7 +1333,7 @@
 										},
 										{
 											"key": "id_coordinate",
-											"value": "1"
+											"value": "10"
 										}
 									]
 								}

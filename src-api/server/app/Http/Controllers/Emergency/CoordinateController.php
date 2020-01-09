@@ -123,4 +123,29 @@ class CoordinateController extends Controller
             ], 400);
         }
     }
+
+    /**
+     * Retrieve a specific coordinate from the given grid placing.
+     *
+     * @param int $line
+     * @param int $column
+     * @return ResponseInterface
+     */
+    public function getCoordinateFromGrid(int $line, int $column): ResponseInterface
+    {
+        try {
+            $coordinates = Coordinate::All();
+            $coordinate = $coordinates->first(function($item) use ($line, $column) {
+                return ($item->line == $line && $item->column == $column);
+            });
+
+            return new CoordinateResource($coordinate);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
+    }
 }
