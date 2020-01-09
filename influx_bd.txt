@@ -1,0 +1,3 @@
+influx_db
+influx_user
+influx_password
