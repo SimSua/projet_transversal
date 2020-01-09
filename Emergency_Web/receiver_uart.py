@@ -32,7 +32,8 @@ def initUART():
         exit()        
 
 def readUARTMessage(): 
-    line = ser.readline()
+    line = str(ser.readline(),"utf-8")
+    print(line)
     if "<" in line or ">" in line:
         return line
 

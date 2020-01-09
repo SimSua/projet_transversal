@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  manager:
+    image: openjdk:13-alpine
+    container_name: manager
+    working_dir: /application
+    volumes:
+      - ./manager.jar:/application/manager.jar
+    command: ["java", "-jar", "manager.jar"]
