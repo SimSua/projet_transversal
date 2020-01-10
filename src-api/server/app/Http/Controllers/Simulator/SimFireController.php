@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Simulator;
 
+use App\Exceptions\ExceptionResponse;
+use App\Exceptions\ResponseInterface;
 use App\Http\Resources\FireCollection;
 use App\Models\Simulator\Fire;
 use Illuminate\Http\Request;
@@ -13,10 +15,19 @@ class SimFireController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @return FireCollection | ExceptionResponse
      */
-    public function index()
+    public function index(): ResponseInterface
     {
-        return new FireCollection(Fire::All());
+        try {
+            return new FireCollection(Fire::All());
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -25,16 +36,22 @@ class SimFireController extends Controller
      * @param Request $request
      * @return FireResource
      */
-    public function store(Request $request)
+    public function store(Request $request): ResponseInterface
     {
-        $fire = new Fire();
-        $fire->line = (int)$request->get('line');
-        $fire->column = (int)$request->get('column');
-        $fire->intensity = (int)$request->get('intensity');
-        $fire->id_coordinate = (int)$request->get('id_coordinate');
-        $fire->save();
+        try {
+            $fire = new Fire();
+            $fire->intensity = (int)$request->get('intensity');
+            $fire->id_coordinate = (int)$request->get('id_coordinate');
+            $fire->save();
 
-        return new FireResource($fire);
+            return new FireResource($fire);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -43,9 +60,17 @@ class SimFireController extends Controller
      * @param int $id
      * @return FireResource
      */
-    public function show($id)
+    public function show($id): ResponseInterface
     {
-        return new FireResource(Fire::FindOrFail($id));
+        try {
+            return new FireResource(Fire::FindOrFail($id));
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -55,16 +80,22 @@ class SimFireController extends Controller
      * @param int $id
      * @return FireResource
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): ResponseInterface
     {
-        $fire = Fire::findOrFail($id);
-        $fire->line = (int)$request->get('line');
-        $fire->column = (int)$request->get('column');
-        $fire->intensity = (int)$request->get('intensity');
-        $fire->id_coordinate = (int)$request->get('id_coordinate');
-        $fire->save();
+        try {
+            $fire = Fire::findOrFail($id);
+            $fire->intensity = (int)$request->get('intensity');
+            $fire->id_coordinate = (int)$request->get('id_coordinate');
+            $fire->save();
 
-        return new FireResource($fire);
+            return new FireResource($fire);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status' => 'error',
+                'message' => $e->getMessage(),
+                'trace' => $e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -73,12 +104,20 @@ class SimFireController extends Controller
      * @param int $id
      * @return FireResource
      */
-    public function destroy($id)
+    public function destroy($id): ResponseInterface
     {
-        $fire = Fire::findOrFail($id);
-        $fire->delete();
+        try {
+            $fire = Fire::findOrFail($id);
+            $fire->delete();
 
-        return new FireResource($fire);
+            return new FireResource($fire);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -88,12 +127,20 @@ class SimFireController extends Controller
      * @param $id
      * @return FireResource
      */
-    public function updateIntensity(Request $request , $id)
+    public function updateIntensity(Request $request , $id): ResponseInterface
     {
-        $fire = Fire::findOrFail($id);
-        $fire->intensity = (int)$request->intensity;
-        $fire->save();
+        try {
+            $fire = Fire::findOrFail($id);
+            $fire->intensity = (int)$request->intensity;
+            $fire->save();
 
-        return new FireResource($fire);
+            return new FireResource($fire);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 }

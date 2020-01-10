@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Simulator\SimCoordinateController;
 use App\Http\Controllers\Simulator\SimFireController;
+use App\Http\Controllers\Simulator\SimFireDepartmentController;
 use Illuminate\Http\Request;
 
 /*
@@ -23,4 +25,12 @@ Route::apiResource('trucks','SimTruckController');
 
 Route::post('/fires/update-intensity/{id}', function(SimFireController $fireController, int $id) {
     return $fireController->updateIntensity(Request::capture(), $id);
+})->where(['id' => '[0-9]+']);
+
+Route::get('/coordinates/{line}/{column}', function(SimCoordinateController $coordinateController, int $line, int $column) {
+    return $coordinateController->getCoordinateFromGrid($line, $column);
+})->where(['line' => '[0-9]+', 'column' => '[0-9]+']);
+
+Route::get('/fire-departments/vehicles/{id}', function(SimFireDepartmentController $fireDepartmentController, int $id) {
+    return $fireDepartmentController->getAllTrucks($id);
 })->where(['id' => '[0-9]+']);

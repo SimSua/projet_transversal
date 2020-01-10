@@ -9,7 +9,7 @@ services:
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_MULTIPLE_DATABASES=app_emergency,app_simulator
+      - POSTGRES_MULTIPLE_DATABASES=app_emergency,app_simulator,app_test
     ports:
       - "5433:5432"
     networks:

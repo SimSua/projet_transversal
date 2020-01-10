@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Simulator;
 
+use App\Exceptions\ExceptionResponse;
+use App\Exceptions\ResponseInterface;
 use App\Http\Resources\TruckCollection;
 use App\Models\Simulator\Truck;
 use Illuminate\Http\Request;
@@ -13,10 +15,19 @@ class SimTruckController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @return TruckCollection | ExceptionResponse
      */
-    public function index()
+    public function index(): ResponseInterface
     {
-        return new TruckCollection(Truck::All());
+        try {
+            return new TruckCollection(Truck::All());
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -25,16 +36,24 @@ class SimTruckController extends Controller
      * @param Request $request
      * @return TruckResource
      */
-    public function store(Request $request)
+    public function store(Request $request): ResponseInterface
     {
-        $truck = new Truck();
-        $truck->id_type = (int)$request->get('id_type');
-        $truck->id_fire = (int)$request->get('id_fire');
-        $truck->id_department = (int)$request->get('id_department');
-        $truck->id_coordinate = (int)$request->get('id_coordinate');
-        $truck->save();
+        try {
+            $truck = new Truck();
+            $truck->id_type = (int)$request->get('id_type');
+            $truck->id_fire = ((int)$request->get('id_fire')!=0)?(int)$request->get('id_fire'):NULL;
+            $truck->id_department = (int)$request->get('id_department');
+            $truck->id_coordinate = (int)$request->get('id_coordinate');
+            $truck->save();
 
-        return new TruckResource($truck);
+            return new TruckResource($truck);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -43,9 +62,17 @@ class SimTruckController extends Controller
      * @param int $id
      * @return TruckResource
      */
-    public function show($id)
+    public function show($id): ResponseInterface
     {
-        return new TruckResource(Truck::FindOrFail($id));
+        try {
+            return new TruckResource(Truck::FindOrFail($id));
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -55,16 +82,24 @@ class SimTruckController extends Controller
      * @param int $id
      * @return TruckResource
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): ResponseInterface
     {
-        $truck = Truck::findOrFail($id);
-        $truck->id_type = (int)$request->get('id_type');
-        $truck->id_fire = (int)$request->get('id_fire');
-        $truck->id_department = (int)$request->get('id_department');
-        $truck->id_coordinate = (int)$request->get('id_coordinate');
-        $truck->save();
+        try {
+            $truck = Truck::findOrFail($id);
+            $truck->id_type = (int)$request->get('id_type');
+            $truck->id_fire = ((int)$request->get('id_fire')!=0)?(int)$request->get('id_fire'):NULL;
+            $truck->id_department = (int)$request->get('id_department');
+            $truck->id_coordinate = (int)$request->get('id_coordinate');
+            $truck->save();
 
-        return new TruckResource($truck);
+            return new TruckResource($truck);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -73,11 +108,19 @@ class SimTruckController extends Controller
      * @param int $id
      * @return TruckResource
      */
-    public function destroy($id)
+    public function destroy($id): ResponseInterface
     {
-        $truck = Truck::findOrFail($id);
-        $truck->delete();
+        try {
+            $truck = Truck::findOrFail($id);
+            $truck->delete();
 
-        return new TruckResource($truck);
+            return new TruckResource($truck);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 }
