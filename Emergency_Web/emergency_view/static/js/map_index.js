@@ -43,7 +43,6 @@ function add_trucks(ID, x, y)
 {
 	camion = L.marker([x, y],{id: ID}).addTo(map);
 	list_camion_layout[ID] = camion
-
 }
 
 function movecamion(camion, x, y)
