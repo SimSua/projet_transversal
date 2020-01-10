@@ -1,5 +1,7 @@
 package mainPackage;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -10,6 +12,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ApiConnector {
@@ -160,6 +163,7 @@ public class ApiConnector {
         for (int i = 0; i < jsonarray.length(); i++) {
             Vehicule vehicule;
             JSONObject jsonobject = jsonarray.getJSONObject(i);
+
             switch ((int) jsonobject.get("id_type")){
                 case 1:
                     vehicule = new Camion((int) jsonobject.get("id"),(int) jsonobject.get("id_type"),
@@ -206,5 +210,52 @@ public class ApiConnector {
 
     }
 
+    public void requestPatchFeu(Feu feu) throws JsonProcessingException {
+        var values = new HashMap<String, String>() {{
+            put ("intensity", Integer.toString(feu.getIntensity()));
+        }};
+
+        var objectMapper = new ObjectMapper();
+        String requestBody = objectMapper
+                .writeValueAsString(values);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(uri+"fires/update-intensity/"+feu.getId()))
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+        HttpResponse<String> response = null;
+        try {
+            response = this.client.send(request, BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        //TODO intensité non mis à jour
+        JSONObject reponse = new JSONObject(response.body());
+        System.out.println(reponse);
+    }
+
+    public void requestPatchVehicule(Vehicule vehicule,Feu feu) throws JsonProcessingException {
+        var values = new HashMap<String, String>() {{
+            put ("id_fire", Integer.toString(feu.getId()));
+        }};
+
+        var objectMapper = new ObjectMapper();
+        String requestBody = objectMapper
+                .writeValueAsString(values);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(uri+"trucks/assign-fire/"+vehicule.getId()))
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+        HttpResponse<String> response = null;
+        try {
+            response = this.client.send(request, BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        //TODO intensité non mis à jour
+        JSONObject reponse = new JSONObject(response.body());
+        System.out.println(reponse);
+    }
 }
 

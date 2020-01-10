@@ -1,16 +1,9 @@
 package mainPackage;
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainSimulator {
     public static void main(String[] args) throws InterruptedException {
         Boolean debug = false;
-        List<Ville> listVilles = new ArrayList<>();
-        List<Caserne> listCasernes = new ArrayList<>();
-        List<Vehicule> listVehicules = new ArrayList<>();
-        List<Feu> listFeux = new ArrayList<>();
-        List<TypeVehicule> listTypesVehicule = new ArrayList<>();
-        List<Coordonnees> listCoordonnees = new ArrayList<>();
+
+
         if (debug) {
 //            Caserne caserne1 = new Caserne(5, 5, new Coordonnees(8, 10));
 //            Caserne caserne2 = new Caserne(10, 20, new Coordonnees(16, 20));
@@ -51,49 +44,20 @@ public class MainSimulator {
 //            System.out.println(villeurbanne.toString());
 
         }else{
-            ApiConnector apiConnector = new ApiConnector();
-            listCasernes = apiConnector.requestCasernes();
-            listVehicules = apiConnector.requestVehicules();
-            listFeux = apiConnector.requestFeux();
-            listTypesVehicule = apiConnector.requestTypesVehicule();
-            listCoordonnees = apiConnector.requestCoordonnees();
-            //set Coordonnees
-            for (Coordonnees coordonnees:listCoordonnees){
-                for (Vehicule vehicule:listVehicules){
-                    if (vehicule.getId_coordonnees() == coordonnees.getId()){
-                        vehicule.setCoordonnees(coordonnees);
-                    }
+            Simulator simulator = new Simulator(debug);
+            simulator.initData();
+            simulator.start();
+            while(true){
+                Thread.sleep(1800);
+                if(simulator.vehiculeChoisi != null && simulator.vehiculeChoisi.getFeu() != null){
+                    simulator.vehiculeChoisi.allerAuFeu();
+                    simulator.apiConnector.request
+
+                    //vehicule téléporté au feu
+
                 }
-                for (Caserne caserne:listCasernes){
-                    if (caserne.getId_coordonnees() == coordonnees.getId()){
-                        caserne.setCoordonnees(coordonnees);
-                    }
-                }
-                for (Feu feu:listFeux){
-                    if (feu.getId_coordonnees() == coordonnees.getId()){
-                        feu.setCoordonnees(coordonnees);
-                    }
-                }
+                simulator.traiterFeux();
             }
-            //set type vehicule
-            for (TypeVehicule type:listTypesVehicule){
-                for (Vehicule vehicule:listVehicules){
-                    if (vehicule.getId_type() == type.getId()){
-                        vehicule.setType(type);
-                    }
-                }
-            }
-            //add vehicule to caserne/set caserne to vehicule
-            for (Vehicule vehicule:listVehicules) {
-                for (Caserne caserne:listCasernes) {
-                    if (vehicule.getId_caserne() == caserne.getId()) {
-                        caserne.addVehicule(vehicule);
-                        vehicule.setCaserne(caserne);
-                    }
-                }
-            }
-            System.out.println(listCasernes.get(1).getVehicules());
-            //System.out.println(casernes);
         }
         return;
         /*

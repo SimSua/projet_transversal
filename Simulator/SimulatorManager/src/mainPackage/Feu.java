@@ -2,38 +2,38 @@ package mainPackage;
 
 public class Feu {
     private int id;
-    private int id_coordonnees;
-    private int intensite;
+    private int id_coordinate;
+    private int intensity;
     private Coordonnees coordonnees;
 
-    public Feu(int id, int intensite,int id_coordonnees) {
+    public Feu(int id, int intensity, int id_coordinate) {
         this.id = id;
-        this.intensite = intensite;
-        this.id_coordonnees = id_coordonnees;
+        this.intensity = intensity;
+        this.id_coordinate = id_coordinate;
     }
 
     public Feu(int id, int intensite, Coordonnees coordonnees) {
         this.id = id;
-        this.intensite = intensite;
+        this.intensity = intensite;
         this.coordonnees = coordonnees;
     }
 
     public void baisserIntensite() {
-        this.intensite--;
+        this.intensity--;
     }
 
-    public void augmenterIntensite() { this.intensite++; }
+    public void augmenterIntensite() { this.intensity++; }
 
     public boolean estEteint() {
-        return this.intensite <= 0;
+        return this.intensity <= 0;
     }
 
     public int getId() {
         return id;
     }
 
-    public int getId_coordonnees() {
-        return id_coordonnees;
+    public int getId_coordinate() {
+        return id_coordinate;
     }
 
     public Coordonnees getCoordonnees() {
@@ -44,15 +44,19 @@ public class Feu {
         this.coordonnees = coordonnees;
     }
 
-    public int getIntensite() {
-        return intensite;
+    public int getIntensity() {
+        return intensity;
+    }
+
+    public void setIntensity(int intensity) {
+        this.intensity = intensity;
     }
 
     @Override
     public String toString() {
         return "Feu{" +
                 "id="+id+
-                "intensite=" + intensite +
+                "intensite=" + intensity +
                 '}';
     }
 }
