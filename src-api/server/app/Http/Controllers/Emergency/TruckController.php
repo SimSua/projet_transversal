@@ -41,7 +41,7 @@ class TruckController extends Controller
         try {
             $truck = new Truck();
             $truck->id_type = (int)$request->get('id_type');
-            $truck->id_fire = (int)$request->get('id_fire');
+            $truck->id_fire = ((int)$request->get('id_fire')!=0)?(int)$request->get('id_fire'):NULL;
             $truck->id_department = (int)$request->get('id_department');
             $truck->id_coordinate = (int)$request->get('id_coordinate');
             $truck->save();
@@ -87,7 +87,7 @@ class TruckController extends Controller
         try {
             $truck = Truck::findOrFail($id);
             $truck->id_type = (int)$request->get('id_type');
-            $truck->id_fire = (int)$request->get('id_fire');
+            $truck->id_fire = ((int)$request->get('id_fire')!=0)?(int)$request->get('id_fire'):NULL;
             $truck->id_department = (int)$request->get('id_department');
             $truck->id_coordinate = (int)$request->get('id_coordinate');
             $truck->save();
@@ -115,6 +115,54 @@ class TruckController extends Controller
             $truck->delete();
 
             return new TruckResource($truck);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Update the specified resource from storage.
+     *
+     * @param Request $request
+     * @param $id
+     * @return ResponseInterface
+     */
+    public function assignFire(Request $request , $id): ResponseInterface
+    {
+        try {
+            $fire = Truck::findOrFail($id);
+            $fire->id_fire = (int)$request->id_fire;
+            $fire->save();
+
+            return new TruckResource($fire);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Update the specified resource from storage.
+     *
+     * @param Request $request
+     * @param $id
+     * @return ResponseInterface
+     */
+    public function updateCoordinate(Request $request , $id): ResponseInterface
+    {
+        try {
+            $fire = Truck::findOrFail($id);
+            $fire->id_coordinate = (int)$request->id_coordinate;
+            $fire->save();
+
+            return new TruckResource($fire);
         } catch (\Exception $e) {
             return new ExceptionResponse([
                 'status'=>'error',

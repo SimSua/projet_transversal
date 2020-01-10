@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Emergency;
 use App\Exceptions\ExceptionResponse;
 use App\Exceptions\ResponseInterface;
 use App\Http\Resources\FireCollection;
+use App\Models\Coordinate;
 use App\Models\Fire;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -131,6 +132,31 @@ class FireController extends Controller
     {
         try {
             $fire = Fire::findOrFail($id);
+            $fire->intensity = (int)$request->intensity;
+            $fire->save();
+
+            return new FireResource($fire);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Update the specified resource from storage from its position on the grid.
+     *
+     * @param Request $request
+     * @param $id
+     * @return FireResource
+     */
+    public function updateIntensityFromPosition(Request $request , int $line, int $column): ResponseInterface
+    {
+        try {
+            $coordinate = Coordinate::where(['line'=> $line, 'column' => $column])->first();
+            $fire = Fire::where('id_coordinate', $coordinate->id)->first();
             $fire->intensity = (int)$request->intensity;
             $fire->save();
 
