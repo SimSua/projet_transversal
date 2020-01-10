@@ -224,13 +224,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_url}}/fires/1",
+									"raw": "{{pt_base_url}}/fires/11",
 									"host": [
 										"{{pt_base_url}}"
 									],
 									"path": [
 										"fires",
-										"1"
+										"11"
 									]
 								}
 							},
@@ -393,6 +393,25 @@
 									],
 									"path": [
 										"fire-departments",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "APP_fire_departments/vehicles/{id}",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_url}}/fire-departments/vehicle/1",
+									"host": [
+										"{{pt_base_url}}"
+									],
+									"path": [
+										"fire-departments",
+										"vehicle",
 										"1"
 									]
 								}
@@ -722,8 +741,9 @@
 										},
 										{
 											"key": "id_fire",
-											"value": "1",
-											"type": "text"
+											"value": "NULL",
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "id_department",
@@ -1229,6 +1249,25 @@
 							"response": []
 						},
 						{
+							"name": "APP_fire_departments/vehicles/{id}",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_sim_url}}/fire-departments/vehicle/1",
+									"host": [
+										"{{pt_base_sim_url}}"
+									],
+									"path": [
+										"fire-departments",
+										"vehicle",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "APP_fire_departments",
 							"request": {
 								"method": "POST",
@@ -1552,11 +1591,12 @@
 										{
 											"key": "id_fire",
 											"value": "1",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "id_department",
-											"value": "1",
+											"value": "4",
 											"type": "text"
 										},
 										{

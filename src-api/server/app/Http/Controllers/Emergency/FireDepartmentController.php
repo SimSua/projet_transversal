@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Emergency;
 use App\Exceptions\ExceptionResponse;
 use App\Exceptions\ResponseInterface;
 use App\Http\Resources\FireDepartmentCollection;
+use App\Http\Resources\TruckCollection;
 use App\Models\FireDepartment;
+use App\Models\Truck;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FireDepartment as FireDepartmentResource;
@@ -113,6 +115,27 @@ class FireDepartmentController extends Controller
             $fireDepartment->delete();
 
             return new FireDepartmentResource($fireDepartment);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Get all vehicles associated to the fire department.
+     *
+     * @param $id
+     * @return ResponseInterface
+     */
+    public function getAllTrucks($id): ResponseInterface
+    {
+        try {
+            $trucks = Truck::where('id_department', $id)->get();
+
+            return new TruckCollection($trucks);
         } catch (\Exception $e) {
             return new ExceptionResponse([
                 'status'=>'error',

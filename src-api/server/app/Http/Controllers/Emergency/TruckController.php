@@ -41,7 +41,7 @@ class TruckController extends Controller
         try {
             $truck = new Truck();
             $truck->id_type = (int)$request->get('id_type');
-            $truck->id_fire = (int)$request->get('id_fire');
+            $truck->id_fire = ((int)$request->get('id_fire')!=0)?(int)$request->get('id_fire'):NULL;
             $truck->id_department = (int)$request->get('id_department');
             $truck->id_coordinate = (int)$request->get('id_coordinate');
             $truck->save();
@@ -87,7 +87,7 @@ class TruckController extends Controller
         try {
             $truck = Truck::findOrFail($id);
             $truck->id_type = (int)$request->get('id_type');
-            $truck->id_fire = (int)$request->get('id_fire');
+            $truck->id_fire = ((int)$request->get('id_fire')!=0)?(int)$request->get('id_fire'):NULL;
             $truck->id_department = (int)$request->get('id_department');
             $truck->id_coordinate = (int)$request->get('id_coordinate');
             $truck->save();

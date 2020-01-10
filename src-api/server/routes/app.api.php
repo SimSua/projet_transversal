@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Emergency\CoordinateController;
 use App\Http\Controllers\Emergency\FireController;
+use App\Http\Controllers\Emergency\FireDepartmentController;
 use Illuminate\Http\Request;
 
 /*
@@ -32,3 +33,7 @@ Route::post('/fires/update-intensity/{id}', function(FireController $fireControl
 Route::get('/coordinates/{line}/{column}', function(CoordinateController $coordinateController, int $line, int $column) {
     return $coordinateController->getCoordinateFromGrid($line, $column);
 })->where(['line' => '[0-9]+', 'column' => '[0-9]+']);
+
+Route::get('/fire-departments/vehicle/{id}', function(FireDepartmentController $fireDepartmentController, int $id) {
+    return $fireDepartmentController->getAllTrucks($id);
+})->where(['id' => '[0-9]+']);
