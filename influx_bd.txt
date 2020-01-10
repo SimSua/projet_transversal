@@ -1,3 +1,5 @@
 influx_db
 influx_user
 influx_password
+
+https://bentek.fr/influxdb-grafana-raspberry-pi/
