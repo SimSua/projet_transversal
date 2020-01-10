@@ -39,6 +39,10 @@ Route::get('/fires/position/get', function(FireController $fireController) {
     return $fireController->getPosition();
 })->middleware('throttle:100,1');
 
+Route::get('/fires/reset/all', function(FireController $fireController) {
+    return $fireController->resetAllFires();
+})->middleware('throttle:100,1');
+
 Route::get('/coordinates/{line}/{column}', function(CoordinateController $coordinateController, int $line, int $column) {
     return $coordinateController->getCoordinateFromGrid($line, $column);
 })->where(['line' => '[0-9]+', 'column' => '[0-9]+'])->middleware('throttle:100,1');

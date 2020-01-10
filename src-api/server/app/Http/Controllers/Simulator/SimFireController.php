@@ -172,7 +172,7 @@ class SimFireController extends Controller
     }
 
     /**
-     * Update the specified resource from storage from its position on the grid.
+     * Get the specified resource information from its position on the grid.
      *
      * @return JsonResponse
      */
@@ -192,6 +192,30 @@ class SimFireController extends Controller
             }
 
             return new JsonResponse($response);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Reset all fires
+     *
+     * @return ResponseInterface
+     */
+    public function resetAllFires()
+    {
+        try {
+            $fires = Fire::All();
+            foreach ($fires as $fire) {
+                $fire->intensity = 0;
+                $fire->save();
+            }
+
+            return new FireCollection(Fire::All());
         } catch (\Exception $e) {
             return new ExceptionResponse([
                 'status'=>'error',
