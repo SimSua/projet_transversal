@@ -2,82 +2,87 @@ package mainPackage;
 
 public class Vehicule {
     private int id;
-    //vitesse de déplacement
-    private int vitesse;
+    private int id_type;
+    private int id_caserne;
+    private int id_coordonnees;
+
+    private TypeVehicule type;
     //coordonnées gps
     private Coordonnees coordonnees;
-    //position x du vehicule
-    private int ligne;
-    //position y du vehicule
-    private int colonne;
     //feu attribué
     private Feu feu;
     private Caserne caserne;
 
-    public Vehicule(int id,int vitesse,int ligne,int colonne,Coordonnees coordonnees,Caserne caserne){
+    public Vehicule(int id,int id_type,int id_caserne,int id_coordonnees){
         this.id = id;
-        this.vitesse = vitesse;
-        this.ligne = ligne;
-        this.colonne = colonne;
-        this.coordonnees = coordonnees;
-        this.caserne = caserne;
+        this.id_type = id_type;
+        this.id_caserne = id_caserne;
+        this.id_coordonnees = id_coordonnees;
     }
 
     void deplacer(Coordonnees coordonnees){
         this.coordonnees = coordonnees;
     }
 
-    public int getId() { return id; }
+    public TypeVehicule getType() {
+        return type;
+    }
 
-    public int getVitesse() {
-        return vitesse;
+    public void setType(TypeVehicule type) {
+        this.type = type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getId_type() {
+        return id_type;
+    }
+
+    public int getId_caserne() {
+        return id_caserne;
+    }
+
+    public int getId_coordonnees() {
+        return id_coordonnees;
     }
 
     public Coordonnees getCoordonnees() {
         return coordonnees;
     }
 
-    public int getLigne() {
-        return ligne;
+    public void setCoordonnees(Coordonnees coordonnees) {
+        this.coordonnees = coordonnees;
     }
 
-    public int getColonne() {
-        return colonne;
-    }
-
-    public Feu getFeu() { return this.feu; }
-
-    public Caserne getCaserne() {
-        return caserne;
+    public Feu getFeu() {
+        return feu;
     }
 
     public void setFeu(Feu feu) {
         this.feu = feu;
     }
 
-    public void setVitesse(int vitesse) {
-        this.vitesse = vitesse;
-    }
-    public void setLigne(int ligne) {
-        this.ligne = ligne;
+    public Caserne getCaserne() {
+        return caserne;
     }
 
-    public void setColonne(int colonne) {
-        this.colonne = colonne;
+    public void setCaserne(Caserne caserne) {
+        this.caserne = caserne;
     }
 
     public void allerAuFeu(){
         System.out.println("n°"+this.id+" va au feu");
-        this.setColonne(this.feu.getColonne());
-        this.setLigne(this.feu.getLigne());
+        this.setCoordonnees(this.feu.getCoordonnees());
     }
 
     public void allerALaCaserne(){
-        this.setColonne(this.caserne.getColonne());
-        this.setLigne(this.caserne.getLigne());
+        System.out.println("Camion n°"+id+" retour à la caserne n°"+caserne.getId());
     }
 
     public boolean estSurLeFeu() {
-        return this.colonne == this.feu.getColonne() && this.ligne == this.feu.getLigne();
+        return this.coordonnees.getColonne() == this.feu.getCoordonnees().getColonne()
+                && this.coordonnees.getLigne() == this.feu.getCoordonnees().getLigne();
     }
 }

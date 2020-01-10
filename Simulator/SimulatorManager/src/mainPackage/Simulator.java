@@ -46,7 +46,7 @@ public class Simulator extends Thread {
         int intensite = (int) (1 + (Math.random() * 10));
         int ligneFeu = (int) (1 + (Math.random() * 30));
         int colonneFeu = (int) (1 + (Math.random() * 30));
-        Feu feu = new Feu(intensite,ligneFeu,colonneFeu,new Coordonnees(7,5));
+        Feu feu = new Feu(1,intensite,new Coordonnees(7,5,5,7,8));
         listFeuxNonTraites.add(feu);
     }
 
@@ -79,7 +79,7 @@ public class Simulator extends Thread {
                     System.out.println("n°"+vehicule.getId()+" a éteint un feu");
                     vehicule.setFeu(null);
                     listFeuxNonTraites.remove(vehicule.getFeu());
-                    vehicule.allerALaCaserne();
+//                    vehicule.allerALaCaserne();
                 }else {
                     vehicule.getFeu().baisserIntensite();
                     System.out.println("intensité baissé du feu " + vehicule.getFeu().toString());
@@ -104,13 +104,13 @@ public class Simulator extends Thread {
         vehiculeChoisi = null;
         for (Caserne caserne : listCasernes) {
             if (first && caserne.getVehiculesDispo().size() > 0) {
-                ancDistance = sqrt(pow(feuAtraiter.getColonne() - caserne.getColonne(), 2)
-                        + pow(feuAtraiter.getLigne() - caserne.getLigne(), 2));
+                ancDistance = sqrt(pow(feuAtraiter.getCoordonnees().getColonne() - caserne.getCoordonnees().getColonne(), 2)
+                        + pow(feuAtraiter.getCoordonnees().getLigne() - caserne.getCoordonnees().getLigne(), 2));
                 caserneChoisie = caserne;
                 first = false;
             } else if (!first && caserne.getVehiculesDispo().size() > 0) {
-                nouvelleDistance = sqrt(pow(feuAtraiter.getColonne() - caserne.getColonne(), 2)
-                        + pow(feuAtraiter.getLigne() - caserne.getLigne(), 2));
+                nouvelleDistance = sqrt(pow(feuAtraiter.getCoordonnees().getColonne() - caserne.getCoordonnees().getColonne(), 2)
+                        + pow(feuAtraiter.getCoordonnees().getLigne() - caserne.getCoordonnees().getLigne(), 2));
                 if (nouvelleDistance < ancDistance) {
                     caserneChoisie = caserne;
                 }

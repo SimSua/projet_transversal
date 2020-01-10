@@ -1,51 +1,101 @@
 package mainPackage;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-import static java.lang.Math.*;
 
 public class MainSimulator {
     public static void main(String[] args) throws InterruptedException {
-        Caserne caserne1 = new Caserne(5,5,new Coordonnees(8,10));
-        Caserne caserne2 = new Caserne(10,20,new Coordonnees(16,20));
-        Caserne caserne3 = new Caserne(15,15,new Coordonnees(20,15));
-        List<Caserne> listCasernes = new ArrayList<>();
-        listCasernes.add(caserne1);
-        listCasernes.add(caserne2);
-        listCasernes.add(caserne3);
-
-        List<Vehicule> listVehicules= new ArrayList<>();
-        //Mise en place des casernes avec les camions (test avec 3 casernes et 3 camions par caserne vitesse aléatoire)
-        for(int i=0;i<9;i=i+3){
-            int vitesseCamion = (int) (1 + (Math.random() * (10 - 1)));
-            Camion camion1 = new Camion(i,vitesseCamion,caserne1.getLigne(),caserne1.getColonne()
-                    ,caserne1.getCoordonnees(),caserne1);
-            Camion camion2 = new Camion(i+1,vitesseCamion,caserne2.getLigne(),caserne2.getColonne()
-                    ,caserne1.getCoordonnees(),caserne2);
-            Camion camion3 = new Camion(i+2,vitesseCamion,caserne3.getLigne(),caserne3.getColonne()
-                    ,caserne3.getCoordonnees(),caserne3);
-            listVehicules.add(camion1);
-            listVehicules.add(camion2);
-            listVehicules.add(camion3);
-            listCasernes.get(new Random().nextInt(listCasernes.size())).addVehicule(camion1);
-            listCasernes.get(new Random().nextInt(listCasernes.size())).addVehicule(camion2);
-            listCasernes.get(new Random().nextInt(listCasernes.size())).addVehicule(camion3);
-        }
-        for (Caserne caserne:listCasernes) {
-            System.out.println(caserne.toString());
-        }
-
-        //Mise en place des Villes et des feux
-        Ville lyon = new Ville("Lyon",new Coordonnees(19,24));
-        Ville villeurbanne = new Ville("Villeurbanne",new Coordonnees(19,30));
-        lyon.addCaserne(caserne1);
-        lyon.addCaserne(caserne2);
-        villeurbanne.addCaserne(caserne3);
-        System.out.println(lyon.toString());
-        System.out.println(villeurbanne.toString());
+        Boolean debug = false;
         List<Ville> listVilles = new ArrayList<>();
+        List<Caserne> listCasernes = new ArrayList<>();
+        List<Vehicule> listVehicules = new ArrayList<>();
+        List<Feu> listFeux = new ArrayList<>();
+        List<TypeVehicule> listTypesVehicule = new ArrayList<>();
+        List<Coordonnees> listCoordonnees = new ArrayList<>();
+        if (debug) {
+//            Caserne caserne1 = new Caserne(5, 5, new Coordonnees(8, 10));
+//            Caserne caserne2 = new Caserne(10, 20, new Coordonnees(16, 20));
+//            Caserne caserne3 = new Caserne(15, 15, new Coordonnees(20, 15));
+//
+//            listCasernes.add(caserne1);
+//            listCasernes.add(caserne2);
+//            listCasernes.add(caserne3);
+//
+//
+//            //Mise en place des casernes avec les camions (test avec 3 casernes et 3 camions par caserne vitesse aléatoire)
+//            for (int i = 0; i < 9; i = i + 3) {
+//                int vitesseCamion = (int) (1 + (Math.random() * (10 - 1)));
+//                Camion camion1 = new Camion(i, vitesseCamion, caserne1.getLigne(), caserne1.getColonne()
+//                        , caserne1.getCoordonnees(), caserne1);
+//                Camion camion2 = new Camion(i + 1, vitesseCamion, caserne2.getLigne(), caserne2.getColonne()
+//                        , caserne1.getCoordonnees(), caserne2);
+//                Camion camion3 = new Camion(i + 2, vitesseCamion, caserne3.getLigne(), caserne3.getColonne()
+//                        , caserne3.getCoordonnees(), caserne3);
+//                listVehicules.add(camion1);
+//                listVehicules.add(camion2);
+//                listVehicules.add(camion3);
+//                listCasernes.get(new Random().nextInt(listCasernes.size())).addVehicule(camion1);
+//                listCasernes.get(new Random().nextInt(listCasernes.size())).addVehicule(camion2);
+//                listCasernes.get(new Random().nextInt(listCasernes.size())).addVehicule(camion3);
+//            }
+//            for (Caserne caserne : listCasernes) {
+//                System.out.println(caserne.toString());
+//            }
+//
+//            //Mise en place des Villes et des feux
+//            Ville lyon = new Ville("Lyon", new Coordonnees(19, 24));
+//            Ville villeurbanne = new Ville("Villeurbanne", new Coordonnees(19, 30));
+//            lyon.addCaserne(caserne1);
+//            lyon.addCaserne(caserne2);
+//            villeurbanne.addCaserne(caserne3);
+//            System.out.println(lyon.toString());
+//            System.out.println(villeurbanne.toString());
+
+        }else{
+            ApiConnector apiConnector = new ApiConnector();
+            listCasernes = apiConnector.requestCasernes();
+            listVehicules = apiConnector.requestVehicules();
+            listFeux = apiConnector.requestFeux();
+            listTypesVehicule = apiConnector.requestTypesVehicule();
+            listCoordonnees = apiConnector.requestCoordonnees();
+            //set Coordonnees
+            for (Coordonnees coordonnees:listCoordonnees){
+                for (Vehicule vehicule:listVehicules){
+                    if (vehicule.getId_coordonnees() == coordonnees.getId()){
+                        vehicule.setCoordonnees(coordonnees);
+                    }
+                }
+                for (Caserne caserne:listCasernes){
+                    if (caserne.getId_coordonnees() == coordonnees.getId()){
+                        caserne.setCoordonnees(coordonnees);
+                    }
+                }
+                for (Feu feu:listFeux){
+                    if (feu.getId_coordonnees() == coordonnees.getId()){
+                        feu.setCoordonnees(coordonnees);
+                    }
+                }
+            }
+            //set type vehicule
+            for (TypeVehicule type:listTypesVehicule){
+                for (Vehicule vehicule:listVehicules){
+                    if (vehicule.getId_type() == type.getId()){
+                        vehicule.setType(type);
+                    }
+                }
+            }
+            //add vehicule to caserne/set caserne to vehicule
+            for (Vehicule vehicule:listVehicules) {
+                for (Caserne caserne:listCasernes) {
+                    if (vehicule.getId_caserne() == caserne.getId()) {
+                        caserne.addVehicule(vehicule);
+                        vehicule.setCaserne(caserne);
+                    }
+                }
+            }
+            System.out.println(listCasernes.get(1).getVehicules());
+            //System.out.println(casernes);
+        }
+        return;
         /*
         Scénario :
         boucle infini
@@ -56,18 +106,18 @@ public class MainSimulator {
         une fois le véhicule sur place, l'intensité diminue de 1 en 1 jusqu'à ce que le feu s'éteigne
         une fois éteint le camion est téléporté vers sa caserne
          */
-        Simulator simulator = new Simulator(listCasernes,listVehicules,listVilles);
-        simulator.start();
-        //Emergency Manager local
-        while(true){
-            Thread.sleep(1800);
-            if(simulator.vehiculeChoisi != null && simulator.vehiculeChoisi.getFeu() != null){
-                simulator.vehiculeChoisi.allerAuFeu();
-                //vehicule téléporté au feu
-
-            }
-            simulator.traiterFeux();
-        }
+//        Simulator simulator = new Simulator(listCasernes,listVehicules,listVilles);
+//        simulator.start();
+//        //Emergency Manager local
+//        while(true){
+//            Thread.sleep(1800);
+//            if(simulator.vehiculeChoisi != null && simulator.vehiculeChoisi.getFeu() != null){
+//                simulator.vehiculeChoisi.allerAuFeu();
+//                //vehicule téléporté au feu
+//
+//            }
+//            simulator.traiterFeux();
+//        }
 
 
     }

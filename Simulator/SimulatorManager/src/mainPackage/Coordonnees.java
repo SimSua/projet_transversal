@@ -1,27 +1,42 @@
 package mainPackage;
 
 public class Coordonnees {
+    private int id;
+    private int ligne;
+    private int colonne;
     private double x_coord;
     private double y_coord;
 
-    public Coordonnees(double x,double y) {
-        this.x_coord = x;
-        this.y_coord = y;
+    public Coordonnees(int id, int ligne, int colonne, double x_coord, double y_coord) {
+        this.id = id;
+        this.ligne = ligne;
+        this.colonne = colonne;
+        this.x_coord = x_coord;
+        this.y_coord = y_coord;
     }
 
-    public double getX() {
-        return this.x_coord;
+    public int getId() {
+        return id;
     }
 
-    public double getY() {
-        return this.y_coord;
+    public int getLigne() {
+        return ligne;
+    }
+
+    public int getColonne() {
+        return colonne;
+    }
+
+    public double getX_coord() {
+        return x_coord;
+    }
+
+    public double getY_coord() {
+        return y_coord;
     }
 
     @Override
     public String toString() {
-        return "Coordonnees{" +
-                "x_coord=" + x_coord +
-                ", y_coord=" + y_coord +
-                '}';
+        return "Coordonnees("+ligne+","+colonne+")";
     }
 }
