@@ -7,3 +7,15 @@ services:
     volumes:
       - ./manager.jar:/application/manager.jar
     command: ["java", "-jar", "manager.jar"]
+    networks:
+      - api
+
+  test:
+    image: debian
+    container_name: test
+    networks:
+      - api
+    command: tail -f /dev/null
+
+networks:
+  api:

@@ -15,8 +15,8 @@ public class Caserne {
 	}
 
 	public ArrayList<Vehicule> generateVehicules() {
-		if(true) {
-		//if(Manager.bdd) {
+		//if(true) {
+		if(Manager.bdd) {
 			ApiConnector connector = new ApiConnector();
 			String s = connector.requestCasernes();
 			System.out.println(s);

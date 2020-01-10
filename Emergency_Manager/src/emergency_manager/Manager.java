@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Manager {
 	
-	public final static boolean bdd = false;
+	public static boolean bdd = true;
 	
 	public static void main(String[] args) {
 		System.out.println("--- Lancement de l'Emergency Manager ---");
@@ -24,5 +24,10 @@ public class Manager {
 		}else {
 			System.out.println("Récupération des casernes depuis la base de données réel");
 		}
+	}
+	
+	public static void testApi() {
+		ApiConnector conn = new ApiConnector();
+		Manager.bdd = conn.test();
 	}
 }

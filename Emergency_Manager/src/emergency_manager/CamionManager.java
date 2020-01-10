@@ -35,10 +35,12 @@ public class CamionManager extends Thread {
 		
 		//Liste des véhicules disponibles
 		ArrayList<Vehicule> vehiculesDispo = new ArrayList<Vehicule>();
-		for(Vehicule ve : v.getCasernes().get(0).getVehicules()) {
-			ve.estRevenu(); //On actualise l'état des vehicules
-			if(ve.estOccupe()==false) {
-				vehiculesDispo.add(ve);
+		if(v.getCasernes().size() != 0) {
+			for(Vehicule ve : v.getCasernes().get(0).getVehicules()) {
+				ve.estRevenu(); //On actualise l'état des vehicules
+				if(ve.estOccupe()==false) {
+					vehiculesDispo.add(ve);
+				}
 			}
 		}
 		//Liste des feux allumés
@@ -67,30 +69,6 @@ public class CamionManager extends Thread {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
-//		int i = 0;
-//		for(Feu f: feuAllume) {
-//			//System.out.println(f);	
-//			
-//			while(i < v.getCasernes().get(0).getVehicules().size()){
-//				if(v.getCasernes().get(0).getVehicules().get(i).estOccupe()) {
-//					System.out.println(i);
-//					i++;
-//				}else {
-//					try {
-//						System.out.println(v.getName());
-//						v.getCasernes().get(0).getVehicules().get(i).envoyer(f);
-//					} catch (Throwable e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					break;
-//				}
-//				System.out.println();
-//			}	
-		//}
 	}
 	
 	public ArrayList<Feu> getFeux(Ville v){
@@ -109,6 +87,8 @@ public class CamionManager extends Thread {
 			}
 		}else {
 			System.out.println("Récupération des feux dans la ville "+v.getName()+" depuis la base de données réel");
+			ApiConnector conn = new ApiConnector();
+			System.out.println(conn.requestFeux());
 		}
 		System.out.println("Nombre de feux : "+feux.size());
 		return feux;

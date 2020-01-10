@@ -7,8 +7,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 
+
+
 public class ApiConnector {
-	protected String uri = "http://webserver:8081/api/";
+	protected String uri = "http://webserver:80/api/";
 	protected HttpClient client;
 	
 	public ApiConnector() {
@@ -46,13 +48,15 @@ public class ApiConnector {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//JSONObject jo = new JSONObject();
 		return response.body(); 
+		
 	
 	}
 	
 	public String requestCoordonnees() {
 		HttpRequest request = HttpRequest.newBuilder()
-		         .uri(URI.create(uri+"fire-departments"))
+		         .uri(URI.create(uri+"coordinates"))
 		         .build();
 		HttpResponse<String> response = null;
 		try {
@@ -83,6 +87,27 @@ public class ApiConnector {
 			e.printStackTrace();
 		}
 		return response.body(); 
+	}
+	
+	public boolean test() {
+		boolean connected;
+		HttpRequest request = HttpRequest.newBuilder()
+		         .uri(URI.create(uri+"fires"))
+		         .build();
+		HttpResponse<String> response = null;
+		try {
+			response = this.client.send(request, BodyHandlers.ofString());
+			connected = true;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			connected=false;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			connected=false;
+		}
+		return connected;
 	}
 	
 }
