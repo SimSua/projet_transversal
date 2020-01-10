@@ -237,6 +237,44 @@
 							"response": []
 						},
 						{
+							"name": "APP_fires/position/get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_url}}/fires/position/get",
+									"host": [
+										"{{pt_base_url}}"
+									],
+									"path": [
+										"fires",
+										"position",
+										"get"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "APP_fires/reset/all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_url}}/fires/reset/all",
+									"host": [
+										"{{pt_base_url}}"
+									],
+									"path": [
+										"fires",
+										"reset",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "APP_fires",
 							"request": {
 								"method": "POST",
@@ -878,6 +916,64 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "APP_trucks/assign-fire/{id}",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "id_fire",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{pt_base_url}}/trucks/assign-fire/1",
+									"host": [
+										"{{pt_base_url}}"
+									],
+									"path": [
+										"trucks",
+										"assign-fire",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "APP_trucks/update-coordinate/{id}",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "id_coordinate",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{pt_base_url}}/trucks/update-coordinate/1",
+									"host": [
+										"{{pt_base_url}}"
+									],
+									"path": [
+										"trucks",
+										"update-coordinate",
+										"1"
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"protocolProfileBehavior": {},
@@ -1117,6 +1213,44 @@
 							"response": []
 						},
 						{
+							"name": "APP_fires/position/get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_sim_url}}/fires/position/get",
+									"host": [
+										"{{pt_base_sim_url}}"
+									],
+									"path": [
+										"fires",
+										"position",
+										"get"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "APP_fires/reset/all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_sim_url}}/fires/reset/all",
+									"host": [
+										"{{pt_base_sim_url}}"
+									],
+									"path": [
+										"fires",
+										"reset",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "APP_fires",
 							"request": {
 								"method": "POST",
@@ -1209,7 +1343,7 @@
 							"response": []
 						},
 						{
-							"name": "APP_fires/update-intensity/{id} Copy",
+							"name": "APP_fires/update-intensity/{id}",
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -1241,16 +1375,22 @@
 							"name": "APP_fires/update-intensity/{line}/{column}",
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
 								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "intensity",
-											"value": "100",
-											"type": "text"
+									"mode": "raw",
+									"raw": "{\n\t\"intensity\":100\n}",
+									"options": {
+										"raw": {
+											"language": "json"
 										}
-									]
+									}
 								},
 								"url": {
 									"raw": "{{pt_base_sim_url}}/fires/update-intensity/0/0",
@@ -1753,6 +1893,64 @@
 											"key": "id_coordinate",
 											"value": "1"
 										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "APP_trucks/assign-fire/{id}",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "id_fire",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{pt_base_sim_url}}/trucks/assign-fire/1",
+									"host": [
+										"{{pt_base_sim_url}}"
+									],
+									"path": [
+										"trucks",
+										"assign-fire",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "APP_trucks/update-coordinate/{id}",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "id_coordinate",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{pt_base_sim_url}}/trucks/update-coordinate/1",
+									"host": [
+										"{{pt_base_sim_url}}"
+									],
+									"path": [
+										"trucks",
+										"update-coordinate",
+										"1"
 									]
 								}
 							},

@@ -7,6 +7,7 @@ use App\Exceptions\ResponseInterface;
 use App\Http\Resources\FireCollection;
 use App\Models\Simulator\Coordinate;
 use App\Models\Simulator\Fire;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Fire as FireResource;
@@ -161,6 +162,60 @@ class SimFireController extends Controller
             $fire->save();
 
             return new FireResource($fire);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Get the specified resource information from its position on the grid.
+     *
+     * @return JsonResponse
+     */
+    public function getPosition()
+    {
+        try {
+            $response = [];
+            $fires = Fire::All();
+            foreach ($fires as $fire) {
+                $coordinate = Coordinate::where('id', $fire->id_coordinate)->first();
+                $response[] = [
+                    'id_fire' => $fire->id,
+                    'intensity' => $fire->intensity,
+                    'line' => $coordinate->line,
+                    'column' => $coordinate->column
+                ];
+            }
+
+            return new JsonResponse($response);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Reset all fires
+     *
+     * @return ResponseInterface
+     */
+    public function resetAllFires()
+    {
+        try {
+            $fires = Fire::All();
+            foreach ($fires as $fire) {
+                $fire->intensity = 0;
+                $fire->save();
+            }
+
+            return new FireCollection(Fire::All());
         } catch (\Exception $e) {
             return new ExceptionResponse([
                 'status'=>'error',
