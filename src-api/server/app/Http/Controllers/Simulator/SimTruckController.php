@@ -123,4 +123,52 @@ class SimTruckController extends Controller
             ], 400);
         }
     }
+
+    /**
+     * Update the specified resource from storage.
+     *
+     * @param Request $request
+     * @param $id
+     * @return ResponseInterface
+     */
+    public function assignFire(Request $request , $id): ResponseInterface
+    {
+        try {
+            $fire = Truck::findOrFail($id);
+            $fire->id_fire = (int)$request->id_fire;
+            $fire->save();
+
+            return new TruckResource($fire);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Update the specified resource from storage.
+     *
+     * @param Request $request
+     * @param $id
+     * @return ResponseInterface
+     */
+    public function updateCoordinate(Request $request , $id): ResponseInterface
+    {
+        try {
+            $fire = Truck::findOrFail($id);
+            $fire->id_coordinate = (int)$request->id_coordinate;
+            $fire->save();
+
+            return new TruckResource($fire);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
+    }
 }
