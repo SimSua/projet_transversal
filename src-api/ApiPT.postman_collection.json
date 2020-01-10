@@ -344,14 +344,45 @@
 									]
 								},
 								"url": {
-									"raw": "{{pt_base_url}}/fires/update-intensity/1",
+									"raw": "{{pt_base_url}}/fires/update-intensity/0/2",
 									"host": [
 										"{{pt_base_url}}"
 									],
 									"path": [
 										"fires",
 										"update-intensity",
-										"1"
+										"0",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "APP_fires/update-intensity/{line}/{column}",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "intensity",
+											"value": "100",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{pt_base_url}}/fires/update-intensity/0/0",
+									"host": [
+										"{{pt_base_url}}"
+									],
+									"path": [
+										"fires",
+										"update-intensity",
+										"0",
+										"0"
 									]
 								}
 							},
@@ -1201,6 +1232,36 @@
 										"fires",
 										"update-intensity",
 										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "APP_fires/update-intensity/{line}/{column}",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "intensity",
+											"value": "100",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{pt_base_sim_url}}/fires/update-intensity/0/0",
+									"host": [
+										"{{pt_base_sim_url}}"
+									],
+									"path": [
+										"fires",
+										"update-intensity",
+										"0",
+										"0"
 									]
 								}
 							},

@@ -30,6 +30,10 @@ Route::post('/fires/update-intensity/{id}', function(FireController $fireControl
     return $fireController->updateIntensity(Request::capture(), $id);
 })->where(['id' => '[0-9]+']);
 
+Route::post('/fires/update-intensity/{line}/{column}', function(FireController $fireController, int $line, int $column) {
+    return $fireController->updateIntensityFromPosition(Request::capture(), $line, $column);
+})->where(['line' => '[0-9]+', 'column' => '[0-9]+']);
+
 Route::get('/coordinates/{line}/{column}', function(CoordinateController $coordinateController, int $line, int $column) {
     return $coordinateController->getCoordinateFromGrid($line, $column);
 })->where(['line' => '[0-9]+', 'column' => '[0-9]+']);
