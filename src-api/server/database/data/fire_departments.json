@@ -1,0 +1,32 @@
+[
+    {
+        "label":"Caserne A",
+        "capacity":3,
+        "id_coordinate":1
+    },
+    {
+        "label":"Caserne B",
+        "capacity":2,
+        "id_coordinate":14
+    },
+    {
+        "label":"Caserne C",
+        "capacity":5,
+        "id_coordinate":27
+    },
+    {
+        "label":"Caserne D",
+        "capacity":4,
+        "id_coordinate":40
+    },
+    {
+        "label":"Caserne E",
+        "capacity":4,
+        "id_coordinate":53
+    },
+    {
+        "label":"Caserne F",
+        "capacity":4,
+        "id_coordinate":60
+    }
+]

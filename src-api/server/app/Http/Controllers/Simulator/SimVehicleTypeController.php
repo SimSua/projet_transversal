@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Simulator;
 
+use App\Exceptions\ExceptionResponse;
+use App\Exceptions\ResponseInterface;
 use App\Http\Resources\VehicleTypeCollection;
 use App\Models\Simulator\VehicleType;
 use Illuminate\Http\Request;
@@ -13,10 +15,19 @@ class SimVehicleTypeController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @return VehicleTypeCollection | ExceptionResponse
      */
-    public function index()
+    public function index(): ResponseInterface
     {
-        return new VehicleTypeCollection(VehicleType::All());
+        try {
+            return new VehicleTypeCollection(VehicleType::All());
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -25,15 +36,23 @@ class SimVehicleTypeController extends Controller
      * @param Request $request
      * @return VehicleTypeResource
      */
-    public function store(Request $request)
+    public function store(Request $request): ResponseInterface
     {
-        $vehicleType = new VehicleType();
-        $vehicleType->label = $request->get('label');
-        $vehicleType->speed = (int)$request->get('speed');
-        $vehicleType->efficiency = (int)$request->get('efficiency');
-        $vehicleType->save();
+        try {
+            $vehicleType = new VehicleType();
+            $vehicleType->label = $request->get('label');
+            $vehicleType->speed = (int)$request->get('speed');
+            $vehicleType->efficiency = (int)$request->get('efficiency');
+            $vehicleType->save();
 
-        return new VehicleTypeResource($vehicleType);
+            return new VehicleTypeResource($vehicleType);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -42,9 +61,17 @@ class SimVehicleTypeController extends Controller
      * @param int $id
      * @return VehicleTypeResource
      */
-    public function show($id)
+    public function show($id): ResponseInterface
     {
-        return new VehicleTypeResource(VehicleType::FindOrFail($id));
+        try {
+            return new VehicleTypeResource(VehicleType::FindOrFail($id));
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -54,15 +81,23 @@ class SimVehicleTypeController extends Controller
      * @param int $id
      * @return VehicleTypeResource
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): ResponseInterface
     {
-        $vehicleType = VehicleType::findOrFail($id);
-        $vehicleType->label = $request->get('label');
-        $vehicleType->speed = (int)$request->get('speed');
-        $vehicleType->efficiency = (int)$request->get('efficiency');
-        $vehicleType->save();
+        try {
+            $vehicleType = VehicleType::findOrFail($id);
+            $vehicleType->label = $request->get('label');
+            $vehicleType->speed = (int)$request->get('speed');
+            $vehicleType->efficiency = (int)$request->get('efficiency');
+            $vehicleType->save();
 
-        return new VehicleTypeResource($vehicleType);
+            return new VehicleTypeResource($vehicleType);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 
     /**
@@ -71,11 +106,19 @@ class SimVehicleTypeController extends Controller
      * @param int $id
      * @return VehicleTypeResource
      */
-    public function destroy($id)
+    public function destroy($id): ResponseInterface
     {
-        $vehicleType = VehicleType::findOrFail($id);
-        $vehicleType->delete();
+        try {
+            $vehicleType = VehicleType::findOrFail($id);
+            $vehicleType->delete();
 
-        return new VehicleTypeResource($vehicleType);
+            return new VehicleTypeResource($vehicleType);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
     }
 }

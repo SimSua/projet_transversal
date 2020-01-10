@@ -2,10 +2,11 @@
 
 namespace App\Http\Resources;
 
+use App\Exceptions\ResponseInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class TruckCollection extends ResourceCollection
+class TruckCollection extends ResourceCollection implements ResponseInterface
 {
     /**
      * Transform the resource collection into an array.

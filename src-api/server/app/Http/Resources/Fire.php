@@ -2,10 +2,11 @@
 
 namespace App\Http\Resources;
 
+use App\Exceptions\ResponseInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Fire extends JsonResource
+class Fire extends JsonResource implements ResponseInterface
 {
     /**
      * Transform the resource into an array.
