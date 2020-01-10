@@ -53,11 +53,12 @@ services:
     working_dir: /application
     volumes:
       - ./Emergency_Web:/application
-    command:
-      - python run.py emergency_view webserver docker
-      - python receiver_uart.py
+    command: sh -c "python receiver_uart.py & python run.py localhost webserver docker"
     ports:
       - "5000:5000"
+    devices:
+      - "/dev/ttyS3:/dev/ttyUSB0"
+
     networks:
       - api
 
