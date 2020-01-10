@@ -43,12 +43,11 @@ def send_to_api(j):
         url_api = url+i["x"]+"/"+i["y"]
         print(url_api)
         print(i)
-        payload = "{\"intensity\":9}"
+        payload = {'intensity': i["intensite"]}
         print("p = "+str(payload))
-
         x = requests.request("POST",url_api, data=str(payload), headers={'Content-Type': "application/json"})
         print(x.request.body)
-        print(x.text)
+        print(x)
         #print(i)
 
 def data_to_json(data):
@@ -79,7 +78,6 @@ initUART()
 i = 0
 total_data = ""
 while True:
-
     data = readUARTMessage()
     if data:
         #print(data," ", i)
