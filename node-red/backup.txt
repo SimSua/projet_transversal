@@ -1,0 +1,148 @@
+[
+    {
+        "id": "8bce9dd3.14a788",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "97192dbb.7919a",
+        "type": "mqtt in",
+        "z": "8bce9dd3.14a788",
+        "name": "",
+        "topic": "Fire",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "188ba03b.e8e23",
+        "x": 250,
+        "y": 380,
+        "wires": [
+            [
+                "48b92c80.aff564",
+                "7626a78.39eed58"
+            ]
+        ]
+    },
+    {
+        "id": "48b92c80.aff564",
+        "type": "debug",
+        "z": "8bce9dd3.14a788",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 770,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "656183f2.52c1cc",
+        "type": "influxdb out",
+        "z": "8bce9dd3.14a788",
+        "influxdb": "95d9d4e7.69dc8",
+        "name": "",
+        "measurement": "intensite",
+        "precision": "",
+        "retentionPolicy": "",
+        "x": 960,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "7626a78.39eed58",
+        "type": "function",
+        "z": "8bce9dd3.14a788",
+        "name": "",
+        "func": "var x = msg.payload;\n\nif (x ==true){\n  var msg_o = {payload : 1}\n  return [msg_o, null]}\nelse if (x ==false){\n   var msg_o = {payload : 1}\n  return [null, msg_o]}",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 470,
+        "y": 380,
+        "wires": [
+            [
+                "43bb6700.c51ce8"
+            ],
+            [
+                "be36be6f.8aa32"
+            ]
+        ]
+    },
+    {
+        "id": "54eee7e4.5ed26",
+        "type": "influxdb out",
+        "z": "8bce9dd3.14a788",
+        "influxdb": "95d9d4e7.69dc8",
+        "name": "",
+        "measurement": "coordonnes",
+        "precision": "",
+        "retentionPolicy": "",
+        "x": 970,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "43bb6700.c51ce8",
+        "type": "debug",
+        "z": "8bce9dd3.14a788",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 710,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "be36be6f.8aa32",
+        "type": "debug",
+        "z": "8bce9dd3.14a788",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 710,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "188ba03b.e8e23",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "127.0.0.1",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "95d9d4e7.69dc8",
+        "type": "influxdb",
+        "z": "",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "influx_db",
+        "name": "",
+        "usetls": false,
+        "tls": ""
+    }
+]
