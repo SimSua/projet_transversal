@@ -5,7 +5,7 @@ function get_trucks()
 
 	$.ajax(
 	{
-		url : "http://164.4.1.10:5000/Camions",
+		url : "http://localhost:5000/Camions",
 		type : 'get',
 		dataType : 'json',
 

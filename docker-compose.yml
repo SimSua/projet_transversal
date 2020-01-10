@@ -32,7 +32,7 @@ services:
     container_name: php-fpm
     working_dir: /application
     volumes:
-      - ./server:/application
+      - ./src-api/server:/application
       - ./src-api/docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
     networks:
       - api
@@ -42,11 +42,24 @@ services:
     container_name: manager
     working_dir: /application
     volumes:
-      - .Emergency_Manager/manager.jar:/application/manager.jar
-    command: ["java", "-jar", "manager.jar"]
+      - ./Emergency_Manager/manager.jar:/application/manager.jar
+    command: java -jar manager.jar
     networks:
       - api
 
+  emergency_view:
+    build: ./Emergency_Web
+    container_name: emergency_view
+    working_dir: /application
+    volumes:
+      - ./Emergency_Web:/application
+    command:
+      - python run.py emergency_view webserver docker
+      - python receiver_uart.py
+    ports:
+      - "5000:5000"
+    networks:
+      - api
 
 networks:
   api:

@@ -1,7 +1,13 @@
 from flask import *
 import requests, json
+import sys
 from .model import *
 
+api="http://164.4.11:8081/api/"
+if len(sys.argv) == 4:
+	if sys.argv[3] == "docker":
+		api="http://"+str(sys.argv[2])+":80/api/"
+print(api)
 app = Flask(__name__)
 
 @app.route('/')
@@ -22,8 +28,8 @@ def Villerbanne():
 # API request Fire
 @app.route('/Fires',methods = ['GET'])
 def fire():
-	fires = requests.get("http://164.4.1.11:8081/api/fires")
-	coordinates = requests.get("http://164.4.1.11:8081/api/coordinates")
+	fires = requests.get(api+"fires")
+	coordinates = requests.get(api+"coordinates")
 	
 	fires_str = json.loads(fires.text)
 	coordinates_str = json.loads(coordinates.text)
@@ -35,8 +41,8 @@ def fire():
 # API request Truck
 @app.route('/Camions',methods = ['GET'])
 def camion():
-	trucks = requests.get("http://164.4.1.11:8081/api/trucks")
-	coordinates = requests.get("http://164.4.1.11:8081/api/coordinates")
+	trucks = requests.get(api+"trucks")
+	coordinates = requests.get(api+"coordinates")
 
 	trucks_str = json.loads(trucks.text)
 	coordinates_str = json.loads(coordinates.text)
