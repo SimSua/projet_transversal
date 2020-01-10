@@ -1,6 +1,6 @@
 
 import serial, requests, time, json
-url="http://localhost:8081/api/fires/position"
+url="http://localhost:8081/api/fires/position/get"
 
 
 # send serial message
@@ -44,10 +44,10 @@ while True:
     #print(response)
     jo = json.loads(response)
     print(jo)
-    for i in jo[u'data']:
-        print(i)
-        for j in i:
-            print(j)
-    time.sleep(1000)
+    for i in jo:
+        print(i[u'intensity'])
+        sendUARTMessage("(%d,%d,%d)" %(int(i[u'line']), int(i[u'column']), int(i[u'intensity'])))
+    sendUARTMessage("@")
+    time.sleep(5)
 
 
