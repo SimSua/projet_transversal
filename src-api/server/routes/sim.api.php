@@ -31,6 +31,6 @@ Route::get('/coordinates/{line}/{column}', function(SimCoordinateController $coo
     return $coordinateController->getCoordinateFromGrid($line, $column);
 })->where(['line' => '[0-9]+', 'column' => '[0-9]+']);
 
-Route::get('/fire-departments/vehicle/{id}', function(SimFireDepartmentController $fireDepartmentController, int $id) {
+Route::get('/fire-departments/vehicles/{id}', function(SimFireDepartmentController $fireDepartmentController, int $id) {
     return $fireDepartmentController->getAllTrucks($id);
 })->where(['id' => '[0-9]+']);

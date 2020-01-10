@@ -405,13 +405,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_url}}/fire-departments/vehicle/1",
+									"raw": "{{pt_base_url}}/fire-departments/vehicles/1",
 									"host": [
 										"{{pt_base_url}}"
 									],
 									"path": [
 										"fire-departments",
-										"vehicle",
+										"vehicles",
 										"1"
 									]
 								}
@@ -1254,13 +1254,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_sim_url}}/fire-departments/vehicle/1",
+									"raw": "{{pt_base_sim_url}}/fire-departments/vehicles/1",
 									"host": [
 										"{{pt_base_sim_url}}"
 									],
 									"path": [
 										"fire-departments",
-										"vehicle",
+										"vehicles",
 										"1"
 									]
 								}

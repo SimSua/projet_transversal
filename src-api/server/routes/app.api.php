@@ -34,6 +34,6 @@ Route::get('/coordinates/{line}/{column}', function(CoordinateController $coordi
     return $coordinateController->getCoordinateFromGrid($line, $column);
 })->where(['line' => '[0-9]+', 'column' => '[0-9]+']);
 
-Route::get('/fire-departments/vehicle/{id}', function(FireDepartmentController $fireDepartmentController, int $id) {
+Route::get('/fire-departments/vehicles/{id}', function(FireDepartmentController $fireDepartmentController, int $id) {
     return $fireDepartmentController->getAllTrucks($id);
 })->where(['id' => '[0-9]+']);
