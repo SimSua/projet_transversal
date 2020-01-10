@@ -237,6 +237,25 @@
 							"response": []
 						},
 						{
+							"name": "APP_fires/position/get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_url}}/fires/position/get",
+									"host": [
+										"{{pt_base_url}}"
+									],
+									"path": [
+										"fires",
+										"position",
+										"get"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "APP_fires",
 							"request": {
 								"method": "POST",
@@ -1169,6 +1188,25 @@
 									"path": [
 										"fires",
 										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "APP_fires/position/get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_sim_url}}/fires/position/get",
+									"host": [
+										"{{pt_base_sim_url}}"
+									],
+									"path": [
+										"fires",
+										"position",
+										"get"
 									]
 								}
 							},

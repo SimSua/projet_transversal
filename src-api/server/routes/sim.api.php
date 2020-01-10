@@ -32,6 +32,10 @@ Route::post('/fires/update-intensity/{line}/{column}', function(SimFireControlle
     return $fireController->updateIntensityFromPosition(Request::capture(), $line, $column);
 })->where(['line' => '[0-9]+', 'column' => '[0-9]+'])->middleware('throttle:100,1');
 
+Route::get('/fires/position/get', function(SimFireController $fireController) {
+    return $fireController->getPosition();
+})->middleware('throttle:100,1');
+
 Route::get('/coordinates/{line}/{column}', function(SimCoordinateController $coordinateController, int $line, int $column) {
     return $coordinateController->getCoordinateFromGrid($line, $column);
 })->where(['line' => '[0-9]+', 'column' => '[0-9]+'])->middleware('throttle:100,1');
