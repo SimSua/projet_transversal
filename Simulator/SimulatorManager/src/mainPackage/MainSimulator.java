@@ -1,6 +1,9 @@
 package mainPackage;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 public class MainSimulator {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, JsonProcessingException {
         Boolean debug = false;
 
 
@@ -51,7 +54,10 @@ public class MainSimulator {
                 Thread.sleep(1800);
                 if(simulator.vehiculeChoisi != null && simulator.vehiculeChoisi.getFeu() != null){
                     simulator.vehiculeChoisi.allerAuFeu();
-                    simulator.apiConnector.request
+                    simulator.apiConnector.requestPatchVehicule(
+                            simulator.vehiculeChoisi,
+                            simulator.vehiculeChoisi.getFeu().getCoordonnees()
+                    );
 
                     //vehicule téléporté au feu
 

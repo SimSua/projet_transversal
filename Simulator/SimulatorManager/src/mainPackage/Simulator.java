@@ -133,8 +133,12 @@ public class Simulator extends Thread {
         }
     }
 
-    public void traiterFeux() {
-        //System.out.println("traiter feux");
+    public void traiterFeux() throws JsonProcessingException {
+        for (Feu feu:listFeuxNonTraites) {
+            System.out.println("intensité augmenté du feu "+ feu.toString());
+            feu.augmenterIntensite();
+            apiConnector.requestPatchFeu(feu);
+        }
         for (Vehicule vehicule:listVehicules){
 //            if(vehicule.getFeu() != null) {
 //                System.out.println(vehicule.estSurLeFeu());
@@ -143,15 +147,15 @@ public class Simulator extends Thread {
                 if (vehicule.getFeu().estEteint()){
                     System.out.println("n°"+vehicule.getId()+" a éteint un feu");
                     vehicule.setFeu(null);
+                    apiConnector.requestPatchVehicule(vehicule, (Feu) null);
                     listFeuxNonTraites.remove(vehicule.getFeu());
 //                    vehicule.allerALaCaserne();
                 }else {
-                    vehicule.getFeu().baisserIntensite();
-                    System.out.println("intensité baissé du feu " + vehicule.getFeu().toString());
+                    vehicule.getFeu().baisserIntensite(vehicule.getType().getEfficacite());
+                    apiConnector.requestPatchFeu(vehicule.getFeu());
+                    System.out.println("intensité baissé du feu -"+vehicule.getType().getEfficacite()
+                            +" | "+ vehicule.getFeu().toString());
                 }
-            }else if(vehicule.getFeu() != null){
-                System.out.println("intensité augmenté du feu "+ vehicule.getFeu().toString());
-                vehicule.getFeu().augmenterIntensite();
             }
         }
     }

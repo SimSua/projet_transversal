@@ -18,8 +18,8 @@ public class Feu {
         this.coordonnees = coordonnees;
     }
 
-    public void baisserIntensite() {
-        this.intensity--;
+    public void baisserIntensite(int efficaciteVehicule) {
+        this.intensity = this.intensity - efficaciteVehicule;
     }
 
     public void augmenterIntensite() { this.intensity++; }
