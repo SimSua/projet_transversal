@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ApiConnector {
-	protected String uri = "http://localhost:8081/api/sim/";
+	protected String uri = "http://localhost:8081/api/";
 	protected HttpClient client;
 
 	public ApiConnector() {
