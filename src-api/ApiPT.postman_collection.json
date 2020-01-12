@@ -237,6 +237,44 @@
 							"response": []
 						},
 						{
+							"name": "APP_fires/position/get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_url}}/fires/position/get",
+									"host": [
+										"{{pt_base_url}}"
+									],
+									"path": [
+										"fires",
+										"position",
+										"get"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "APP_fires/reset/all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_url}}/fires/reset/all",
+									"host": [
+										"{{pt_base_url}}"
+									],
+									"path": [
+										"fires",
+										"reset",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "APP_fires",
 							"request": {
 								"method": "POST",
@@ -758,6 +796,25 @@
 							"response": []
 						},
 						{
+							"name": "APP_trucks/reset/all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_url}}/trucks/reset/all",
+									"host": [
+										"{{pt_base_url}}"
+									],
+									"path": [
+										"trucks",
+										"reset",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "APP_trucks",
 							"request": {
 								"method": "POST",
@@ -1169,6 +1226,44 @@
 									"path": [
 										"fires",
 										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "APP_fires/position/get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_sim_url}}/fires/position/get",
+									"host": [
+										"{{pt_base_sim_url}}"
+									],
+									"path": [
+										"fires",
+										"position",
+										"get"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "APP_fires/reset/all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_sim_url}}/fires/reset/all",
+									"host": [
+										"{{pt_base_sim_url}}"
+									],
+									"path": [
+										"fires",
+										"reset",
+										"all"
 									]
 								}
 							},
@@ -1695,6 +1790,25 @@
 									"path": [
 										"trucks",
 										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "APP_trucks/reset/all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_sim_url}}/trucks/reset/all",
+									"host": [
+										"{{pt_base_sim_url}}"
+									],
+									"path": [
+										"trucks",
+										"reset",
+										"all"
 									]
 								}
 							},
