@@ -271,7 +271,6 @@ public class ApiConnector {
             e.printStackTrace();
         }
         JSONObject reponse = new JSONObject(response.body());
-        System.out.println(reponse);
     }
     public void requestPatchVehicule(Vehicule vehicule,Coordonnees coordonnees) throws JsonProcessingException {
         var values = new HashMap<String, Integer>() {{
@@ -294,7 +293,6 @@ public class ApiConnector {
             e.printStackTrace();
         }
         JSONObject reponse = new JSONObject(response.body());
-        System.out.println(reponse);
     }
 }
 

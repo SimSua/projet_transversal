@@ -10,6 +10,7 @@ import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
 public class Simulator extends Thread {
+    private static final int POURCENTAGE_CHANCE_FEU = 20;
     private Boolean debug;
     private Feu nouveauFeu;
     public Vehicule vehiculeChoisi;
@@ -145,12 +146,14 @@ public class Simulator extends Thread {
 //            }
             if (vehicule.getFeu() != null && vehicule.estSurLeFeu()){
                 if (vehicule.getFeu().estEteint()){
+                    //Feu éteint
                     System.out.println("n°"+vehicule.getId()+" a éteint un feu");
                     vehicule.setFeu(null);
                     apiConnector.requestPatchVehicule(vehicule, (Feu) null);
                     listFeuxNonTraites.remove(vehicule.getFeu());
-//                    vehicule.allerALaCaserne();
+                    vehicule.allerALaCaserne();
                 }else {
+                    //Feu intensité baissée
                     vehicule.getFeu().baisserIntensite(vehicule.getType().getEfficacite());
                     apiConnector.requestPatchFeu(vehicule.getFeu());
                     System.out.println("intensité baissé du feu -"+vehicule.getType().getEfficacite()
@@ -190,7 +193,7 @@ public class Simulator extends Thread {
 
     private Boolean getChanceFeu() {
 //        int pourcentageChance = (int) (1 + (Math.random() * 10));
-        int pourcentageChance = 2;//20%
+        int pourcentageChance = POURCENTAGE_CHANCE_FEU / 10;//20%
         List<Boolean> tirage = new ArrayList<>();
         for(int i=0;i<10;i++){
             if(i<pourcentageChance){

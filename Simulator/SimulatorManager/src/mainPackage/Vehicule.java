@@ -78,6 +78,7 @@ public class Vehicule {
     }
 
     public void allerALaCaserne(){
+        this.setCoordonnees(this.caserne.getCoordonnees());
         System.out.println("Camion n°"+id+" retour à la caserne n°"+caserne.getId());
     }
 
