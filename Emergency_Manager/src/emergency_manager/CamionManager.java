@@ -80,7 +80,7 @@ public class CamionManager extends Thread {
 					if((int)Math.abs(Math.random()*10)==3) {
 						intensite=(int)Math.abs(Math.random()*10);
 					}
-					Feu f = new Feu(new Coordonnees(100*i, 100*j, j, i), intensite);
+					Feu f = new Feu(new Coordonnees(i+j,100*i, 100*j, j, i), intensite);
 					feux.add(f);
 					System.out.println(v.getName()+" : "+f.toString());
 				}

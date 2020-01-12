@@ -6,7 +6,6 @@ public class MainSimulator {
     public static void main(String[] args) throws InterruptedException, JsonProcessingException {
         Boolean debug = false;
 
-
         if (debug) {
 //            Caserne caserne1 = new Caserne(5, 5, new Coordonnees(8, 10));
 //            Caserne caserne2 = new Caserne(10, 20, new Coordonnees(16, 20));

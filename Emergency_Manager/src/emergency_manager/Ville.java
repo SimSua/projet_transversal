@@ -1,6 +1,7 @@
 package emergency_manager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Ville {
 	protected String name;
@@ -41,5 +42,9 @@ public class Ville {
 	public ArrayList<Feu> getFeux() {
 		// TODO Auto-generated method stub
 		return this.feux;
+	}
+
+	public void addCasernes(List<Caserne> requestCasernes) {
+		this.casernes = (ArrayList<Caserne>)requestCasernes;
 	}
 }

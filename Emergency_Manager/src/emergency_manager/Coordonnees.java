@@ -1,41 +1,43 @@
 package emergency_manager;
 
 public class Coordonnees {
-	protected int x;
-	protected int y;
-	protected int ligne;
-	protected int colonne;
-	
-	public Coordonnees(int x, int y, int l, int c) {
-		this.x = x;
-		this.y = y;
-		if(l >= 0 && l < 6) {
-			this.ligne = l;
-		}else {
-			this.ligne = 0;
-		}
-		
-		if(c <= 9 && c >= 0) {
-			this.colonne = c;
-		}else {
-			this.colonne = 0;
-		}
+	private int id;
+	private int ligne;
+	private int colonne;
+	private double x_coord;
+	private double y_coord;
+
+	public Coordonnees(int id, int ligne, int colonne, double x_coord, double y_coord) {
+		this.id = id;
+		this.ligne = ligne;
+		this.colonne = colonne;
+		this.x_coord = x_coord;
+		this.y_coord = y_coord;
 	}
-	
-	public void getXYfromBDD() {
-		
+
+	public int getId() {
+		return id;
 	}
-	
-	public int getX() {
-		return this.x;
-	}
-	public int getY() {
-		return this.y;
-	}
+
 	public int getLigne() {
-		return this.ligne;
+		return ligne;
 	}
+
 	public int getColonne() {
-		return this.colonne;
+		return colonne;
+	}
+
+	public double getX_coord() {
+		return x_coord;
+	}
+
+	public double getY_coord() {
+		return y_coord;
+	}
+
+	@Override
+	public String toString() {
+		return "Coordonnees("+ligne+","+colonne+")";
 	}
 }
+

@@ -20,14 +20,10 @@ public class Manager {
 	
 	public static void creerCaserne(Ville v) {
 		if(!Manager.bdd) {
-			v.addCaserne(new Caserne(new Coordonnees(0, 0, 0, 0)));
+			v.addCaserne(new Caserne(new Coordonnees(1,0, 0, 0, 0)));
 		}else {
 			System.out.println("Récupération des casernes depuis la base de données réel");
+			v.addCasernes(new ApiConnector().requestCasernes());
 		}
-	}
-	
-	public static void testApi() {
-		ApiConnector conn = new ApiConnector();
-		Manager.bdd = conn.test();
 	}
 }

@@ -2,11 +2,21 @@ package emergency_manager;
 
 public abstract class Vehicule {
 	protected static int compteur = 0;
-	protected int id;
+	private int id;
+	private int id_type;
+	private int id_caserne;
+	protected int id_coordonnees;
 	protected int vitesse;
 	protected Caserne c;
 	protected boolean occupe = false;
 	protected Coordonnees coord;
+
+	public Vehicule(int id,int id_type,int id_caserne,int id_coordonnees){
+		this.id = id;
+		this.id_type = id_type;
+		this.id_caserne = id_caserne;
+		this.id_coordonnees = id_coordonnees;
+	}
 	
 	public Vehicule(int vitesse, Caserne c, Coordonnees coord) {
 		this.id = Vehicule.compteur++;
@@ -31,4 +41,6 @@ public abstract class Vehicule {
 		// TODO Auto-generated method stub
 		return occupe;
 	}
+
+	public int getId(){ return id;}
 }
