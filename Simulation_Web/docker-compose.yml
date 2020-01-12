@@ -1,0 +1,11 @@
+version: "3"
+services:
+  simulation_view:
+    build: .
+    container_name: simulation_view
+    volumes: 
+      - .:/application
+    working_dir: /application
+    ports:
+      - "5000:5000"
+    command: python run.py localhost localhost:8081 docker

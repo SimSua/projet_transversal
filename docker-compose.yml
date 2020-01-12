@@ -53,12 +53,30 @@ services:
     working_dir: /application
     volumes:
       - ./Emergency_Web:/application
-    command: sh -c "python receiver_uart.py & python run.py localhost webserver docker"
+    command: python run.py localhost webserver:80 docker
     ports:
       - "5000:5000"
-    devices:
-      - "/dev/ttyS3:/dev/ttyUSB0"
+    networks:
+      - api
+  
+  emergency_iot:
+    build: ./Emergency_Web
+    container_name: emergency_iot
+    working_dir: /application
+    volumes:
+      - ./Emergency_Web:/application
+    networks:
+      - api
 
+  simulation_view:
+    build: ./Simulation_Web
+    container_name: simulation_view
+    volumes: 
+      - ./Simulation_Web:/application
+    working_dir: /application
+    ports:
+      - "5001:5000"
+    command: python run.py localhost webserver:80 docker 
     networks:
       - api
 

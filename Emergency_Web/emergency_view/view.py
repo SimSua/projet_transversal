@@ -6,7 +6,7 @@ from .model import *
 api="http://164.4.11:8081/api/"
 if len(sys.argv) == 4:
 	if sys.argv[3] == "docker":
-		api="http://"+str(sys.argv[2])+":80/api/"
+		api="http://"+str(sys.argv[2])+"/api/"
 print(api)
 app = Flask(__name__)
 
@@ -17,7 +17,7 @@ def Lyon():
 	script_camion = url_for('static', filename='js/camion.js')
 	return render_template("index.html", map_index = script_map, fire = script_fire, camion = script_camion, X=45.7579341, Y=4.8307417, Z=15)
 
-@app.route('/Villerbanne')
+@app.route('/Villeurbannes')
 def Villerbanne():
 	script_map = url_for('static', filename='js/map_index.js')
 	script_fire = url_for('static', filename='js/fire.js')
@@ -28,6 +28,7 @@ def Villerbanne():
 # API request Fire
 @app.route('/Fires',methods = ['GET'])
 def fire():
+	print("oui")
 	fires = requests.get(api+"fires")
 	coordinates = requests.get(api+"coordinates")
 	
