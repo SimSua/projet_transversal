@@ -171,15 +171,21 @@ public class ApiConnector {
 
 			switch ((int) jsonobject.get("id_type")){
 				case 1:
-					vehicule = new Camion((int) jsonobject.get("id"),(int) jsonobject.get("id_type"),
+					vehicule = new Camion((int) jsonobject.get("id"),
+							(int) jsonobject.get("id_type"),
 							(int) jsonobject.get("id_department"),
-							(int) jsonobject.get("id_coordinate"));
+							(int) jsonobject.get("id_coordinate"),
+							(int) jsonobject.get("id_fire")
+					);
 //                            this.requestCoordonnees((int) jsonobject.get("id_coordinate")),
 //                            this.requestCaserne((int) jsonobject.get("id_department")));
 				default:
-					vehicule = new Camion((int) jsonobject.get("id"),(int) jsonobject.get("id_type"),
+					vehicule = new Camion((int) jsonobject.get("id"),
+							(int) jsonobject.get("id_type"),
 							(int) jsonobject.get("id_department"),
-							(int) jsonobject.get("id_coordinate"));
+							(int) jsonobject.get("id_coordinate"),
+							(int) jsonobject.get("id_fire")
+					);
 //                            this.requestCoordonnees((int) jsonobject.get("id_coordinate")),
 //                            this.requestCaserne((int) jsonobject.get("id_department")));
 			}
@@ -215,7 +221,7 @@ public class ApiConnector {
 
 	}
 
-	public void requestPatchFeu(Feu feu) throws JsonProcessingException {
+	public void requestPatchFeu(Feu feu) throws IOException {
 		var values = new HashMap<String, Integer>() {{
 			put ("intensity", feu.getIntensity());
 		}};
@@ -243,7 +249,7 @@ public class ApiConnector {
 //        System.out.println(reponse);
 	}
 
-	public void requestPatchVehicule(Vehicule vehicule,Feu feu) throws JsonProcessingException {
+	public void requestPatchVehicule(Vehicule vehicule,Feu feu) throws IOException {
 		Object values;
 		if (feu != null) {
 			values = new HashMap<String, String>() {{
@@ -272,7 +278,7 @@ public class ApiConnector {
 		}
 		JSONObject reponse = new JSONObject(response.body());
 	}
-	public void requestPatchVehicule(Vehicule vehicule,Coordonnees coordonnees) throws JsonProcessingException {
+	public void requestPatchVehicule(Vehicule vehicule,Coordonnees coordonnees) throws IOException {
 		var values = new HashMap<String, Integer>() {{
 			put("id_coordinate", coordonnees.getId());
 		}};
@@ -293,5 +299,49 @@ public class ApiConnector {
 			e.printStackTrace();
 		}
 		JSONObject reponse = new JSONObject(response.body());
+	}
+
+	public Feu requestFeu(int id_feu) {
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create(uri+"fires/"+id_feu))
+				.build();
+		HttpResponse<String> response = null;
+		try {
+			response = this.client.send(request, BodyHandlers.ofString());
+		} catch (IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			JSONObject reponse = new JSONObject(response.body());
+			JSONObject jsonobject = new JSONObject(reponse.get("data").toString());
+			Feu feu = new Feu(
+					(int) jsonobject.get("id"),
+					(int) jsonobject.get("intensity"),
+					(int) jsonobject.get("id_coordinate"));
+			return feu;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void requestResetAllFeux() {
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create(uri+"fires/reset/all"))
+				.build();
+		HttpResponse<String> response = null;
+		try {
+			response = this.client.send(request, BodyHandlers.ofString());
+		} catch (IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			JSONObject reponse = new JSONObject(response.body());
+			JSONObject jsonobject = new JSONObject(reponse.get("data").toString());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 }

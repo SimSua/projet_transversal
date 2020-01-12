@@ -1,6 +1,7 @@
 package mainPackage;
 
-public class Vehicule {
+public abstract class Vehicule {
+    private int id_feu = Integer.parseInt(null);
     private int id;
     private int id_type;
     private int id_caserne;
@@ -13,11 +14,12 @@ public class Vehicule {
     private Feu feu;
     private Caserne caserne;
 
-    public Vehicule(int id,int id_type,int id_caserne,int id_coordonnees){
+    public Vehicule(int id,int id_type,int id_caserne,int id_coordonnees, int id_feu){
         this.id = id;
         this.id_type = id_type;
         this.id_caserne = id_caserne;
         this.id_coordonnees = id_coordonnees;
+        this.id_feu = id_feu;
     }
 
     void deplacer(Coordonnees coordonnees){
@@ -85,5 +87,9 @@ public class Vehicule {
     public boolean estSurLeFeu() {
         return this.coordonnees.getColonne() == this.feu.getCoordonnees().getColonne()
                 && this.coordonnees.getLigne() == this.feu.getCoordonnees().getLigne();
+    }
+
+    public int getId_feu() {
+        return id_feu;
     }
 }

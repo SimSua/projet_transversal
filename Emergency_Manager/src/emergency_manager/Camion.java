@@ -1,10 +1,12 @@
 package emergency_manager;
 
 public class Camion extends Vehicule {
-
-	public Camion(Caserne c, Coordonnees coord) {
-		// TODO Auto-generated constructor stub
-		super(1, c, coord);
+	public Camion(int id, int id_type, int id_caserne, int id_coordonnees,int id_feu) {
+		super(id, id_type, id_caserne, id_coordonnees,id_feu);
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Camion n°" + this.getId();
+	}
 }

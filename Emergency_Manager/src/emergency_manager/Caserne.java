@@ -1,35 +1,65 @@
 package emergency_manager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Caserne {
-	private ArrayList<Vehicule> vehicules;
-	protected Coordonnees coord;
-	
-	public Caserne(Coordonnees coord) {
-		System.out.println("Creation d'une caserne");
-		this.coord = coord;
-		vehicules = new ArrayList<Vehicule>();
-		this.generateVehicules();
+	private int id;
+	private int id_coordonnees;
+	private Coordonnees coordonnees;
+	private int capacite;
+	private List<Vehicule> vehicules = new ArrayList<Vehicule>();
+
+	public Caserne(int id, int capacite,int id_coordonnees) {
+		this.id = id;
+		this.capacite = capacite;
+		this.id_coordonnees = id_coordonnees;
 	}
 
-	public ArrayList<Vehicule> generateVehicules() {
-		//Connection bdd
-		for(int i = 0; i < 5; i++) {
-			this.vehicules.add(new Camion(this, this.getCoordonnees()));
-		}
+	public void addVehicule(Vehicule vehicule){
+		this.vehicules.add(vehicule);
+	}
+
+	public List<Vehicule> getVehiculesDispo() {
+		List<Vehicule> vehiculesDispo = new ArrayList<>();
+		for (Vehicule vehicule:this.getVehicules())
+			if (vehicule.getFeu() == null) {
+				vehiculesDispo.add(vehicule);
+			}
+		return vehiculesDispo;
+	}
+
+	public Coordonnees getCoordonnees() {
+		return coordonnees;
+	}
+
+	public void setCoordonnees(Coordonnees coordonnees) {
+		this.coordonnees = coordonnees;
+	}
+
+	public List<Vehicule> getVehicules() {
 		return vehicules;
 	}
-	
-	public ArrayList<Vehicule> getVehicules(){
-		return this.vehicules;
+
+	public int getId() {
+		return id;
 	}
 
-	public void setVehicules(ArrayList<Vehicule> vehicules) {
-		this.vehicules = vehicules;
-	} 
-	
-	public Coordonnees getCoordonnees() {
-		return this.coord;
+	public int getId_coordonnees() {
+		return id_coordonnees;
+	}
+
+	public int getCapacite() {
+		return capacite;
+	}
+
+	@Override
+	public String toString() {
+		ArrayList idVehicules = new ArrayList<>();
+		for (Vehicule vehicule:vehicules) idVehicules.add(vehicule.getId());
+		return "Caserne{" +
+				"id="+id+
+				", vehicules=" + idVehicules +
+				'}';
 	}
 }
