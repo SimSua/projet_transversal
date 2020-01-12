@@ -1,48 +1,62 @@
 package mainPackage;
 
 public class Feu {
-
-    private int intensite;
-    private int ligne;
-    private int colonne;
+    private int id;
+    private int id_coordinate;
+    private int intensity;
     private Coordonnees coordonnees;
 
-    public Feu(int intensite, int ligne, int colonne, Coordonnees coordonnees) {
-        this.intensite = intensite;
-        this.ligne = ligne;
-        this.colonne = colonne;
+    public Feu(int id, int intensity, int id_coordinate) {
+        this.id = id;
+        this.intensity = intensity;
+        this.id_coordinate = id_coordinate;
+    }
+
+    public Feu(int id, int intensite, Coordonnees coordonnees) {
+        this.id = id;
+        this.intensity = intensite;
         this.coordonnees = coordonnees;
     }
 
-    public void baisserIntensite() {
-        this.intensite--;
+    public void baisserIntensite(int efficaciteVehicule) {
+        this.intensity = this.intensity - efficaciteVehicule;
     }
 
-    public void augmenterIntensite() { this.intensite++; }
+    public void augmenterIntensite() { this.intensity++; }
 
     public boolean estEteint() {
-        return this.intensite <= 0;
+        return this.intensity <= 0;
     }
 
-    public int getIntensite() {
-        return intensite;
+    public int getId() {
+        return id;
     }
 
-    public int getLigne() {
-        return ligne;
+    public int getId_coordinate() {
+        return id_coordinate;
     }
 
-    public int getColonne() {
-        return colonne;
+    public Coordonnees getCoordonnees() {
+        return coordonnees;
+    }
+
+    public void setCoordonnees(Coordonnees coordonnees) {
+        this.coordonnees = coordonnees;
+    }
+
+    public int getIntensity() {
+        return intensity;
+    }
+
+    public void setIntensity(int intensity) {
+        this.intensity = intensity;
     }
 
     @Override
     public String toString() {
         return "Feu{" +
-                "intensite=" + intensite +
-                ", ligne=" + ligne +
-                ", colonne=" + colonne +
-                ", coordonnees=" + coordonnees.toString() +
+                "id="+id+
+                "intensite=" + intensity +
                 '}';
     }
 }

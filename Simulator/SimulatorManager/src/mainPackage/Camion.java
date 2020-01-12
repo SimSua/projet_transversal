@@ -1,24 +1,12 @@
 package mainPackage;
 
 public class Camion extends Vehicule {
-    private Caserne caserne;
-
-    public Camion(int vitesse, int ligne, int colonne, Coordonnees coordonnees,Caserne caserne) {
-        super(vitesse, ligne, colonne,coordonnees);
-        this.caserne = caserne;
-    }
-    public Caserne getCaserne() {
-        return caserne;
+    public Camion(int id, int id_type, int id_caserne, int id_coordonnees) {
+        super(id, id_type, id_caserne, id_coordonnees);
     }
 
     @Override
     public String toString() {
-        return "Camion{" +
-                "caserne=" + caserne.toString() +
-                ", vitesse=" + this.getVitesse() +
-                ", coordonnees=" + this.getCoordonnees().toString() +
-                ", ligne=" + this.getLigne() +
-                ", colonne=" + this.getColonne() +
-                '}';
+        return "Camion n°" + this.getId();
     }
 }

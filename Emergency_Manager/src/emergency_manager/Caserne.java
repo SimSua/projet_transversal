@@ -2,7 +2,6 @@ package emergency_manager;
 
 import java.util.ArrayList;
 
-
 public class Caserne {
 	private ArrayList<Vehicule> vehicules;
 	protected Coordonnees coord;
