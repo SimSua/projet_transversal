@@ -65,6 +65,9 @@ services:
     working_dir: /application
     volumes:
       - ./Emergency_Web:/application
+    devices:
+      - "/dev/ttyUSB1:/dev/ttyUSB1"
+    command: python receiver_uart.py webserver:80 ttyUSB1
     networks:
       - api
 
@@ -80,5 +83,36 @@ services:
     networks:
       - api
 
+  simulation_iot:
+    build: ./Simulation_Web
+    container_name: simulation_iot
+    working_dir: /application
+    volumes:
+      - ./Simulation_Web:/application
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
+    command: python sender_uart.py webserver:80 ttyUSB0
+    networks:
+      - api
+
+  influx:
+    image: influxdb:1.7.9
+    container_name: influx
+    volumes:
+      - ./influx:/var/lib/influxdb
+    ports:
+      - "8086:8086"
+    networks:
+      - api
+    
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    volumes: 
+      - grafana/grafana-storage:/var/lib/grafana
+    ports: 
+      - "3000:3000"
+    networks: 
+      - api
 networks:
   api:

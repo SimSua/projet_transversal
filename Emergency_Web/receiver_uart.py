@@ -1,15 +1,54 @@
-import serial, json, requests
+import serial, json, requests, sys
+from cryptography.fernet import Fernet
 
+# 3 args needed 
+#arg 0 = program name
+#arg 1 = url
+#arg 2 = tty
+
+if len(sys.argv) != 3:
+    sys.exit()
+else:
+    url="http://"+str(sys.argv[1])+"/api/fires/update-intensity/"
+    SERIALPORT="/dev/"+str(sys.argv[2])
+
+print("Receiver ready to receive data")
 #Ce script python lit les donnees recues sur ttyUSB0 puis les ecrit dans un fichier
 #To do : Envoyer les donnees sur l'API Rest
 #To do : Verifier integrite des donnees
 #A lancer en sudo, a besoin de pyserial pour fonctionner (sudo pip install pyserial)
-SERIALPORT = "/dev/ttyS3"
+#SERIALPORT = "/dev/ttyS3"
 #SERIALPORT = "/dev/ttyUSB0"
 #SERIALPORT = "/dev/tty.usbserial-DA00G4XZ"
 BAUDRATE = 115200
 ser = serial.Serial()
-url="http://localhost:8081/api/fires/update-intensity/"
+#url="http://localhost:8081/api/fires/update-intensity/"
+
+def load_key():
+    """
+    Loads the key from the current directory named `key.key`
+    """
+    return open("key.key", "rb").read()
+
+#Caeser Cypher	
+def Encryption(s,k):
+    encstr=""
+    for i in s:
+        encstr=encstr+chr(ord(i)+k+30)
+    return encstr
+
+def Decryption(p,k):
+    #p=Encryption(s,k)
+    print(p)
+    decstr=""
+    try:
+        for i in p:
+            decstr=decstr+chr(ord(i)-k-30)
+    except:
+        print("Erreur dans le decryptage de "+i)
+
+    return decstr
+
 def initUART():
     # ser = serial.Serial(SERIALPORT, BAUDRATE)
     ser.port=SERIALPORT
@@ -32,59 +71,82 @@ def initUART():
         exit()        
 
 def readUARTMessage(): 
-    line = str(ser.readline(),"utf-8")
+    line = str(ser.readline())
     print(line)
     if "<" in line or ">" in line:
         return line
 
 def send_to_api(j):
-    jo = json.loads(j)
-    for i in jo:
-        url_api = url+i["x"]+"/"+i["y"]
-        print(url_api)
-        print(i)
-        payload = {'intensity': i["intensite"]}
-        print("p = "+str(payload))
-        x = requests.request("POST",url_api, data=str(payload), headers={'Content-Type': "application/json"})
-        print(x.request.body)
-        print(x)
-        #print(i)
+    try:
+        jo = json.loads(j)
+        for i in jo:
+            if str.isnumeric(i["x"]) and str.isnumeric(i["y"]) and str.isnumeric(i["intensite"]):
+                url_api = url+i["x"]+"/"+i["y"]
+                print(url_api)
+                print(i)
+                payload = {'intensity': i["intensite"]}
+                print("p = "+str(payload))
+                x = requests.request("POST",url_api, data=str(payload), headers={'Content-Type': "application/json"})
+                #print(x.request.body)
+                print(x)
+                #print(i)
+    except:
+        print("Error send to api")
+
+def decrypt_total_data(d, k):
+    dec=""
+    for i in range(0, len(total_data), 7):
+        dec += Decryption(d[i:i+7], k)
+    return dec
 
 def data_to_json(data):
-    json_str = "[\n"
-    data = data.replace('<','')
-    data = data.replace('>','')
-    for i in range(len(data)):
-        #print(data[i])
-        if data[i] == "(":
-            data_dict = {}
-            i += 1
-            data_dict["x"] = data[i]
-            i += 2
-            data_dict["y"] = data[i]
-            i += 2
-            data_dict["intensite"] = data[i]
-            #print(data_dict)
-            json_str += json.dumps(data_dict)+",\n"
-    json_str = json_str[:-2] + "\n]"
-    print(json_str)
-    file = open("uart.log", "a+")
-    file.write(json_str)
-    file.close()        
-    return json_str
+    
+    try:
+        json_str = "[\n"
+        print(data)
+        for i in range(len(data)):
+            #print(data[i])
+            if data[i] == "(":
+                data_dict = {}
+                i += 1
+                data_dict["x"] = data[i]
+                i += 2
+                data_dict["y"] = data[i]
+                i += 2
+                data_dict["intensite"] = data[i]
+                #print(data_dict)
+                json_str += json.dumps(data_dict)+",\n"
+        json_str = json_str[:-2] + "\n]"
+        print(json_str)
+        file = open("uart.log", "a+")
+        file.write(json_str)
+        file.close()        
+        return json_str
+    except:
+        print("Error data to json")
+        return ""
 
 
 initUART()
-i = 0
 total_data = ""
+k = int(load_key())
+i = 0
+
 while True:
     data = readUARTMessage()
-    if data:
-        #print(data," ", i)
-        total_data += data[7:-2]
-        if "(5,9," in total_data: #(5,9, signifie qu'on a recu la derniere ligne
-            send_to_api(data_to_json(total_data))
-            i = 0
+    if len(data)!=0:
+        data = data.replace('<','')
+        data = data.replace('>','')
+        data = data.replace('msg : ','')
+        data = data.replace('\r','')
+        data = data.replace('\n','')
+        print(data + " "+ str(i))
+        total_data += data
+        if i == 6: #(5,9, signifie qu'on a recu la derniere ligne
+            send_to_api(data_to_json(decrypt_total_data(total_data, k)))
             total_data = ""
-    i += 1
+            i=0
+        else:
+            i += 1
+
         

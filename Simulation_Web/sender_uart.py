@@ -1,15 +1,39 @@
 
-import serial, requests, time, json
-url="http://localhost:8081/api/fires/position/get"
+import serial, requests, time, json, sys
+from cryptography.fernet import Fernet
 
+# 3 args needed 
+#arg 0 = program name
+#arg 1 = url
+#arg 2 = tty
 
+if len(sys.argv) != 3:
+    sys.exit()
+else:
+    url="http://"+str(sys.argv[1])+"/api/sim/fires/position/get"
+    SERIALPORT="/dev/"+str(sys.argv[2])
+
+print("Sender ready to send data")
 # send serial message
 # Don't forget to establish the right serial port ******** ATTENTION
-SERIALPORT = "/dev/ttyS3"
+#SERIALPORT = "/dev/ttyS3"
 #SERIALPORT = "/dev/ttyUSB0"
 #SERIALPORT = "/dev/tty.usbserial-DA00G4XZ"
 BAUDRATE = 115200
 ser = serial.Serial()
+
+def load_key():
+    """
+    Loads the key from the current directory named `key.key`
+    """
+    return open("key.key", "rb").read()
+
+#Caeser Cypher	
+def encrypt(s,k):
+    encstr=""
+    for i in s:
+        encstr=encstr+chr(ord(i)+k+30)
+    return encstr
 
 def initUART():
     # ser = serial.Serial(SERIALPORT, BAUDRATE)
@@ -33,21 +57,28 @@ def initUART():
         print("Serial {} port not available".format(SERIALPORT))
         exit()
 
-def sendUARTMessage(msg):
-    ser.write(msg.encode())
-    print("Message <" + msg + "> sent to micro-controller." )
+def sendUARTMessage(msg, f):
+    if f:
+        m = encrypt(msg, int(f))
+    else:
+        m = msg
+    ser.write(m.encode())
+    print("Message <" + str(m) + "> sent to micro-controller." )
+   
 
 initUART()
 while True:
     #r = requests.get(url)
+    f = load_key()   
+    print(f)
     response = requests.get(url).text
     #print(response)
     jo = json.loads(response)
-    print(jo)
+    #print(jo)
     for i in jo:
-        print(i[u'intensity'])
-        sendUARTMessage("(%d,%d,%d)" %(int(i[u'line']), int(i[u'column']), int(i[u'intensity'])))
-    sendUARTMessage("@")
+        #print("(%d,%d,%d)" %(int(i[u'line']), int(i[u'column']), int(i[u'intensity'])))
+        sendUARTMessage("(%d,%d,%d)" %(int(i[u'line']), int(i[u'column']), int(i[u'intensity'])), f)
+    sendUARTMessage("@", False)
     time.sleep(5)
 
 
