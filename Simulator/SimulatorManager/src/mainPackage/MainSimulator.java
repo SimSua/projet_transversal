@@ -1,6 +1,8 @@
 package mainPackage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainSimulator {
     public static void main(String[] args) throws Exception {
@@ -52,14 +54,26 @@ public class MainSimulator {
                 }
                 simulator.traiterFeux();
             }else {
-                simulator.getDataFromDB();
-                for (Vehicule vehicule:simulator.listVehicules) {
-                    if (vehicule.getFeu() != null){
-                        vehicule.allerAuFeu();
-                        simulator.apiConnector.requestPatchVehicule(
-                                vehicule,
-                                vehicule.getFeu().getCoordonnees()
-                        );
+                List<Vehicule> listVehiculesFromEmergency = simulator.apiConnector.requestVehiculesFromEmergency();
+                List<Vehicule> listVehiculesAffectes = new ArrayList<>();
+                for (Vehicule vehicule:listVehiculesFromEmergency) {
+                    if(vehicule.getId_feu() != -1){
+                        listVehiculesAffectes.add(vehicule);
+                    }
+                }
+                for (Vehicule vehicule:listVehiculesAffectes) {
+                    for (Vehicule vehiculeAenvoyer:simulator.listVehicules) {
+                        if(vehicule.getId() == vehiculeAenvoyer.getId()) {
+                            Feu feu = simulator.apiConnector.requestFeu(vehicule.getId_feu());
+                            feu.setCoordonnees(simulator.apiConnector.requestCoordonnees(feu.getId_coordinate()));
+                            vehiculeAenvoyer.setFeu(feu);
+                            System.out.println(vehicule.getId_feu());
+                            vehiculeAenvoyer.allerAuFeu();
+                            simulator.apiConnector.requestPatchVehicule(
+                                    vehiculeAenvoyer,
+                                    vehiculeAenvoyer.getFeu().getCoordonnees()
+                            );
+                        }
                     }
                 }
                 simulator.traiterFeux();

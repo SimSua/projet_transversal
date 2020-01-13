@@ -25,6 +25,12 @@ print("Receiver ready to receive data")
 #SERIALPORT = "/dev/tty.usbserial-DA00G4XZ"
 BAUDRATE = 115200
 ser = serial.Serial()
+valx = []
+for i in range(6):
+	valy = []
+	for j in range(10):
+		valy.append(0)
+	valx.append(valy)
 
 #url="http://localhost:8081/api/fires/update-intensity/"
 
@@ -91,19 +97,25 @@ def send_to_api(j, client):
     try:
         jo = json.loads(j)
         for i in jo:
+		#print(i["x"]+"	"+i["y"])
+		#if not valx[int(i["x"])]:
+			#last_value[int(i["x"])][int(i["y"])] = i["intensite"]
            #if str(i["x"]).isnumeric() and str(i["y"]).isnumeric() and str(i["intensite"]).isnumeric():
-                url_api = url+i["x"]+"/"+i["y"]
-                print(url_api)
-                print(i)
-                payload = {'intensity': i["intensite"]}
-                print("p = "+json.dumps(payload))
-                x = requests.request("POST",url_api, data=str(payload), headers={'Content-Type': "application/json"})
-
-		client.publish("sensors", payload=json.dumps(i), qos=0, retain=False)
-                #print(x.request.body)
-                print(x)
+		if int(i["intensite"]) != valx[int(i["x"])][int(i["y"])]:
+			url_api = url+i["x"]+"/"+i["y"]
+			print(url_api)
+			print(i)
+			payload = "{\"intensity\": "+str(i["intensite"])+"}"
+			print("p = "+json.dumps(payload))
+		        x = requests.request("POST",url_api, data=payload, headers={'Content-Type': "application/json"})
+			valx[int(i["x"])][int(i["y"])] = int(i["intensite"])
+			print(x.text)
+		#client.publish("sensors", payload=json.dumps(i), qos=0, retain=False)
+                	print(x.request.body)
+               
                 #print(i)
-    except ValueError as e:
+    except TypeError as e:
+	print(e)
         print("Error send to api")
 
 def decrypt_total_data(d, k):
@@ -142,9 +154,9 @@ def data_to_json(data):
 
 
 initUART()
-client = mqtt.Client()
-client.on_connect = on_connect
-client.connect(mqtt_host, 1883, 60)
+#client = mqtt.Client()
+#client.on_connect = on_connect
+#client.connect(mqtt_host, 1883, 60)
 total_data = ""
 k = int(load_key())
 i = 0
@@ -160,7 +172,7 @@ while True:
         print(data + " "+ str(i))
         total_data += data
         if i == 6: #(5,9, signifie qu'on a recu la derniere ligne
-            send_to_api(data_to_json(decrypt_total_data(total_data, k)), client)
+            send_to_api(data_to_json(decrypt_total_data(total_data, False)), "oui")
             total_data = ""
             i=0
         else:

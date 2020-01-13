@@ -121,7 +121,7 @@ public class Simulator extends Thread {
 
     private void creerFeu() throws IOException {
         Feu feu = listFeux.get(new Random().nextInt(listFeux.size()));
-        feu.setIntensity((int) (5 + (Math.random() * 10)));
+        feu.setIntensity((int) (5 + (Math.random() * 4)));
         apiConnector.requestPatchFeu(feu);
         listFeuxNonTraites.add(feu);
     }

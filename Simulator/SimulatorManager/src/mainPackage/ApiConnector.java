@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ApiConnector {
+    protected String uriEmergency;
     //	protected String uri = "http://localhost:8081/api/";
     protected String host;
     protected String uri;
@@ -24,6 +25,7 @@ public class ApiConnector {
         this.client = HttpClient.newHttpClient();
         this.host = host;
         this.uri = "http://"+host+"/api/sim/";
+        this.uriEmergency = "http://"+host+"/api/";;
         System.out.println("api connecté sur "+this.uri);
     }
 
@@ -104,31 +106,31 @@ public class ApiConnector {
 
     }
 
-//    public Coordonnees requestCoordonnees(int id) {
-//        HttpRequest request = HttpRequest.newBuilder()
-//                .uri(URI.create(uri+"coordinates/"+id))
-//                .build();
-//        HttpResponse<String> response = null;
-//        try {
-//            response = this.client.send(request, BodyHandlers.ofString());
-//        } catch (IOException | InterruptedException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        try {
-//            JSONObject reponse = new JSONObject(response.body());
-//            JSONObject jsonobject = new JSONObject(reponse.get("data").toString());
-//            Coordonnees coordonnees = new Coordonnees((int) jsonobject.get("id"),
-//                    Integer.parseInt(jsonobject.get("line").toString()),
-//                    Integer.parseInt(jsonobject.get("column").toString()),
-//                    Double.parseDouble(jsonobject.get("longitude").toString()),
-//                    Double.parseDouble(jsonobject.get("latitude").toString()));
-//            return coordonnees;
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
+    public Coordonnees requestCoordonnees(int id) {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(uriEmergency+"coordinates/"+id))
+                .build();
+        HttpResponse<String> response = null;
+        try {
+            response = this.client.send(request, BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        try {
+            JSONObject reponse = new JSONObject(response.body());
+            JSONObject jsonobject = new JSONObject(reponse.get("data").toString());
+            Coordonnees coordonnees = new Coordonnees((int) jsonobject.get("id"),
+                    Integer.parseInt(jsonobject.get("line").toString()),
+                    Integer.parseInt(jsonobject.get("column").toString()),
+                    Double.parseDouble(jsonobject.get("longitude").toString()),
+                    Double.parseDouble(jsonobject.get("latitude").toString()));
+            return coordonnees;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public List<Coordonnees> requestCoordonnees() {
         List<Coordonnees> listCoordonnees = new ArrayList<>();
@@ -161,6 +163,49 @@ public class ApiConnector {
         List<Vehicule> listVehicules = new ArrayList<>();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(uri+"trucks"))
+                .build();
+        HttpResponse<String> response = null;
+        try {
+            response = this.client.send(request, BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        JSONObject reponse = new JSONObject(response.body());
+        JSONArray jsonarray = new JSONArray(reponse.get("data").toString());
+        for (int i = 0; i < jsonarray.length(); i++) {
+            Vehicule vehicule;
+            JSONObject jsonobject = jsonarray.getJSONObject(i);
+            switch ((int) jsonobject.get("id_type")){
+                case 1:
+                    vehicule = new Camion((int) jsonobject.get("id"),
+                            (int) jsonobject.get("id_type"),
+                            (int) jsonobject.get("id_department"),
+                            (int) jsonobject.get("id_coordinate"),
+                            jsonobject.get("id_fire").toString()
+                    );
+//                            this.requestCoordonnees((int) jsonobject.get("id_coordinate")),
+//                            this.requestCaserne((int) jsonobject.get("id_department")));
+                default:
+                    vehicule = new Camion((int) jsonobject.get("id"),
+                            (int) jsonobject.get("id_type"),
+                            (int) jsonobject.get("id_department"),
+                            (int) jsonobject.get("id_coordinate"),
+                            jsonobject.get("id_fire").toString()
+                    );
+//                            this.requestCoordonnees((int) jsonobject.get("id_coordinate")),
+//                            this.requestCaserne((int) jsonobject.get("id_department")));
+            }
+
+            listVehicules.add(vehicule);
+        }
+        return listVehicules;
+    }
+
+    public List<Vehicule> requestVehiculesFromEmergency() {
+        List<Vehicule> listVehicules = new ArrayList<>();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(uriEmergency+"trucks"))
                 .build();
         HttpResponse<String> response = null;
         try {

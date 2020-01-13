@@ -58,8 +58,10 @@ def initUART():
 
 def sendUARTMessage(msg, f):
     if f:
+
         m = encrypt(msg, int(f))
     else:
+	
         m = msg
     ser.write(m.encode())
     print("Message <" + str(m) + "> sent to micro-controller." )
@@ -76,8 +78,8 @@ while True:
     #print(jo)
     for i in jo:
         #print("(%d,%d,%d)" %(int(i[u'line']), int(i[u'column']), int(i[u'intensity'])))
-        sendUARTMessage("(%d,%d,%d)" %(int(i[u'line']), int(i[u'column']), int(i[u'intensity'])), f)
+        sendUARTMessage("(%d,%d,%d)" %(int(i[u'line']), int(i[u'column']), int(i[u'intensity'])), False)
     sendUARTMessage("@", False)
-    time.sleep(5)
+    time.sleep(30)
 
 
