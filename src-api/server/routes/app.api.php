@@ -43,6 +43,10 @@ Route::get('/fires/reset/all', function(FireController $fireController) {
     return $fireController->resetAllFires();
 });
 
+Route::get('/fires/active/untreated', function(FireController $fireController) {
+    return $fireController->getAllActiveUntreatedFires();
+});
+
 Route::get('/coordinates/{line}/{column}', function(CoordinateController $coordinateController, int $line, int $column) {
     return $coordinateController->getCoordinateFromGrid($line, $column);
 })->where(['line' => '[0-9]+', 'column' => '[0-9]+']);

@@ -7,6 +7,7 @@ use App\Exceptions\ResponseInterface;
 use App\Http\Resources\FireCollection;
 use App\Models\Simulator\Coordinate;
 use App\Models\Simulator\Fire;
+use App\Models\Simulator\Truck;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -228,6 +229,42 @@ class SimFireController extends Controller
             }
 
             return new FireCollection(Fire::All());
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Get all active untreated fires
+     *
+     * @return ResponseInterface
+     */
+    public function getAllActiveUntreatedFires()
+    {
+        try {
+            $fires = Fire::All();
+            $trucks = Truck::All();
+            $untreatedFires = [];
+
+            foreach ($fires as $fire) {
+                if ($fire->intensity > 0) {
+                    $assigned = false;
+                    foreach ($trucks as $truck) {
+                        if ($truck->id_fire == $fire->id) {
+                            $assigned = true;
+                        }
+                    }
+                    if (!$assigned) {
+                        array_push($untreatedFires, $fire);
+                    }
+                }
+            }
+
+            return new FireCollection($untreatedFires);
         } catch (\Exception $e) {
             return new ExceptionResponse([
                 'status'=>'error',
