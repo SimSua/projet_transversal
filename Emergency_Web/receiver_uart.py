@@ -1,16 +1,19 @@
 import serial, json, requests, sys
-from cryptography.fernet import Fernet
+import paho.mqtt.client as mqtt
 
-# 3 args needed 
+# 4 args needed 
 #arg 0 = program name
 #arg 1 = url
 #arg 2 = tty
+#arg 3 = broker mqtt
 
-if len(sys.argv) != 3:
+if len(sys.argv) != 4:
+    print("Missing args")
     sys.exit()
 else:
     url="http://"+str(sys.argv[1])+"/api/fires/update-intensity/"
     SERIALPORT="/dev/"+str(sys.argv[2])
+    mqtt_host=str(sys.argv[3])
 
 print("Receiver ready to receive data")
 #Ce script python lit les donnees recues sur ttyUSB0 puis les ecrit dans un fichier
@@ -22,7 +25,15 @@ print("Receiver ready to receive data")
 #SERIALPORT = "/dev/tty.usbserial-DA00G4XZ"
 BAUDRATE = 115200
 ser = serial.Serial()
+
 #url="http://localhost:8081/api/fires/update-intensity/"
+
+def on_connect(client, userdata, flags, rc):
+    print("Connected with result code "+str(rc))
+
+    # Subscribing in on_connect() means that if we lose the connection and
+    # reconnect then subscriptions will be renewed.
+    client.subscribe("$SYS/#")
 
 def load_key():
     """
@@ -39,7 +50,7 @@ def Encryption(s,k):
 
 def Decryption(p,k):
     #p=Encryption(s,k)
-    print(p)
+    #print(p)
     decstr=""
     try:
         for i in p:
@@ -76,31 +87,34 @@ def readUARTMessage():
     if "<" in line or ">" in line:
         return line
 
-def send_to_api(j):
+def send_to_api(j, client):
     try:
         jo = json.loads(j)
         for i in jo:
-            if str.isnumeric(i["x"]) and str.isnumeric(i["y"]) and str.isnumeric(i["intensite"]):
+           #if str(i["x"]).isnumeric() and str(i["y"]).isnumeric() and str(i["intensite"]).isnumeric():
                 url_api = url+i["x"]+"/"+i["y"]
                 print(url_api)
                 print(i)
                 payload = {'intensity': i["intensite"]}
-                print("p = "+str(payload))
+                print("p = "+json.dumps(payload))
                 x = requests.request("POST",url_api, data=str(payload), headers={'Content-Type': "application/json"})
+
+		client.publish("sensors", payload=json.dumps(i), qos=0, retain=False)
                 #print(x.request.body)
                 print(x)
                 #print(i)
-    except:
+    except ValueError as e:
         print("Error send to api")
 
 def decrypt_total_data(d, k):
-    dec=""
-    for i in range(0, len(total_data), 7):
-        dec += Decryption(d[i:i+7], k)
-    return dec
+    if k!=False:
+      dec=""
+      for i in range(0, len(total_data), 7):
+          dec += Decryption(d[i:i+7], k)
+      return dec
+    return d
 
 def data_to_json(data):
-    
     try:
         json_str = "[\n"
         print(data)
@@ -128,6 +142,9 @@ def data_to_json(data):
 
 
 initUART()
+client = mqtt.Client()
+client.on_connect = on_connect
+client.connect(mqtt_host, 1883, 60)
 total_data = ""
 k = int(load_key())
 i = 0
@@ -143,7 +160,7 @@ while True:
         print(data + " "+ str(i))
         total_data += data
         if i == 6: #(5,9, signifie qu'on a recu la derniere ligne
-            send_to_api(data_to_json(decrypt_total_data(total_data, k)))
+            send_to_api(data_to_json(decrypt_total_data(total_data, k)), client)
             total_data = ""
             i=0
         else:

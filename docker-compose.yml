@@ -42,8 +42,18 @@ services:
     container_name: manager
     working_dir: /application
     volumes:
-      - ./Emergency_Manager/manager.jar:/application/manager.jar
-    command: java -jar manager.jar
+      - ./Emergency_Manager/out/artifacts/Emergency_Manager_jar/Emergency_Manager.jar:/application/manager.jar
+    command: java -jar manager.jar api_host false
+    networks:
+      - api
+
+  simulator:
+    image: openjdk:13-alpine
+    container_name: simulator
+    working_dir: /application
+    volumes:
+      - ./Simulator/out/artifacts/Simulator.jar/:/application/Simulator.jar
+    command: java -jar Simulator.jar api_host false
     networks:
       - api
 
@@ -106,13 +116,33 @@ services:
       - api
     
   grafana:
-    image: grafana/grafana:6.5.2
+    image: grafana/grafana
     container_name: grafana
     volumes: 
       - ./grafana/grafana-storage:/var/lib/grafana
     ports: 
       - "3000:3000"
+    user: "472"
+    #entrypoint: bash -c "tail -f /dev/null"
     networks: 
       - api
+
+  broker:
+    image: eclipse-mosquitto
+    container_name: broker
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    networks:
+      - api
+
+  telegraf:
+    image: telegraf
+    container_name: telegraf
+    volumes:
+      - ./telegraf:/etc/telegraf
+    networks:
+      - api    
+
 networks:
   api:

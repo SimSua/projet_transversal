@@ -1,6 +1,5 @@
 
 import serial, requests, time, json, sys
-from cryptography.fernet import Fernet
 
 # 3 args needed 
 #arg 0 = program name
