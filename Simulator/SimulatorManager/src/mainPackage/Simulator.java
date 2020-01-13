@@ -2,6 +2,7 @@ package mainPackage;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,8 +23,9 @@ public class Simulator extends Thread {
     private List<Feu> listFeuxNonTraites = new ArrayList<>();
     public List<TypeVehicule> listTypesVehicule = new ArrayList<>();
     public List<Coordonnees> listCoordonnees = new ArrayList<>();
-    public ApiConnector apiConnector = new ApiConnector();
-    public Simulator (Boolean debug) {
+    public ApiConnector apiConnector;
+    public Simulator (Boolean debug,ApiConnector apiConnector) {
+        this.apiConnector = apiConnector;
         this.debug = debug;
     }
 
@@ -83,11 +85,15 @@ public class Simulator extends Thread {
                     creerFeu();
                 } catch (JsonProcessingException e) {
                     e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
                 if (debug) {
                     try {
                         attribuerFeu();
                     } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else {
@@ -112,14 +118,14 @@ public class Simulator extends Thread {
         }
     }
 
-    private void creerFeu() throws JsonProcessingException {
+    private void creerFeu() throws IOException {
         Feu feu = listFeux.get(new Random().nextInt(listFeux.size()));
         feu.setIntensity((int) (5 + (Math.random() * 10)));
         apiConnector.requestPatchFeu(feu);
         listFeuxNonTraites.add(feu);
     }
 
-    private void attribuerFeu() throws JsonProcessingException {
+    private void attribuerFeu() throws IOException {
         int indexOfFeu = -1;
         for (Feu feuAtraiter:listFeuxNonTraites) {
             getCaserneDispo(feuAtraiter);
@@ -138,7 +144,7 @@ public class Simulator extends Thread {
         }
     }
 
-    public void traiterFeux() throws JsonProcessingException {
+    public void traiterFeux() throws IOException {
         for (Vehicule vehicule:listVehicules){
 //            if(vehicule.getFeu() != null) {
 //                System.out.println(vehicule.estSurLeFeu());

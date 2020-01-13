@@ -21,10 +21,12 @@ public class EmergencyManager extends Thread {
 	private List<Feu> listFeuxNonTraites = new ArrayList<>();
 	public List<TypeVehicule> listTypesVehicule = new ArrayList<>();
 	public List<Coordonnees> listCoordonnees = new ArrayList<>();
-	public ApiConnector apiConnector = new ApiConnector();
+	public ApiConnector apiConnector;
 	protected Ville v;
-	public EmergencyManager(Boolean debug) {
+	public EmergencyManager(Boolean debug,ApiConnector apiConnector) {
+
 		this.debug = debug;
+		this.apiConnector = apiConnector;
 	}
 	@Override
 	public void run() {
@@ -37,15 +39,10 @@ public class EmergencyManager extends Thread {
 					listIdfeuxTraites.add(vehicule.getId_feu());
 				}
 			}
-			listFeuxNonTraites = apiConnector.requestFeuxNonTraites();
-			for (Feu feu:listFeuxNonTraites) {
-				try {
-					attribuerFeu();
-				} catch (JsonProcessingException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			try {
+				attribuerFeu();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 			try {
 				sleep(2000);
@@ -62,7 +59,7 @@ public class EmergencyManager extends Thread {
 		listFeux = apiConnector.requestFeux();
 		listTypesVehicule = apiConnector.requestTypesVehicule();
 		listCoordonnees = apiConnector.requestCoordonnees();
-
+		listFeuxNonTraites = apiConnector.requestFeuxNonTraites();
 		//apiConnector.requestResetAllFeux();
 		//set Coordonnees
 		for (Coordonnees coordonnees:listCoordonnees){
@@ -77,6 +74,11 @@ public class EmergencyManager extends Thread {
 				}
 			}
 			for (Feu feu:listFeux){
+				if (feu.getId_coordinate() == coordonnees.getId()){
+					feu.setCoordonnees(coordonnees);
+				}
+			}
+			for (Feu feu:listFeuxNonTraites){
 				if (feu.getId_coordinate() == coordonnees.getId()){
 					feu.setCoordonnees(coordonnees);
 				}

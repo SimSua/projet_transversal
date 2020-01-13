@@ -16,11 +16,14 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ApiConnector {
-	protected String uri = "http://localhost:8081/api/";
+//	protected String uri = "http://localhost:8081/api/";
+	protected String host;
+	protected String uri = "http://"+host+"/api/";
 	protected HttpClient client;
 
-	public ApiConnector() {
+	public ApiConnector(String host) {
 		this.client = HttpClient.newHttpClient();
+		this.host = host;
 	}
 
 	public List<Caserne> requestCasernes() {
@@ -348,7 +351,7 @@ public class ApiConnector {
 	public List<Feu> requestFeuxNonTraites() {
 		List<Feu> listFeux = new ArrayList<>();
 		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create(uri+"fires"))
+				.uri(URI.create(uri+"fires/active/untreated"))
 				.build();
 		HttpResponse<String> response = null;
 		try {
