@@ -17,12 +17,14 @@ import java.util.List;
 public class ApiConnector {
     //	protected String uri = "http://localhost:8081/api/";
     protected String host;
-    protected String uri = "http://"+host+"/api/";
+    protected String uri;
     protected HttpClient client;
 
     public ApiConnector(String host) {
         this.client = HttpClient.newHttpClient();
         this.host = host;
+        this.uri = "http://"+host+"/api/sim/";
+        System.out.println("api connecté sur "+this.uri);
     }
 
     public List<Caserne> requestCasernes() {
@@ -41,6 +43,7 @@ public class ApiConnector {
         try {
             JSONObject reponse = new JSONObject(response.body());
             JSONArray jsonarray = new JSONArray(reponse.get("data").toString());
+
             for (int i = 0; i < jsonarray.length(); i++) {
                 JSONObject jsonobject = jsonarray.getJSONObject(i);
                 Caserne caserne = new Caserne((int) jsonobject.get("id"),(int) jsonobject.get("capacity"),
@@ -339,12 +342,12 @@ public class ApiConnector {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        try {
-            JSONObject reponse = new JSONObject(response.body());
-            JSONObject jsonobject = new JSONObject(reponse.get("data").toString());
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+//        try {
+//            JSONObject reponse = new JSONObject(response.body());
+//            JSONObject jsonobject = new JSONObject(reponse.get("data").toString());
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
     }
 
     public List<Feu> requestFeuxNonTraites() {

@@ -18,12 +18,14 @@ import java.util.List;
 public class ApiConnector {
 //	protected String uri = "http://localhost:8081/api/";
 	protected String host;
-	protected String uri = "http://"+host+"/api/";
+	protected String uri;
 	protected HttpClient client;
 
 	public ApiConnector(String host) {
 		this.client = HttpClient.newHttpClient();
 		this.host = host;
+		this.uri = "http://"+host+"/api/";
+		System.out.println("api connecté sur "+this.uri);
 	}
 
 	public List<Caserne> requestCasernes() {

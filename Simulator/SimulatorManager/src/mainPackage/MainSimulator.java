@@ -7,11 +7,12 @@ public class MainSimulator {
         if (args[0].length() < 2){
             throw new Exception("Argument non valide, l'argument doit correspondre à host:port debug[true/false]");
         }
-        ApiConnector apiConnector = new ApiConnector(args[0]);
+        ApiConnector apiConnector = new ApiConnector(args[0].toString());
         Boolean debug = false;
-        if (args[1] == "true") {
+
+        if (args[1].trim().equals("true")) {
             debug = true;
-        }else if(args[1] == "false"){
+        }else if(args[1].trim().equals("false")){
             debug = false;
         }else{
             throw new Exception("Argument non valide, l'argument doit correspondre à host:port debug[true/false]");
@@ -51,7 +52,7 @@ public class MainSimulator {
                 }
                 simulator.traiterFeux();
             }else {
-                simulator.updateDataFeuxFromDB();
+                simulator.getDataFromDB();
                 for (Vehicule vehicule:simulator.listVehicules) {
                     if (vehicule.getFeu() != null){
                         vehicule.allerAuFeu();
