@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class MainSimulator {
     public static void main(String[] args) throws InterruptedException, JsonProcessingException {
-        Boolean debug = false;
+        Boolean debug = true;
         if (debug){
             System.out.println("--- Lancement du Simulator en mode debug ---");
         }else {

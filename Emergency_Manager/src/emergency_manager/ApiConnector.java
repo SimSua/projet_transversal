@@ -89,7 +89,8 @@ public class ApiConnector {
 		JSONArray jsonarray = new JSONArray(reponse.get("data").toString());
 		for (int i = 0; i < jsonarray.length(); i++) {
 			JSONObject jsonobject = jsonarray.getJSONObject(i);
-			Feu feu = new Feu((int) jsonobject.get("id"),(int) jsonobject.get("intensity"),
+			Feu feu = new Feu((int) jsonobject.get("id"),
+					(int) jsonobject.get("intensity"),
 					(int) jsonobject.get("id_coordinate"));
 //                    this.requestCoordonnees((int) jsonobject.get("id_coordinate")));
 			listFeux.add(feu);
@@ -342,6 +343,31 @@ public class ApiConnector {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+
+	public List<Feu> requestFeuxNonTraites() {
+		List<Feu> listFeux = new ArrayList<>();
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create(uri+"fires"))
+				.build();
+		HttpResponse<String> response = null;
+		try {
+			response = this.client.send(request, BodyHandlers.ofString());
+		} catch (IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JSONObject reponse = new JSONObject(response.body());
+		JSONArray jsonarray = new JSONArray(reponse.get("data").toString());
+		for (int i = 0; i < jsonarray.length(); i++) {
+			JSONObject jsonobject = jsonarray.getJSONObject(i);
+			Feu feu = new Feu((int) jsonobject.get("id"),
+					(int) jsonobject.get("intensity"),
+					(int) jsonobject.get("id_coordinate"));
+//                    this.requestCoordonnees((int) jsonobject.get("id_coordinate")));
+			listFeux.add(feu);
+		}
+		return listFeux;
 	}
 }
 

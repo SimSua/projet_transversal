@@ -192,7 +192,7 @@ public class ApiConnector {
                             (int) jsonobject.get("id_type"),
                             (int) jsonobject.get("id_department"),
                             (int) jsonobject.get("id_coordinate"),
-                            (int) jsonobject.get("id_fire")
+                            jsonobject.get("id_fire").toString()
                     );
 //                            this.requestCoordonnees((int) jsonobject.get("id_coordinate")),
 //                            this.requestCaserne((int) jsonobject.get("id_department")));
@@ -201,7 +201,7 @@ public class ApiConnector {
                             (int) jsonobject.get("id_type"),
                             (int) jsonobject.get("id_department"),
                             (int) jsonobject.get("id_coordinate"),
-                            (int) jsonobject.get("id_fire")
+                            jsonobject.get("id_fire").toString()
                     );
 //                            this.requestCoordonnees((int) jsonobject.get("id_coordinate")),
 //                            this.requestCaserne((int) jsonobject.get("id_department")));

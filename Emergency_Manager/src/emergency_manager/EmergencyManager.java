@@ -30,22 +30,21 @@ public class EmergencyManager extends Thread {
 	public void run() {
 		List<Integer> listIdfeuxTraites = new ArrayList<>();
 		while(true) {
+			System.out.println("update data");
 			getDataFromDB();
-			listFeuxNonTraites = listFeux;
 			for (Vehicule vehicule:listVehicules) {
-				if (vehicule.getFeu() != null) {
-					listIdfeuxTraites.add(vehicule.getFeu().getId());
+				if (vehicule.getId_feu() != -1) {
+					listIdfeuxTraites.add(vehicule.getId_feu());
 				}
 			}
-			for (Feu feu:listFeux) {
-				if (feu.getIntensity() > 0 && !listIdfeuxTraites.contains(feu.getId())) {
-					try {
-						attribuerFeu();
-					} catch (JsonProcessingException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+			listFeuxNonTraites = apiConnector.requestFeuxNonTraites();
+			for (Feu feu:listFeuxNonTraites) {
+				try {
+					attribuerFeu();
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 			try {
@@ -64,7 +63,7 @@ public class EmergencyManager extends Thread {
 		listTypesVehicule = apiConnector.requestTypesVehicule();
 		listCoordonnees = apiConnector.requestCoordonnees();
 
-		apiConnector.requestResetAllFeux();
+		//apiConnector.requestResetAllFeux();
 		//set Coordonnees
 		for (Coordonnees coordonnees:listCoordonnees){
 			for (Vehicule vehicule:listVehicules){
@@ -109,6 +108,8 @@ public class EmergencyManager extends Thread {
 			if (caserneChoisie != null) {
 				vehiculeChoisi = getChoixVehicule();
 				vehiculeChoisi.setFeu(feuAtraiter);
+				System.out.println("Vehicule n°"+vehiculeChoisi.getId()+" affecté au feu n°"+
+						feuAtraiter.getId());
 				apiConnector.requestPatchVehicule(vehiculeChoisi,feuAtraiter);
 				indexOfFeu = listFeuxNonTraites.indexOf(feuAtraiter);
 			} else {

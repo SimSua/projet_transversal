@@ -20,6 +20,8 @@ public abstract class Vehicule {
 		this.id_coordonnees = id_coordonnees;
 		if (id_feu != "null") {
 			this.id_feu = Integer.parseInt(id_feu);
+		}else{
+			this.id_feu = -1;
 		}
 	}
 	public Vehicule(int id,int id_type,int id_caserne,int id_coordonnees, int id_feu){
@@ -44,6 +46,10 @@ public abstract class Vehicule {
 
 	public int getId() {
 		return id;
+	}
+
+	public int getId_feu() {
+		return id_feu;
 	}
 
 	public int getId_type() {

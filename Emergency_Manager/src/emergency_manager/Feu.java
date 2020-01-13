@@ -61,12 +61,4 @@ public class Feu {
 				"intensite=" + intensity +
 				'}';
 	}
-
-	public int getIntensity() {
-		return intensity;
-	}
-
-	public int getId() {
-		return id;
-	}
 }
