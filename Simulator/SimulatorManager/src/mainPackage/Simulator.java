@@ -10,28 +10,31 @@ import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
 public class Simulator extends Thread {
-    private Boolean debug;
+    private static final int POURCENTAGE_CHANCE_FEU = 20;
+    public Boolean debug;
     private Feu nouveauFeu;
     public Vehicule vehiculeChoisi;
     private Caserne caserneChoisie = null;
-    private List<Ville> listVilles = new ArrayList<>();
-    private List<Caserne> listCasernes = new ArrayList<>();
-    private List<Vehicule> listVehicules = new ArrayList<>();
-    private List<Feu> listFeux = new ArrayList<>();
+    public List<Ville> listVilles = new ArrayList<>();
+    public List<Caserne> listCasernes = new ArrayList<>();
+    public List<Vehicule> listVehicules = new ArrayList<>();
+    public List<Feu> listFeux = new ArrayList<>();
     private List<Feu> listFeuxNonTraites = new ArrayList<>();
-    private List<TypeVehicule> listTypesVehicule = new ArrayList<>();
-    private List<Coordonnees> listCoordonnees = new ArrayList<>();
+    public List<TypeVehicule> listTypesVehicule = new ArrayList<>();
+    public List<Coordonnees> listCoordonnees = new ArrayList<>();
     public ApiConnector apiConnector = new ApiConnector();
     public Simulator (Boolean debug) {
         this.debug = debug;
     }
 
-    public void initData(){
+    public void getDataFromDB(){
         listCasernes = apiConnector.requestCasernes();
         listVehicules = apiConnector.requestVehicules();
         listFeux = apiConnector.requestFeux();
         listTypesVehicule = apiConnector.requestTypesVehicule();
         listCoordonnees = apiConnector.requestCoordonnees();
+
+        apiConnector.requestResetAllFeux();
         //set Coordonnees
         for (Coordonnees coordonnees:listCoordonnees){
             for (Vehicule vehicule:listVehicules){
@@ -71,12 +74,7 @@ public class Simulator extends Thread {
 
     @Override
     public void run() {
-        while (true){
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        while (true) {
             Boolean nouveauFeu = getChanceFeu();
             vehiculeChoisi = null;
             if (nouveauFeu) {
@@ -86,30 +84,39 @@ public class Simulator extends Thread {
                 } catch (JsonProcessingException e) {
                     e.printStackTrace();
                 }
-                try {
-                    attribuerFeu();
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
+                if (debug) {
+                    try {
+                        attribuerFeu();
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("Pas de nouveau feu");
                 }
-            }else{
-                System.out.println("Pas de nouveau feu");
+            }
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public void updateDataFeuxFromDB() {
+        List<Vehicule> listVehiculesFromDB = apiConnector.requestVehicules();
+        for (Vehicule vehiculeDB:listVehiculesFromDB) {
+            for (Vehicule vehicule:listVehicules) {
+                if (vehicule.getId() == vehiculeDB.getId()){
+                    vehicule.setFeu(apiConnector.requestFeu(vehiculeDB.getId_feu()));
+                }
             }
         }
     }
 
     private void creerFeu() throws JsonProcessingException {
-        if (this.debug) {
-            int intensite = (int) (1 + (Math.random() * 10));
-            int ligneFeu = (int) (1 + (Math.random() * 30));
-            int colonneFeu = (int) (1 + (Math.random() * 30));
-            Feu feu = new Feu(1, intensite, new Coordonnees(7, 5, 5, 7, 8));
-            listFeuxNonTraites.add(feu);
-        }else {
-            Feu feu = listFeux.get(new Random().nextInt(listFeux.size()));
-            feu.setIntensity((int) (5 + (Math.random() * 10)));
-            apiConnector.requestPatchFeu(feu);
-            listFeuxNonTraites.add(feu);
-        }
+        Feu feu = listFeux.get(new Random().nextInt(listFeux.size()));
+        feu.setIntensity((int) (5 + (Math.random() * 10)));
+        apiConnector.requestPatchFeu(feu);
+        listFeuxNonTraites.add(feu);
     }
 
     private void attribuerFeu() throws JsonProcessingException {
@@ -119,9 +126,7 @@ public class Simulator extends Thread {
             if (caserneChoisie != null) {
                 vehiculeChoisi = getChoixVehicule();
                 vehiculeChoisi.setFeu(feuAtraiter);
-                if (!debug){
-                    apiConnector.requestPatchVehicule(vehiculeChoisi,feuAtraiter);
-                }
+                apiConnector.requestPatchVehicule(vehiculeChoisi,feuAtraiter);
                 indexOfFeu = listFeuxNonTraites.indexOf(feuAtraiter);
             } else {
                 indexOfFeu = -1;
@@ -134,23 +139,20 @@ public class Simulator extends Thread {
     }
 
     public void traiterFeux() throws JsonProcessingException {
-        for (Feu feu:listFeuxNonTraites) {
-            System.out.println("intensité augmenté du feu "+ feu.toString());
-            feu.augmenterIntensite();
-            apiConnector.requestPatchFeu(feu);
-        }
         for (Vehicule vehicule:listVehicules){
 //            if(vehicule.getFeu() != null) {
 //                System.out.println(vehicule.estSurLeFeu());
 //            }
             if (vehicule.getFeu() != null && vehicule.estSurLeFeu()){
                 if (vehicule.getFeu().estEteint()){
+                    //Feu éteint
                     System.out.println("n°"+vehicule.getId()+" a éteint un feu");
                     vehicule.setFeu(null);
                     apiConnector.requestPatchVehicule(vehicule, (Feu) null);
                     listFeuxNonTraites.remove(vehicule.getFeu());
-//                    vehicule.allerALaCaserne();
+                    vehicule.allerALaCaserne();
                 }else {
+                    //Feu intensité baissée
                     vehicule.getFeu().baisserIntensite(vehicule.getType().getEfficacite());
                     apiConnector.requestPatchFeu(vehicule.getFeu());
                     System.out.println("intensité baissé du feu -"+vehicule.getType().getEfficacite()
@@ -158,6 +160,12 @@ public class Simulator extends Thread {
                 }
             }
         }
+        for (Feu feu:listFeuxNonTraites) {
+            System.out.println("intensité augmenté du feu "+ feu.toString());
+            feu.augmenterIntensite();
+            apiConnector.requestPatchFeu(feu);
+        }
+
     }
 
     private Vehicule getChoixVehicule() {
@@ -190,7 +198,7 @@ public class Simulator extends Thread {
 
     private Boolean getChanceFeu() {
 //        int pourcentageChance = (int) (1 + (Math.random() * 10));
-        int pourcentageChance = 2;//20%
+        int pourcentageChance = POURCENTAGE_CHANCE_FEU / 10;//20%
         List<Boolean> tirage = new ArrayList<>();
         for(int i=0;i<10;i++){
             if(i<pourcentageChance){

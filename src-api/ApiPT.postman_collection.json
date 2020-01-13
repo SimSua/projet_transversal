@@ -796,6 +796,25 @@
 							"response": []
 						},
 						{
+							"name": "APP_trucks/reset/all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_url}}/trucks/reset/all",
+									"host": [
+										"{{pt_base_url}}"
+									],
+									"path": [
+										"trucks",
+										"reset",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "APP_trucks",
 							"request": {
 								"method": "POST",
@@ -1771,6 +1790,25 @@
 									"path": [
 										"trucks",
 										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "APP_trucks/reset/all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_sim_url}}/trucks/reset/all",
+									"host": [
+										"{{pt_base_sim_url}}"
+									],
+									"path": [
+										"trucks",
+										"reset",
+										"all"
 									]
 								}
 							},

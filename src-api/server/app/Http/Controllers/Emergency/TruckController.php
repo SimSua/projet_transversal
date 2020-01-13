@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Emergency;
 use App\Exceptions\ExceptionResponse;
 use App\Exceptions\ResponseInterface;
 use App\Http\Resources\TruckCollection;
+use App\Models\FireDepartment;
 use App\Models\Truck;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -163,6 +164,32 @@ class TruckController extends Controller
             $fire->save();
 
             return new TruckResource($fire);
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Reset all trucks
+     *
+     * @return ResponseInterface
+     */
+    public function resetAllTrucks()
+    {
+        try {
+            $trucks = Truck::All();
+            foreach ($trucks as $truck) {
+                $department = FireDepartment::where('id', $truck->id_department)->first();
+                $truck->id_fire = null;
+                $truck->id_coordinate = $department->id_coordinate;
+                $truck->save();
+            }
+
+            return new TruckCollection(Truck::All());
         } catch (\Exception $e) {
             return new ExceptionResponse([
                 'status'=>'error',
