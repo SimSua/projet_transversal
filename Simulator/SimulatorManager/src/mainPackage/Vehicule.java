@@ -84,7 +84,7 @@ public abstract class Vehicule {
     }
 
     public void allerAuFeu(){
-        System.out.println("n°"+this.id+" va au feu");
+        System.out.println("n°"+this.id+" va au feu n°"+feu.getId());
         this.setCoordonnees(this.feu.getCoordonnees());
     }
 
@@ -100,5 +100,9 @@ public abstract class Vehicule {
 
     public int getId_feu() {
         return id_feu;
+    }
+
+    public void setId_feu(int i) {
+        this.id_feu = i;
     }
 }

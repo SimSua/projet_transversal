@@ -25,7 +25,7 @@ public class Feu {
     public void augmenterIntensite() { if (this.intensity<9){this.intensity++;} }
 
     public boolean estEteint() {
-        return this.intensity <= 0;
+        return this.intensity == 0;
     }
 
     public int getId() {

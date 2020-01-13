@@ -419,5 +419,18 @@ public class ApiConnector {
         }
         return listFeux;
     }
+
+    public void requestResetAllVehicules() {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(uri+"trucks/reset/all"))
+                .build();
+        HttpResponse<String> response = null;
+        try {
+            response = this.client.send(request, BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 }
 

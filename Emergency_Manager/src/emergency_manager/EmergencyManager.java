@@ -60,7 +60,7 @@ public class EmergencyManager extends Thread {
 		listTypesVehicule = apiConnector.requestTypesVehicule();
 		listCoordonnees = apiConnector.requestCoordonnees();
 		listFeuxNonTraites = apiConnector.requestFeuxNonTraites();
-		//apiConnector.requestResetAllFeux();
+
 		//set Coordonnees
 		for (Coordonnees coordonnees:listCoordonnees){
 			for (Vehicule vehicule:listVehicules){

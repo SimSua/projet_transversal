@@ -35,6 +35,7 @@ public class MainSimulator {
         une fois éteint le camion est téléporté vers sa caserne
          */
         Simulator simulator = new Simulator(debug,apiConnector);
+        simulator.resetAll();
         simulator.getDataFromDB();
         simulator.start();
         deplacementVehicule(simulator);
@@ -52,7 +53,7 @@ public class MainSimulator {
                     );
                     //vehicule téléporté au feu
                 }
-                simulator.traiterFeux();
+//                simulator.traiterFeux();
             }else {
                 List<Vehicule> listVehiculesFromEmergency = simulator.apiConnector.requestVehiculesFromEmergency();
                 List<Vehicule> listVehiculesAffectes = new ArrayList<>();
@@ -61,22 +62,32 @@ public class MainSimulator {
                         listVehiculesAffectes.add(vehicule);
                     }
                 }
+                System.out.println(simulator.listFeuxNonTraites);
                 for (Vehicule vehicule:listVehiculesAffectes) {
                     for (Vehicule vehiculeAenvoyer:simulator.listVehicules) {
                         if(vehicule.getId() == vehiculeAenvoyer.getId()) {
                             Feu feu = simulator.apiConnector.requestFeu(vehicule.getId_feu());
                             feu.setCoordonnees(simulator.apiConnector.requestCoordonnees(feu.getId_coordinate()));
-                            vehiculeAenvoyer.setFeu(feu);
-                            System.out.println(vehicule.getId_feu());
-                            vehiculeAenvoyer.allerAuFeu();
-                            simulator.apiConnector.requestPatchVehicule(
-                                    vehiculeAenvoyer,
-                                    vehiculeAenvoyer.getFeu().getCoordonnees()
-                            );
+                            if (vehiculeAenvoyer.getCoordonnees() == vehiculeAenvoyer.getCaserne().getCoordonnees()) {
+                                vehiculeAenvoyer.setFeu(feu);
+                                vehiculeAenvoyer.allerAuFeu();
+                                simulator.apiConnector.requestPatchVehicule(
+                                        vehiculeAenvoyer,
+                                        vehiculeAenvoyer.getFeu().getCoordonnees()
+                                );
+                                simulator.listFeuxNonTraites.removeIf(feu1 -> (feu1.getId() == feu.getId()));
+                            }
+                            simulator.traiterFeux(vehiculeAenvoyer);
+
                         }
                     }
                 }
-                simulator.traiterFeux();
+                System.out.println(simulator.listFeuxNonTraites);
+                for (Feu feu:simulator.listFeuxNonTraites) {
+                    System.out.println("intensité augmentée du feu n°"+feu.getId()+" "+ feu.toString());
+                    feu.augmenterIntensite();
+                    simulator.apiConnector.requestPatchFeu(feu);
+                }
             }
             Thread.sleep(1800);
         }

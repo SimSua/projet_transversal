@@ -25,6 +25,8 @@ public class Manager {
 			System.out.println("--- Lancement de l'Emergency Manager en mode normal ---");
 		}
 		EmergencyManager emergencyManager = new EmergencyManager(debug,apiConnector);
+		emergencyManager.apiConnector.requestResetAllFeux();
+		emergencyManager.apiConnector.requestResetAllVehicules();
 		emergencyManager.start();
 	}
 }

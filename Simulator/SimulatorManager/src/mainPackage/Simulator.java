@@ -20,13 +20,18 @@ public class Simulator extends Thread {
     public List<Caserne> listCasernes = new ArrayList<>();
     public List<Vehicule> listVehicules = new ArrayList<>();
     public List<Feu> listFeux = new ArrayList<>();
-    private List<Feu> listFeuxNonTraites = new ArrayList<>();
+    public List<Feu> listFeuxNonTraites = new ArrayList<>();
     public List<TypeVehicule> listTypesVehicule = new ArrayList<>();
     public List<Coordonnees> listCoordonnees = new ArrayList<>();
     public ApiConnector apiConnector;
     public Simulator (Boolean debug,ApiConnector apiConnector) {
         this.apiConnector = apiConnector;
         this.debug = debug;
+    }
+
+    public void resetAll(){
+        apiConnector.requestResetAllFeux();
+        apiConnector.requestResetAllVehicules();
     }
 
     public void getDataFromDB(){
@@ -122,7 +127,7 @@ public class Simulator extends Thread {
     private void creerFeu() throws IOException {
         Feu feu = listFeux.get(new Random().nextInt(listFeux.size()));
         feu.setIntensity((int) (5 + (Math.random() * 4)));
-        apiConnector.requestPatchFeu(feu);
+        apiConnector.requestPatchFeu(feu);//sim
         listFeuxNonTraites.add(feu);
     }
 
@@ -145,33 +150,27 @@ public class Simulator extends Thread {
         }
     }
 
-    public void traiterFeux() throws IOException {
-        for (Vehicule vehicule:listVehicules){
-//            if(vehicule.getFeu() != null) {
-//                System.out.println(vehicule.estSurLeFeu());
-//            }
+    public void traiterFeux(Vehicule vehicule) throws IOException {
             if (vehicule.getFeu() != null && vehicule.estSurLeFeu()){
+//                System.out.println("TEST INTENSITE DU FEU n°"+vehicule.getFeu().getId()+
+//                        " INTENSITE "+vehicule.getFeu().getIntensity());
                 if (vehicule.getFeu().estEteint()){
                     //Feu éteint
                     System.out.println("n°"+vehicule.getId()+" a éteint un feu");
                     vehicule.setFeu(null);
+                    vehicule.setId_feu(-1);
                     apiConnector.requestPatchVehicule(vehicule, (Feu) null);
-                    listFeuxNonTraites.remove(vehicule.getFeu());
                     vehicule.allerALaCaserne();
                 }else {
                     //Feu intensité baissée
                     vehicule.getFeu().baisserIntensite(vehicule.getType().getEfficacite());
                     apiConnector.requestPatchFeu(vehicule.getFeu());
-                    System.out.println("intensité baissé du feu -"+vehicule.getType().getEfficacite()
+                    System.out.println("intensité baissée du feu  n°"+vehicule.getFeu().getId()
+                            +"  -"+vehicule.getType().getEfficacite()
                             +" | "+ vehicule.getFeu().toString());
                 }
             }
-        }
-        for (Feu feu:listFeuxNonTraites) {
-            System.out.println("intensité augmenté du feu "+ feu.toString());
-            feu.augmenterIntensite();
-            apiConnector.requestPatchFeu(feu);
-        }
+
 
     }
 

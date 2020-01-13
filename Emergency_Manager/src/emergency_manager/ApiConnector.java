@@ -342,12 +342,12 @@ public class ApiConnector {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		try {
-			JSONObject reponse = new JSONObject(response.body());
-			JSONObject jsonobject = new JSONObject(reponse.get("data").toString());
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+//		try {
+//			JSONObject reponse = new JSONObject(response.body());
+//			JSONObject jsonobject = new JSONObject(reponse.get("data").toString());
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
 	}
 
 	public List<Feu> requestFeuxNonTraites() {
@@ -373,6 +373,21 @@ public class ApiConnector {
 			listFeux.add(feu);
 		}
 		return listFeux;
+	}
+
+
+
+	public void requestResetAllVehicules() {
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create(uri+"trucks/reset/all"))
+				.build();
+		HttpResponse<String> response = null;
+		try {
+			response = this.client.send(request, BodyHandlers.ofString());
+		} catch (IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
 
