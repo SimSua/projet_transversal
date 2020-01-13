@@ -13,7 +13,7 @@ public class Manager {
 		}else {
 			System.out.println("--- Lancement de l'Emergency Manager en mode normal ---");
 		}
+		EmergencyManager emergencyManager = new EmergencyManager(debug);
+		emergencyManager.start();
 	}
-	
-
 }

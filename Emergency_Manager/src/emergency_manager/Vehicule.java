@@ -5,7 +5,7 @@ public abstract class Vehicule {
 	private int id_type;
 	private int id_caserne;
 	private int id_coordonnees;
-	private int id_feu = Integer.parseInt(null);
+	private int id_feu;
 	private TypeVehicule type;
 	//coordonnées gps
 	private Coordonnees coordonnees;
@@ -13,6 +13,15 @@ public abstract class Vehicule {
 	private Feu feu;
 	private Caserne caserne;
 
+	public Vehicule(int id,int id_type,int id_caserne,int id_coordonnees, String id_feu){
+		this.id = id;
+		this.id_type = id_type;
+		this.id_caserne = id_caserne;
+		this.id_coordonnees = id_coordonnees;
+		if (id_feu != "null") {
+			this.id_feu = Integer.parseInt(id_feu);
+		}
+	}
 	public Vehicule(int id,int id_type,int id_caserne,int id_coordonnees, int id_feu){
 		this.id = id;
 		this.id_type = id_type;
