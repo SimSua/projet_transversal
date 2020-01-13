@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Manager {
 	
-	public final static boolean bdd = false;
+	public static boolean bdd = true;
 	
 	public static void main(String[] args) {
 		Boolean debug = false;

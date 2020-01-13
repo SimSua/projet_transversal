@@ -40,3 +40,4 @@ public class Coordonnees {
 		return "Coordonnees("+ligne+","+colonne+")";
 	}
 }
+

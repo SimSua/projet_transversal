@@ -1,2 +1,5 @@
 Flask
 pyserial
+requests
+cryptography
+influxdb

@@ -3,6 +3,7 @@ package mainPackage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -85,14 +86,20 @@ public class ApiConnector {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        JSONObject reponse = new JSONObject(response.body());
-        JSONArray jsonarray = new JSONArray(reponse.get("data").toString());
+        JSONObject reponse = new JSONObject();
+        JSONArray jsonarray = new JSONArray();
+        try {
+            reponse = new JSONObject(response.body());
+            jsonarray = new JSONArray(reponse.get("data").toString());
         for (int i = 0; i < jsonarray.length(); i++) {
             JSONObject jsonobject = jsonarray.getJSONObject(i);
             Feu feu = new Feu((int) jsonobject.get("id"),(int) jsonobject.get("intensity"),
                     (int) jsonobject.get("id_coordinate"));
 //                    this.requestCoordonnees((int) jsonobject.get("id_coordinate")));
             listFeux.add(feu);
+        }
+        } catch (JSONException je){
+            je.printStackTrace();
         }
         return listFeux;
 
@@ -136,16 +143,22 @@ public class ApiConnector {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        JSONObject reponse = new JSONObject(response.body());
-        JSONArray jsonarray = new JSONArray(reponse.get("data").toString());
-        for (int i = 0; i < jsonarray.length(); i++) {
-            JSONObject jsonobject = jsonarray.getJSONObject(i);
-            Coordonnees coordonnees = new Coordonnees((int) jsonobject.get("id"),
-                    Integer.parseInt(jsonobject.get("line").toString()),
-                    Integer.parseInt(jsonobject.get("column").toString()),
-                    Double.parseDouble(jsonobject.get("longitude").toString()),
-                    Double.parseDouble(jsonobject.get("latitude").toString()));
-            listCoordonnees.add(coordonnees);
+        JSONObject reponse = new JSONObject();
+        JSONArray jsonarray = new JSONArray();
+        try {
+            reponse = new JSONObject(response.body());
+            jsonarray = new JSONArray(reponse.get("data").toString());
+            for (int i = 0; i < jsonarray.length(); i++) {
+                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                Coordonnees coordonnees = new Coordonnees((int) jsonobject.get("id"),
+                        Integer.parseInt(jsonobject.get("line").toString()),
+                        Integer.parseInt(jsonobject.get("column").toString()),
+                        Double.parseDouble(jsonobject.get("longitude").toString()),
+                        Double.parseDouble(jsonobject.get("latitude").toString()));
+                listCoordonnees.add(coordonnees);
+            }
+        } catch (JSONException je){
+            je.printStackTrace();
         }
         return listCoordonnees;
 
@@ -163,11 +176,15 @@ public class ApiConnector {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        JSONObject reponse = new JSONObject(response.body());
-        JSONArray jsonarray = new JSONArray(reponse.get("data").toString());
-        for (int i = 0; i < jsonarray.length(); i++) {
-            Vehicule vehicule;
-            JSONObject jsonobject = jsonarray.getJSONObject(i);
+        JSONObject reponse = new JSONObject();
+        JSONArray jsonarray = new JSONArray();
+        try {
+            reponse = new JSONObject(response.body());
+            jsonarray = new JSONArray(reponse.get("data").toString());
+            ;
+            for (int i = 0; i < jsonarray.length(); i++) {
+                Vehicule vehicule;
+                JSONObject jsonobject = jsonarray.getJSONObject(i);
 
             switch ((int) jsonobject.get("id_type")){
                 case 1:
@@ -188,9 +205,12 @@ public class ApiConnector {
                     );
 //                            this.requestCoordonnees((int) jsonobject.get("id_coordinate")),
 //                            this.requestCaserne((int) jsonobject.get("id_department")));
-            }
+                }
 
-            listVehicules.add(vehicule);
+                listVehicules.add(vehicule);
+            }
+        } catch (JSONException je){
+            je.printStackTrace();
         }
         return listVehicules;
     }
@@ -207,15 +227,21 @@ public class ApiConnector {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        JSONObject reponse = new JSONObject(response.body());
-        JSONArray jsonarray = new JSONArray(reponse.get("data").toString());
-        for (int i = 0; i < jsonarray.length(); i++) {
-            JSONObject jsonobject = jsonarray.getJSONObject(i);
-            TypeVehicule typeVehicule =
-                    new TypeVehicule((int) jsonobject.get("id"),(String) jsonobject.get("label"),
-                            (int) jsonobject.get("speed"),(int) jsonobject.get("efficiency"));
+        JSONObject reponse = new JSONObject();
+        JSONArray jsonarray = new JSONArray();
+        try {
+            reponse = new JSONObject(response.body());
+            jsonarray = new JSONArray(reponse.get("data").toString());
+            for (int i = 0; i < jsonarray.length(); i++) {
+                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                TypeVehicule typeVehicule =
+                        new TypeVehicule((int) jsonobject.get("id"), (String) jsonobject.get("label"),
+                                (int) jsonobject.get("speed"), (int) jsonobject.get("efficiency"));
 //                    this.requestCoordonnees((int) jsonobject.get("id_coordinate")));
-            listTypesVehicule.add(typeVehicule);
+                listTypesVehicule.add(typeVehicule);
+            }
+        } catch(JSONException je){
+            je.printStackTrace();
         }
         return listTypesVehicule;
 
@@ -227,8 +253,13 @@ public class ApiConnector {
         }};
 
         var objectMapper = new ObjectMapper();
-        String requestBody = objectMapper
-                .writeValueAsString(values);
+        String requestBody = null;
+        try {
+            requestBody = objectMapper
+                    .writeValueAsString(values);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(uri+"fires/update-intensity/"+feu.getId()))
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
@@ -262,8 +293,13 @@ public class ApiConnector {
         }
 
         var objectMapper = new ObjectMapper();
-        String requestBody = objectMapper
-                .writeValueAsString(values);
+        String requestBody = null;
+        try {
+            requestBody = objectMapper
+                    .writeValueAsString(values);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(uri+"trucks/assign-fire/"+vehicule.getId()))
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
@@ -284,8 +320,13 @@ public class ApiConnector {
         }};
 
         var objectMapper = new ObjectMapper();
-        String requestBody = objectMapper
-                .writeValueAsString(values);
+        String requestBody = null;
+        try {
+            requestBody = objectMapper
+                    .writeValueAsString(values);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(uri+"trucks/update-coordinate/"+vehicule.getId()))
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))

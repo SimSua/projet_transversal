@@ -25,4 +25,8 @@ public class Ville {
 				", coordonnees=" + coordonnees.toString() +
 				'}';
 	}
+
+	public void addCasernes(List<Caserne> requestCasernes) {
+		this.casernes = (ArrayList<Caserne>)requestCasernes;
+	}
 }
