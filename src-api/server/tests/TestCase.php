@@ -49,4 +49,48 @@ abstract class TestCase extends BaseTestCase
 
         return $this->post('/api/coordinates', $data);
     }
+
+    protected function createFire(int $intensity=0, int $idCoordinate=1)
+    {
+        $data = [
+            'intensity' => $intensity,
+            'id_coordinate' => $idCoordinate
+        ];
+
+        return $this->post('/api/fires', $data);
+    }
+
+    protected function createFireDepartment(int $idCoordinate=1, string $label="Default", int $capacity=1)
+    {
+        $data = [
+            'label' => $label,
+            'capacity' => $capacity,
+            'id_coordinate' => $idCoordinate
+        ];
+
+        return $this->post('/api/fire-departments', $data);
+    }
+
+    protected function createVehicleType(string $label="Default", int $speed=1, int $efficiency=1)
+    {
+        $data = [
+            'label' => $label,
+            'speed' => $speed,
+            'efficiency' => $efficiency
+        ];
+
+        return $this->post('/api/vehicle-types', $data);
+    }
+
+    protected function createTruck(int $idType=1, int $idFire=1, int $idDepartment=1, int $idCoordinate=1)
+    {
+        $data = [
+            'id_type' => $idType,
+            'id_fire' => $idFire,
+            'id_department' => $idDepartment,
+            'id_coordinate' => $idCoordinate
+        ];
+
+        return $this->post('/api/trucks', $data);
+    }
 }
