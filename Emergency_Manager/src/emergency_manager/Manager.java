@@ -12,9 +12,9 @@ public class Manager {
 		}
 		ApiConnector apiConnector = new ApiConnector(args[0]);
 		Boolean debug = false;
-		if (args[1] == "true") {
+		if (args[1].trim().equals("true")) {
 			debug = true;
-		}else if(args[1] == "false"){
+		}else if(args[1].trim().equals("false")){
 			debug = false;
 		}else{
 			throw new Exception("Argument non valide, l'argument doit correspondre à host:port debug[true/false]");
