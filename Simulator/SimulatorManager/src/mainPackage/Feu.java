@@ -22,7 +22,7 @@ public class Feu {
         this.intensity = this.intensity - efficaciteVehicule;
     }
 
-    public void augmenterIntensite() { this.intensity++; }
+    public void augmenterIntensite() { if (this.intensity<9){this.intensity++;} }
 
     public boolean estEteint() {
         return this.intensity <= 0;
