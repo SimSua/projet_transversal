@@ -45,3 +45,45 @@ Pour l'instant pour lancer le serveur web :
 - "sudo run -p 5000:5000 python-flask python run.py "0.0.0.0""
 Pour lancer la partie IOT :
 - "sudo docker run -p 5000:5000 -v /dev/ttyUSB0:/dev/ttyUSB0 -v :/app --privileged python-flask python receiver_uart.py"
+
+#Docker compose
+db:
+working
+webserver:
+working
+php-fpm:
+docker-compose exec php-fpm bash
+
+composer install
+php artisan migrate --database=pgsql
+php artisan migrate --database=pgsql_sim
+php artisan db:seed --database=pgsql
+php artisan db:seed --database=pgsql_sim
+
+manager:
+
+emergency_view:
+working
+emergency_iot:
+problème avec le serial
+simulation_view:
+working
+simulation_iot:
+problème avec le serial
+influx:
+docker exec -it influx influx
+create database sensors
+grafana:
+La première fois lancer en user: root
+se connecter au container (faire entrypoint: bash -c "tail -f /dev/null")
+lancer
+chown -R root:root /etc/grafana && \
+chmod -R a+r /etc/grafana && \
+chown -R grafana:grafana /var/lib/grafana && \
+chown -R grafana:grafana /usr/share/grafana
+stop le container et relancer en user: 472
+login: admin
+pass : admin
+broker:
+telegraf:
+

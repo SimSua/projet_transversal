@@ -1,5 +1,4 @@
 Flask
 pyserial
 requests
-cryptography
-influxdb
+paho-mqtt
