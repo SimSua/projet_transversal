@@ -7,6 +7,7 @@ use App\Exceptions\ResponseInterface;
 use App\Http\Resources\FireCollection;
 use App\Models\Coordinate;
 use App\Models\Fire;
+use App\Models\Truck;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -41,6 +42,9 @@ class FireController extends Controller
     public function store(Request $request): ResponseInterface
     {
         try {
+            if ((int)$request->intensity < 0 || (int)$request->intensity > 9) {
+                throw new \Exception('Out of bounds value (0-9)');
+            }
             $fire = new Fire();
             $fire->intensity = (int)$request->get('intensity');
             $fire->id_coordinate = (int)$request->get('id_coordinate');
@@ -85,6 +89,9 @@ class FireController extends Controller
     public function update(Request $request, $id): ResponseInterface
     {
         try {
+            if ((int)$request->intensity < 0 || (int)$request->intensity > 9) {
+                throw new \Exception('Out of bounds value (0-9)');
+            }
             $fire = Fire::findOrFail($id);
             $fire->intensity = (int)$request->get('intensity');
             $fire->id_coordinate = (int)$request->get('id_coordinate');
@@ -132,6 +139,9 @@ class FireController extends Controller
     public function updateIntensity(Request $request , $id): ResponseInterface
     {
         try {
+            if ((int)$request->intensity < 0 || (int)$request->intensity > 9) {
+                throw new \Exception('Out of bounds value (0-9)');
+            }
             $fire = Fire::findOrFail($id);
             $fire->intensity = (int)$request->intensity;
             $fire->save();
@@ -156,6 +166,9 @@ class FireController extends Controller
     public function updateIntensityFromPosition(Request $request , int $line, int $column): ResponseInterface
     {
         try {
+            if ((int)$request->intensity < 0 || (int)$request->intensity > 9) {
+                throw new \Exception('Out of bounds value (0-9)');
+            }
             $coordinate = Coordinate::where(['line'=> $line, 'column' => $column])->first();
             $fire = Fire::where('id_coordinate', $coordinate->id)->first();
             $fire->intensity = (int)$request->intensity;
@@ -216,6 +229,42 @@ class FireController extends Controller
             }
 
             return new FireCollection(Fire::All());
+        } catch (\Exception $e) {
+            return new ExceptionResponse([
+                'status'=>'error',
+                'message'=>$e->getMessage(),
+                'trace'=>$e->getTrace(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Get all active untreated fires
+     *
+     * @return ResponseInterface
+     */
+    public function getAllActiveUntreatedFires()
+    {
+        try {
+            $fires = Fire::All();
+            $trucks = Truck::All();
+            $untreatedFires = [];
+
+            foreach ($fires as $fire) {
+                if ($fire->intensity > 0) {
+                    $assigned = false;
+                    foreach ($trucks as $truck) {
+                        if ($truck->id_fire == $fire->id) {
+                            $assigned = true;
+                        }
+                    }
+                    if (!$assigned) {
+                        array_push($untreatedFires, $fire);
+                    }
+                }
+            }
+
+            return new FireCollection($untreatedFires);
         } catch (\Exception $e) {
             return new ExceptionResponse([
                 'status'=>'error',

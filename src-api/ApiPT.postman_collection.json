@@ -146,13 +146,13 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_url}}/coordinates/2",
+									"raw": "{{pt_base_url}}/coordinates/200",
 									"host": [
 										"{{pt_base_url}}"
 									],
 									"path": [
 										"coordinates",
-										"2"
+										"200"
 									]
 								}
 							},
@@ -275,6 +275,25 @@
 							"response": []
 						},
 						{
+							"name": "APP_fires/active/untreated",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_url}}/fires/active/untreated",
+									"host": [
+										"{{pt_base_url}}"
+									],
+									"path": [
+										"fires",
+										"active",
+										"untreated"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "APP_fires",
 							"request": {
 								"method": "POST",
@@ -344,7 +363,7 @@
 								"method": "PATCH",
 								"header": [],
 								"url": {
-									"raw": "{{pt_base_url}}/fires/10?intensity=0&id_coordinate=1",
+									"raw": "{{pt_base_url}}/fires/10?intensity=1&id_coordinate=10",
 									"host": [
 										"{{pt_base_url}}"
 									],
@@ -355,11 +374,11 @@
 									"query": [
 										{
 											"key": "intensity",
-											"value": "0"
+											"value": "1"
 										},
 										{
 											"key": "id_coordinate",
-											"value": "1"
+											"value": "10"
 										}
 									]
 								}
@@ -406,7 +425,7 @@
 									"formdata": [
 										{
 											"key": "intensity",
-											"value": "100",
+											"value": "5",
 											"type": "text"
 										}
 									]
@@ -946,20 +965,20 @@
 									"formdata": [
 										{
 											"key": "id_fire",
-											"value": "2",
+											"value": "10",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{pt_base_url}}/trucks/assign-fire/1",
+									"raw": "{{pt_base_url}}/trucks/assign-fire/5",
 									"host": [
 										"{{pt_base_url}}"
 									],
 									"path": [
 										"trucks",
 										"assign-fire",
-										"1"
+										"5"
 									]
 								}
 							},
@@ -1270,6 +1289,25 @@
 							"response": []
 						},
 						{
+							"name": "APP_fires/active/untreated",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{pt_base_sim_url}}/fires/active/untreated",
+									"host": [
+										"{{pt_base_sim_url}}"
+									],
+									"path": [
+										"fires",
+										"active",
+										"untreated"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "APP_fires",
 							"request": {
 								"method": "POST",
@@ -1371,20 +1409,20 @@
 									"formdata": [
 										{
 											"key": "intensity",
-											"value": "100",
+											"value": "9",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{pt_base_sim_url}}/fires/update-intensity/1",
+									"raw": "{{pt_base_sim_url}}/fires/update-intensity/10",
 									"host": [
 										"{{pt_base_sim_url}}"
 									],
 									"path": [
 										"fires",
 										"update-intensity",
-										"1"
+										"10"
 									]
 								}
 							},
@@ -1946,20 +1984,20 @@
 									"formdata": [
 										{
 											"key": "id_fire",
-											"value": "2",
+											"value": "1",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{pt_base_sim_url}}/trucks/assign-fire/1",
+									"raw": "{{pt_base_sim_url}}/trucks/assign-fire/6",
 									"host": [
 										"{{pt_base_sim_url}}"
 									],
 									"path": [
 										"trucks",
 										"assign-fire",
-										"1"
+										"6"
 									]
 								}
 							},

@@ -21,44 +21,48 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('coordinates','CoordinateController')->middleware('throttle:1000,1');
-Route::apiResource('fires','FireController')->middleware('throttle:1000,1');
-Route::apiResource('fire-departments','FireDepartmentController')->middleware('throttle:1000,1');
-Route::apiResource('vehicle-types','VehicleTypeController')->middleware('throttle:1000,1');
-Route::apiResource('trucks','TruckController')->middleware('throttle:1000,1');
+Route::apiResource('coordinates','CoordinateController');
+Route::apiResource('fires','FireController');
+Route::apiResource('fire-departments','FireDepartmentController');
+Route::apiResource('vehicle-types','VehicleTypeController');
+Route::apiResource('trucks','TruckController');
 
 Route::post('/fires/update-intensity/{id}', function(FireController $fireController, int $id) {
     return $fireController->updateIntensity(Request::capture(), $id);
-})->where(['id' => '[0-9]+'])->middleware('throttle:1000,1');
+})->where(['id' => '[0-9]+']);
 
 Route::post('/fires/update-intensity/{line}/{column}', function(FireController $fireController, int $line, int $column) {
     return $fireController->updateIntensityFromPosition(Request::capture(), $line, $column);
-})->where(['line' => '[0-9]+', 'column' => '[0-9]+'])->middleware('throttle:1000,1');
+})->where(['line' => '[0-9]+', 'column' => '[0-9]+']);
 
 Route::get('/fires/position/get', function(FireController $fireController) {
     return $fireController->getPosition();
-})->middleware('throttle:1000,1');
+});
 
 Route::get('/fires/reset/all', function(FireController $fireController) {
     return $fireController->resetAllFires();
-})->middleware('throttle:1000,1');
+});
+
+Route::get('/fires/active/untreated', function(FireController $fireController) {
+    return $fireController->getAllActiveUntreatedFires();
+});
 
 Route::get('/coordinates/{line}/{column}', function(CoordinateController $coordinateController, int $line, int $column) {
     return $coordinateController->getCoordinateFromGrid($line, $column);
-})->where(['line' => '[0-9]+', 'column' => '[0-9]+'])->middleware('throttle:1000,1');
+})->where(['line' => '[0-9]+', 'column' => '[0-9]+']);
 
 Route::get('/fire-departments/vehicles/{id}', function(FireDepartmentController $fireDepartmentController, int $id) {
     return $fireDepartmentController->getAllTrucks($id);
-})->where(['id' => '[0-9]+'])->middleware('throttle:1000,1');
+})->where(['id' => '[0-9]+']);
 
 Route::post('/trucks/assign-fire/{id}', function(TruckController $truckController, int $id) {
     return $truckController->assignFire(Request::capture(), $id);
-})->where(['id' => '[0-9]+'])->middleware('throttle:1000,1');
+})->where(['id' => '[0-9]+']);
 
 Route::post('/trucks/update-coordinate/{id}', function(TruckController $truckController, int $id) {
     return $truckController->updateCoordinate(Request::capture(), $id);
-})->where(['id' => '[0-9]+'])->middleware('throttle:1000,1');
+})->where(['id' => '[0-9]+']);
 
 Route::get('/trucks/reset/all', function(TruckController $truckController) {
     return $truckController->resetAllTrucks();
-})->middleware('throttle:10000,1');
+});

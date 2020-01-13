@@ -37,4 +37,16 @@ abstract class TestCase extends BaseTestCase
             return null;
         }
     }
+
+    protected function createCoordinate(int $line=0, int $column=0, float $latitude=45.78, float $longitude=4.8)
+    {
+        $data = [
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'line' => $line,
+            'column' => $column
+        ];
+
+        return $this->post('/api/coordinates', $data);
+    }
 }

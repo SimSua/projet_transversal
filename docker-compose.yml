@@ -47,6 +47,16 @@ services:
     networks:
       - api
 
+  simulator:
+    image: openjdk:13-alpine
+    container_name: simulator
+    working_dir: /application
+    volumes:
+      - ./Simulator/out/artifacts/Simulator.jar/:/application/manager.jar
+    command: java -jar Simulator.jar 
+    networks:
+      - api
+
   emergency_view:
     build: ./Emergency_Web
     container_name: emergency_view
