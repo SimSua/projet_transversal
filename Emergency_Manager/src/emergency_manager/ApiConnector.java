@@ -25,6 +25,7 @@ public class ApiConnector {
 		this.client = HttpClient.newHttpClient();
 		this.host = host;
 		this.uri = "http://"+host+"/api/";
+		System.out.println("api connecté sur "+this.uri);
 	}
 
 	public List<Caserne> requestCasernes() {

@@ -96,9 +96,10 @@ public class Simulator extends Thread {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                } else {
-                    System.out.println("Pas de nouveau feu");
                 }
+            }
+            else {
+                System.out.println("Pas de nouveau feu");
             }
             try {
                 Thread.sleep(2000);
@@ -111,7 +112,7 @@ public class Simulator extends Thread {
         List<Vehicule> listVehiculesFromDB = apiConnector.requestVehicules();
         for (Vehicule vehiculeDB:listVehiculesFromDB) {
             for (Vehicule vehicule:listVehicules) {
-                if (vehicule.getId() == vehiculeDB.getId()){
+                if (vehicule.getId() == vehiculeDB.getId() && vehiculeDB.getId_feu() != -1){
                     vehicule.setFeu(apiConnector.requestFeu(vehiculeDB.getId_feu()));
                 }
             }

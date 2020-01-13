@@ -52,7 +52,7 @@ public class MainSimulator {
                 }
                 simulator.traiterFeux();
             }else {
-                simulator.updateDataFeuxFromDB();
+                simulator.getDataFromDB();
                 for (Vehicule vehicule:simulator.listVehicules) {
                     if (vehicule.getFeu() != null){
                         vehicule.allerAuFeu();
