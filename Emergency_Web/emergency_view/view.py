@@ -30,7 +30,7 @@ def Villerbanne():
 def fire():
 	print("oui")
 	fires = requests.get(api+"fires")
-	coordinates = requests.get(api+"coordinates")
+	coordinates = requests.get(api+"sim/coordinates")
 	
 	fires_str = json.loads(fires.text)
 	coordinates_str = json.loads(coordinates.text)
