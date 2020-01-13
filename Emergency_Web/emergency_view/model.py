@@ -3,19 +3,12 @@ import json
 def get_coordinate(ID, coordinate) :
 	latitude = None
 	longitude = None
+
 	for tab in coordinate["data"] :	
+		#print(tab)
+		if int(tab["id"])==ID:
+			return tab["latitude"], tab["longitude"]
 		
-		for key, value in tab.items() :			
-			if key == 'id' :
-				if int(value) != ID :
-					break
-
-			if key == "longitude" :
-				longitude = value
-				
-			elif key == "latitude" :
-				latitude = value
-
 	return latitude, longitude
 
 def find_coordinate(data, coordinate) : 

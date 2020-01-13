@@ -5,7 +5,7 @@ function get_fire()
 
 	$.ajax(
 	{
-		url : "http://localhost:5001/Fires",
+		url : "http://localhost:5000/Fires",
 		type : 'get',
 		dataType : 'json',
 

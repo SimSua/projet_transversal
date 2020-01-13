@@ -43,7 +43,7 @@ services:
     working_dir: /application
     volumes:
       - ./Emergency_Manager/out/artifacts/Emergency_Manager_jar/Emergency_Manager.jar:/application/manager.jar
-    command: java -jar manager.jar api_host false
+    command: java -jar manager.jar webserver false
     networks:
       - api
 
@@ -52,8 +52,8 @@ services:
     container_name: simulator
     working_dir: /application
     volumes:
-      - ./Simulator/out/artifacts/Simulator.jar/:/application/Simulator.jar
-    command: java -jar Simulator.jar api_host false
+      - ./Simulator/out/artifacts/Simulator_jar/Simulator.jar/:/application/Simulator.jar
+    command: java -jar Simulator.jar webserver false
     networks:
       - api
 
